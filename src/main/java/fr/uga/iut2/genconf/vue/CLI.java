@@ -3,14 +3,11 @@ package fr.uga.iut2.genconf.vue;
 import fr.uga.iut2.genconf.controleur.Commande;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import org.apache.commons.validator.routines.EmailValidator;
 
 /**
@@ -41,10 +38,15 @@ public class CLI extends IHM {
      * @return Une chaîne de caractères contenant le synopsis des commandes.
      */
     private static String synopsisCommandes() {
-        return Arrays.stream(Commande.values())
-                .map(Commande::synopsis)
-                .map(str -> "  " + str)
-                .collect(Collectors.joining(System.lineSeparator()));
+        StringBuilder builder = new StringBuilder();
+
+        for (Commande cmd: Commande.values()) {
+            builder.append("  ");  // légère indentation
+            builder.append(cmd.synopsis());
+            builder.append(System.lineSeparator());
+        }
+
+        return builder.toString();
     }
 
     /**
@@ -80,13 +82,14 @@ public class CLI extends IHM {
      * @return L'interprétation de la lecture de l'entrée standard.
      */
     private static <T> T lireAvecErreurs(final Function<String, Optional<T>> parseFunction) {
+        Optional<T> result = Optional.empty();
         Scanner in = new Scanner(System.in);
-        Optional<T> result = Stream.generate(in::next)
-                .sequential()
-                .limit(CLI.MAX_ESSAIS)
-                .map(parseFunction)
-                .flatMap(Optional::stream)
-                .findFirst();
+        String token;
+
+        for (int i = 0; i < CLI.MAX_ESSAIS && result.isEmpty(); ++i) {
+            token = in.next();
+            result = parseFunction.apply(token);
+        }
 
         return result.orElseThrow(() -> new Error("Erreur de lecture (" + CLI.MAX_ESSAIS + " essais infructueux)."));
     }
