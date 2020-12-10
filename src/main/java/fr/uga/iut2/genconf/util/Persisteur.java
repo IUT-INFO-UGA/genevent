@@ -40,9 +40,10 @@ public final class Persisteur {
      *     l'enregistrement.
      */
     public static final void sauverEtat(final GenConf genconf) throws FileNotFoundException, IOException {
-        try {
+        try (
             FileOutputStream fos = new FileOutputStream(Persisteur.NOM_BDD);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
+        ){
             oos.writeObject(genconf);
             // Les classes `FileOutputStream` et `ObjectOutputStream`
             // implémentent l'interface `AutoCloseable` : pas besoin de faire
@@ -80,9 +81,10 @@ public final class Persisteur {
     public static final GenConf lireEtat() throws ClassNotFoundException, IOException {
         GenConf genconf;
 
-        try {
+        try (
             FileInputStream fis = new FileInputStream(Persisteur.NOM_BDD);
             ObjectInputStream ois = new ObjectInputStream(fis);
+        ){
             genconf = (GenConf) ois.readObject();
             System.out.println("Restauration de l'état réussie.");
             System.out.flush();
