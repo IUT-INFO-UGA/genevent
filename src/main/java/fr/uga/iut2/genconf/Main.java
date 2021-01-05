@@ -1,9 +1,11 @@
 package fr.uga.iut2.genconf;
 
 import fr.uga.iut2.genconf.controleur.Controleur;
+import fr.uga.iut2.genconf.controleur.ControleurGUI;
 import fr.uga.iut2.genconf.modele.GenConf;
 import fr.uga.iut2.genconf.util.Persisteur;
 import java.io.IOException;
+
 
 /**
  *
@@ -14,9 +16,9 @@ public class Main {
     public static final int EXIT_ERR_LOAD = 2;
     public static final int EXIT_ERR_SAVE = 3;
 
-    public static void main(String[] args) {
-        GenConf genconf = null;
+    private static GenConf genconf = null;
 
+    public static void main(String[] args) {
         try {
             genconf = Persisteur.lireEtat();
         }
@@ -28,8 +30,10 @@ public class Main {
 
         // Controleur garde le contrôle de l'exécution tant que
         // l'utilisa·teur/trice n'a pas saisi la commande QUITTER.
-        new Controleur(genconf);
+        new ControleurGUI(genconf);
+    }
 
+    public static void terminer() {
         try {
             Persisteur.sauverEtat(genconf);
         }

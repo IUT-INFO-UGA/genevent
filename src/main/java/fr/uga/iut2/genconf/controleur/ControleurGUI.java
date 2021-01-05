@@ -1,22 +1,26 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package fr.uga.iut2.genconf.controleur;
 
 import fr.uga.iut2.genconf.Main;
-import fr.uga.iut2.genconf.vue.CLI;
 import fr.uga.iut2.genconf.modele.GenConf;
+import fr.uga.iut2.genconf.vue.IHMGenConf;
 import fr.uga.iut2.genconf.vue.IHM;
 
 /**
  *
- * @author Raphaël Bleuse <raphael.bleuse@univ-grenoble-alpes.fr>
+ * @author laurillau
  */
-public class Controleur {
-
+public class ControleurGUI {
     private final GenConf genconf;
     private final IHM ihm;
 
-    public Controleur(GenConf genconf) {
+    public ControleurGUI(GenConf genconf) {
         this.genconf = genconf;
-        this.ihm = new CLI(this);
+        this.ihm = new IHMGenConf(this);
         this.ihm.afficherInterface();
     }
 
