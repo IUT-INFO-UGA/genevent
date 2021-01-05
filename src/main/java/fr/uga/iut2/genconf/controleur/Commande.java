@@ -3,11 +3,11 @@ package fr.uga.iut2.genconf.controleur;
 import java.util.HashMap;
 import java.util.Map;
 
+
 /**
  * L'enum Commande répertorie les actions que l'utilisa·teur/trice peut
  * entreprendre via l'IHM.
  *
- * @author Raphaël Bleuse <raphael.bleuse@univ-grenoble-alpes.fr>
  */
 public enum Commande {
 

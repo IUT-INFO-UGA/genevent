@@ -1,13 +1,9 @@
 package fr.uga.iut2.genconf.vue;
 
-import fr.uga.iut2.genconf.controleur.Commande;
 import java.time.LocalDate;
 import java.util.Set;
 
-/**
- *
- * @author Raphaël Bleuse <raphael.bleuse@univ-grenoble-alpes.fr>
- */
+
 public abstract class IHM {
     /**
      * Classe conteneur pour les informations saisies à propos d'un
@@ -55,13 +51,13 @@ public abstract class IHM {
     }
 
     /**
-     * Rend actif l'interface homme-machine
+     * Rend actif l'interface Humain-machine.
      *
      */
     public abstract void afficherInterface();
 
     /**
-     * Rend inactif l'interface Homme machine
+     * Rend inactif l'interface Humain-machine.
      *
      */
     public abstract void fermerInterface();

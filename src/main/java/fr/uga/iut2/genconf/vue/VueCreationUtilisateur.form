@@ -98,7 +98,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="creer">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Creer"/>
+        <Property name="text" type="java.lang.String" value="Cr&#xe9;er"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="creerActionPerformed"/>
@@ -124,7 +124,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Cr&#xe9;er un utilisateur"/>
+        <Property name="text" type="java.lang.String" value="Cr&#xe9;er un&#xb7;e utilisa&#xb7;teur/trice"/>
       </Properties>
     </Component>
   </SubComponents>

@@ -5,10 +5,7 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- *
- * @author Raphaël Bleuse <raphael.bleuse@univ-grenoble-alpes.fr>
- */
+
 public class GenConf implements Serializable {
 
     private static final long serialVersionUID = 1L;  // nécessaire pour la sérialisation

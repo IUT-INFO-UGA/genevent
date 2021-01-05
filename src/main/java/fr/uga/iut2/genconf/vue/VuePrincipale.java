@@ -1,28 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.uga.iut2.genconf.vue;
 
 import java.awt.CardLayout;
 import javax.swing.JPanel;
 
 
-/**
- *
- * @author laurillau
- */
 public class VuePrincipale extends javax.swing.JFrame {
-    private IHMGenConf ihm;
+    private final GUI gui;
 
     /**
      * Creates new form VuePrincipale
      */
-    public VuePrincipale(IHMGenConf ihm) {
-        this.ihm = ihm;
+    public VuePrincipale(GUI gui) {
+        this.gui = gui;
 
-        initComponents();
+        // création de l'interface générée
+        this.initComponents();
     }
 
     protected void afficher() {
@@ -31,6 +23,7 @@ public class VuePrincipale extends javax.swing.JFrame {
     }
 
     protected void ajouterVue(JPanel vue, String id) {
+
         CardLayout cLayout = (CardLayout) this.getContentPane().getLayout();
 
         cLayout.addLayoutComponent(vue, id);
@@ -43,7 +36,7 @@ public class VuePrincipale extends javax.swing.JFrame {
     }
 
     protected void fermer() {
-        dispose();
+        this.dispose();
     }
 
     /**
@@ -104,16 +97,15 @@ public class VuePrincipale extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void actionMenuCreationUtilisateur(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actionMenuCreationUtilisateur
-        ihm.actionCreerUtilisateur();
+        this.gui.actionCreerUtilisateur();
     }//GEN-LAST:event_actionMenuCreationUtilisateur
 
     private void actionMenuCreationConference(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actionMenuCreationConference
-        ihm.actionCreerConference();
+        this.gui.actionCreerConference();
     }//GEN-LAST:event_actionMenuCreationConference
 
     private void actionMenuQuitter(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actionMenuQuitter
-        ihm.actionTerminer();
-        this.dispose();
+        this.gui.actionTerminer();
     }//GEN-LAST:event_actionMenuQuitter
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

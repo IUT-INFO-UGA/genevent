@@ -5,10 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import org.apache.commons.validator.routines.EmailValidator;
 
-/**
- *
- * @author Raphaël Bleuse <raphael.bleuse@univ-grenoble-alpes.fr>
- */
+
 public class Utilisateur implements Serializable {
 
     private static final long serialVersionUID = 1L;  // nécessaire pour la sérialisation

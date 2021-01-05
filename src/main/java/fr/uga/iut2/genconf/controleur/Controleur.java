@@ -1,14 +1,12 @@
 package fr.uga.iut2.genconf.controleur;
 
 import fr.uga.iut2.genconf.Main;
-import fr.uga.iut2.genconf.vue.CLI;
 import fr.uga.iut2.genconf.modele.GenConf;
+import fr.uga.iut2.genconf.vue.CLI;
+import fr.uga.iut2.genconf.vue.GUI;
 import fr.uga.iut2.genconf.vue.IHM;
 
-/**
- *
- * @author Raphaël Bleuse <raphael.bleuse@univ-grenoble-alpes.fr>
- */
+
 public class Controleur {
 
     private final GenConf genconf;
@@ -16,7 +14,11 @@ public class Controleur {
 
     public Controleur(GenConf genconf) {
         this.genconf = genconf;
-        this.ihm = new CLI(this);
+
+        // choisir la classe CLI ou GUI
+//        this.ihm = new CLI(this);
+        this.ihm = new GUI(this);
+
         this.ihm.afficherInterface();
     }
 

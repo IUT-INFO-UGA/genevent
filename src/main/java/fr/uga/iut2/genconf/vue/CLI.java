@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.function.Function;
 import org.apache.commons.validator.routines.EmailValidator;
 
+
 /**
  * La classe CLI est responsable des interactions avec l'utilisa·teur/trice en
  * mode texte.
@@ -21,7 +22,6 @@ import org.apache.commons.validator.routines.EmailValidator;
  * Aucun méthode de cette classe n'est pas censée modifier ses paramètres,
  * c'est pourquoi les paramètres des méthodes sont tous marqués comme `final`.
  *
- * @author Raphaël Bleuse <raphael.bleuse@univ-grenoble-alpes.fr>
  */
 public class CLI extends IHM {
 
@@ -29,13 +29,14 @@ public class CLI extends IHM {
      * Nombre maximum d'essais pour la lecture d'une saisie utilisa·teur/trice.
      */
     private static final int MAX_ESSAIS = 3;
-    private Controleur controleur;
+    private final Controleur controleur;
 
     public CLI(Controleur controleur) {
         this.controleur = controleur;
     }
 
-//-----  Elements du dialogue  -------------------------------
+//-----  Éléments du dialogue  -------------------------------------------------
+
     private Commande dialogueSaisirCommande() {
         CLI.afficher("===== GenConf: Générateur Site Conférence =====");
         CLI.afficher(CLI.synopsisCommandes());

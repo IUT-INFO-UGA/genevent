@@ -1,16 +1,11 @@
 package fr.uga.iut2.genconf;
 
 import fr.uga.iut2.genconf.controleur.Controleur;
-import fr.uga.iut2.genconf.controleur.ControleurGUI;
 import fr.uga.iut2.genconf.modele.GenConf;
 import fr.uga.iut2.genconf.util.Persisteur;
 import java.io.IOException;
 
 
-/**
- *
- * @author Raphaël Bleuse <raphael.bleuse@univ-grenoble-alpes.fr>
- */
 public class Main {
 
     public static final int EXIT_ERR_LOAD = 2;
@@ -30,7 +25,7 @@ public class Main {
 
         // Controleur garde le contrôle de l'exécution tant que
         // l'utilisa·teur/trice n'a pas saisi la commande QUITTER.
-        new ControleurGUI(genconf);
+        new Controleur(genconf);
     }
 
     public static void terminer() {

@@ -1,32 +1,25 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.uga.iut2.genconf.vue;
 
 import java.awt.Color;
+import java.util.Optional;
 import org.apache.commons.validator.routines.EmailValidator;
 
-/**
- *
- * @author laurillau
- */
-public class VueCreationUtilisateur extends javax.swing.JPanel {
-    public static final IHM.InfosUtilisateur VIDE = new IHM.InfosUtilisateur("", "", "");
 
-    private IHMGenConf ihmGenConf;
+public class VueCreationUtilisateur extends javax.swing.JPanel {
+    private final GUI gui;
 
     /**
      * Creates new form VueCreationUtilisateur
      */
-    public VueCreationUtilisateur(IHMGenConf ihmGenConf) {
-        this.ihmGenConf = ihmGenConf;
+    public VueCreationUtilisateur(GUI gui) {
+        this.gui = gui;
 
-        initComponents();
+        // création de l'interface générée
+        this.initComponents();
 
-        creer.setEnabled(false);
-        email.setForeground(Color.red);
+        // configuration des composants de l'interface (à faire après la création de l'interface)
+        this.creer.setEnabled(false);
+        this.email.setForeground(Color.red);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -59,7 +52,7 @@ public class VueCreationUtilisateur extends javax.swing.JPanel {
             }
         });
 
-        creer.setText("Creer");
+        creer.setText("Créer");
         creer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 creerActionPerformed(evt);
@@ -85,7 +78,7 @@ public class VueCreationUtilisateur extends javax.swing.JPanel {
             }
         });
 
-        jLabel4.setText("Créer un utilisateur");
+        jLabel4.setText("Créer un·e utilisa·teur/trice");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -140,15 +133,16 @@ public class VueCreationUtilisateur extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void creerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_creerActionPerformed
-        IHM.InfosUtilisateur infoUser = new IHM.InfosUtilisateur(
-                nomUser.getText(),
-                prenomUser.getText(),
-                email.getText());
-        ihmGenConf.creerUtilisateur(infoUser);
+        IHM.InfosUtilisateur infosUtilisateur = new IHM.InfosUtilisateur(
+                this.email.getText().trim().toLowerCase(),
+                this.nomUser.getText().trim(),
+                this.prenomUser.getText().trim()
+        );
+        this.gui.creerUtilisateur(Optional.of(infosUtilisateur));
     }//GEN-LAST:event_creerActionPerformed
 
     private void annulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_annulerActionPerformed
-        ihmGenConf.creerUtilisateur(VIDE);
+        this.gui.creerUtilisateur(Optional.empty());
     }//GEN-LAST:event_annulerActionPerformed
 
     private void validerSaisie(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_validerSaisie
@@ -157,16 +151,16 @@ public class VueCreationUtilisateur extends javax.swing.JPanel {
         String nom, prenom;
         EmailValidator validator = EmailValidator.getInstance(false, false);
 
-        nom = nomUser.getText();
-        prenom = prenomUser.getText();
-        validEmail = validator.isValid(email.getText());
-        email.setForeground(validEmail ? Color.black : Color.red);
+        nom = this.nomUser.getText().trim();
+        prenom = this.prenomUser.getText().trim();
+        validEmail = validator.isValid(this.email.getText().trim().toLowerCase());
+        this.email.setForeground(validEmail ? Color.black : Color.red);
 
         valide = validEmail
                  && (nom != null) && (nom.length() > 0)
                  && (prenom != null) && (prenom.length() > 0);
 
-        creer.setEnabled(valide);
+        this.creer.setEnabled(valide);
     }//GEN-LAST:event_validerSaisie
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
