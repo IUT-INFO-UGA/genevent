@@ -1,6 +1,5 @@
 package fr.uga.iut2.genconf.controleur;
 
-import fr.uga.iut2.genconf.Main;
 import fr.uga.iut2.genconf.modele.GenConf;
 import fr.uga.iut2.genconf.vue.CLI;
 import fr.uga.iut2.genconf.vue.GUI;
@@ -18,7 +17,9 @@ public class Controleur {
         // choisir la classe CLI ou GUI
 //        this.ihm = new CLI(this);
         this.ihm = new GUI(this);
+    }
 
+    public void demarrer() {
         this.ihm.afficherInterface();
     }
 
@@ -26,7 +27,6 @@ public class Controleur {
         switch (cmd) {
             case QUITTER:
                 this.ihm.fermerInterface();
-                Main.terminer();
                 break;
             case CREER_UTILISATEUR:
                 this.ihm.saisirUtilisateur();

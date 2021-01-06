@@ -4,10 +4,13 @@ import fr.uga.iut2.genconf.controleur.Commande;
 import fr.uga.iut2.genconf.controleur.Controleur;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
 
 
 public class GUI extends IHM {
     private final Controleur controleur;
+    private final CountDownLatch eolBarrier;
+
     private final VuePrincipale vuePrincipale;
     private final VueCreationConference vueCreationConf;
     private final VueCreationUtilisateur vueCreationUser;
@@ -20,6 +23,9 @@ public class GUI extends IHM {
 
     public GUI(Controleur controleur) {
         this.controleur = controleur;
+
+        // initialisé à 1 pour attendre l'évènement correspondant à la fin de vie de GUI
+        this.eolBarrier = new CountDownLatch(1);
 
         // création de l'interface
         this.vueEtat = new VueEtat(this);
@@ -68,11 +74,24 @@ public class GUI extends IHM {
     @Override
     public void afficherInterface() {
         this.vuePrincipale.afficher();
+
+        // On attend que GUI ait fini avant de rendre la main au contrôleur
+        // (c'est à dire au moment de l'appel de `fermerInterface`)
+        try {
+            this.eolBarrier.await();
+        }
+        catch (InterruptedException exc) {
+            System.err.println("Erreur d'exécution de l'interface.");
+            System.err.flush();
+        }
     }
 
     @Override
     public void fermerInterface() {
         this.vuePrincipale.fermer();
+
+        // On notifie la fin de vie de GUI pour rendre la main au contrôleur
+        this.eolBarrier.countDown();
     }
 
     @Override
