@@ -23,22 +23,6 @@ public class Controleur {
         this.ihm.afficherInterface();
     }
 
-    public void gererDialogue(Commande cmd) {
-        switch (cmd) {
-            case QUITTER:
-                this.ihm.fermerInterface();
-                break;
-            case CREER_UTILISATEUR:
-                this.ihm.saisirUtilisateur();
-                break;
-            case CREER_CONFERENCE:
-                this.ihm.saisirNouvelleConference(this.genconf.getConferences().keySet());
-                break;
-            default:
-                assert false: "Commande inconnue.";
-        }
-    }
-
     public void creerUtilisateur(IHM.InfosUtilisateur infos) {
         boolean nouvelUtilisateur = this.genconf.ajouteUtilisateur(
                 infos.email,
@@ -56,6 +40,10 @@ public class Controleur {
                     false
             );
         }
+    }
+
+    public void saisirConference() {
+        this.ihm.saisirNouvelleConference(this.genconf.getConferences().keySet());
     }
 
     public void creerConference(IHM.InfosNouvelleConference infos) {

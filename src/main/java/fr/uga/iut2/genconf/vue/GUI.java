@@ -1,6 +1,5 @@
 package fr.uga.iut2.genconf.vue;
 
-import fr.uga.iut2.genconf.controleur.Commande;
 import fr.uga.iut2.genconf.controleur.Controleur;
 import java.util.Optional;
 import java.util.Set;
@@ -42,15 +41,15 @@ public class GUI extends IHM {
 //-----  Éléments du dialogue  -------------------------------------------------
 
     protected void actionCreerConference() {
-        this.controleur.gererDialogue(Commande.CREER_CONFERENCE);
+        this.controleur.saisirConference();
     }
 
     protected void actionCreerUtilisateur() {
-        this.controleur.gererDialogue(Commande.CREER_UTILISATEUR);
+        this.saisirUtilisateur();
     }
 
     protected void actionTerminer() {
-        this.controleur.gererDialogue(Commande.QUITTER);
+        this.fermerInterface();
     }
 
     protected void creerUtilisateur(Optional<InfosUtilisateur> nouvelUtilisateur) {
