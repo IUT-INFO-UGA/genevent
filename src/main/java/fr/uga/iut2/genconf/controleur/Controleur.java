@@ -20,7 +20,7 @@ public class Controleur {
     }
 
     public void demarrer() {
-        this.ihm.afficherInterface();
+        this.ihm.demarrerInteraction();
     }
 
     public void creerUtilisateur(IHM.InfosUtilisateur infos) {

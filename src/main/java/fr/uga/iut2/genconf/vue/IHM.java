@@ -57,13 +57,7 @@ public abstract class IHM {
      * l'IHM est fermée.
      *
      */
-    public abstract void afficherInterface();
-
-    /**
-     * Rend inactif l'interface Humain-machine.
-     *
-     */
-    public abstract void fermerInterface();
+    public abstract void demarrerInteraction();
 
     /**
      * Affiche un message d'information à l'attention de l'utilisa·teur/trice.

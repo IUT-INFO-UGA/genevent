@@ -49,7 +49,10 @@ public class GUI extends IHM {
     }
 
     protected void actionTerminer() {
-        this.fermerInterface();
+        this.vuePrincipale.fermer();
+
+        // On notifie la fin de vie de GUI pour rendre la main au contrôleur
+        this.eolBarrier.countDown();
     }
 
     protected void creerUtilisateur(Optional<InfosUtilisateur> nouvelUtilisateur) {
@@ -71,11 +74,11 @@ public class GUI extends IHM {
 //-----  Implémentation des méthodes abstraites  -------------------------------
 
     @Override
-    public void afficherInterface() {
+    public void demarrerInteraction() {
         this.vuePrincipale.afficher();
 
         // On attend que GUI ait fini avant de rendre la main au contrôleur
-        // (c'est à dire au moment de l'appel de `fermerInterface`)
+        // (c'est à dire au moment de l'appel de `actionTerminer`)
         try {
             this.eolBarrier.await();
         }
@@ -83,14 +86,6 @@ public class GUI extends IHM {
             System.err.println("Erreur d'exécution de l'interface.");
             System.err.flush();
         }
-    }
-
-    @Override
-    public void fermerInterface() {
-        this.vuePrincipale.fermer();
-
-        // On notifie la fin de vie de GUI pour rendre la main au contrôleur
-        this.eolBarrier.countDown();
     }
 
     @Override

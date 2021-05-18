@@ -144,7 +144,7 @@ public class CLI extends IHM {
 //-----  Implémentation des méthodes abstraites  -------------------------------
 
     @Override
-    public final void afficherInterface() {
+    public final void demarrerInteraction() {
         Commande cmd;
         do {
             cmd = dialogueSaisirCommande();
@@ -161,11 +161,6 @@ public class CLI extends IHM {
                     assert false : "Commande inconnue.";
             }
         } while (cmd != Commande.QUITTER);
-    }
-
-    @Override
-    public final void fermerInterface() {
-        // rien à faire ici
     }
 
     @Override
