@@ -152,7 +152,7 @@ public class CLI extends IHM {
                 case QUITTER:
                     break;
                 case CREER_UTILISATEUR:
-                    this.saisirUtilisateur();
+                    this.controleur.saisirUtilisateur();
                     break;
                 case CREER_CONFERENCE:
                     this.controleur.saisirConference();

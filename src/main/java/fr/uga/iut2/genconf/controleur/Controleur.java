@@ -23,6 +23,10 @@ public class Controleur {
         this.ihm.demarrerInteraction();
     }
 
+    public void saisirUtilisateur() {
+        this.ihm.saisirUtilisateur();
+    }
+
     public void creerUtilisateur(IHM.InfosUtilisateur infos) {
         boolean nouvelUtilisateur = this.genconf.ajouteUtilisateur(
                 infos.email,

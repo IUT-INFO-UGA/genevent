@@ -45,7 +45,7 @@ public class GUI extends IHM {
     }
 
     protected void actionCreerUtilisateur() {
-        this.saisirUtilisateur();
+        this.controleur.saisirUtilisateur();
     }
 
     protected void actionTerminer() {
