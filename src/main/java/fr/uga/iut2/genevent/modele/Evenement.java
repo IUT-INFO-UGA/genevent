@@ -1,4 +1,4 @@
-package fr.uga.iut2.genconf.modele;
+package fr.uga.iut2.genevent.modele;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -6,10 +6,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class Conference implements Serializable {
+public class Evenement implements Serializable {
 
     private static final long serialVersionUID = 1L;  // nécessaire pour la sérialisation
-    private final GenConf genconf;
+    private final GenEvent genevent;
     private final String nom;
     private LocalDate dateDebut;
     private LocalDate dateFin;
@@ -19,15 +19,15 @@ public class Conference implements Serializable {
     //     On utilise la négation ici pour exprimer (dateDebut <= dateFin), ce
     //     qui est équivalent à !(dateDebut > dateFin).
 
-    public static Conference initialiseConference(GenConf genconf, String nom, LocalDate dateDebut, LocalDate dateFin, Utilisateur admin) {
-        Conference conf = new Conference(genconf, nom, dateDebut, dateFin);
-        conf.ajouteAdministrateur(admin);
-        return conf;
+    public static Evenement initialiseEvenement(GenEvent genevent, String nom, LocalDate dateDebut, LocalDate dateFin, Utilisateur admin) {
+        Evenement evt = new Evenement(genevent, nom, dateDebut, dateFin);
+        evt.ajouteAdministrateur(admin);
+        return evt;
     }
 
-    public Conference(GenConf genconf, String nom, LocalDate dateDebut, LocalDate dateFin) {
+    public Evenement(GenEvent genevent, String nom, LocalDate dateDebut, LocalDate dateFin) {
         assert !dateDebut.isAfter(dateFin);
-        this.genconf = genconf;
+        this.genevent = genevent;
         this.nom = nom;
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
@@ -59,6 +59,6 @@ public class Conference implements Serializable {
     public void ajouteAdministrateur(Utilisateur admin) {
         assert !this.administrateurs.containsKey(admin.getEmail());
         this.administrateurs.put(admin.getEmail(), admin);
-        admin.ajouteConferenceAdministree(this);
+        admin.ajouteEvenementAdministre(this);
     }
 }

@@ -1,6 +1,6 @@
-package fr.uga.iut2.genconf.vue;
+package fr.uga.iut2.genevent.vue;
 
-import fr.uga.iut2.genconf.controleur.Controleur;
+import fr.uga.iut2.genevent.controleur.Controleur;
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
@@ -11,13 +11,13 @@ public class GUI extends IHM {
     private final CountDownLatch eolBarrier;
 
     private final VuePrincipale vuePrincipale;
-    private final VueCreationConference vueCreationConf;
+    private final VueCreationEvenement vueCreationEvt;
     private final VueCreationUtilisateur vueCreationUser;
     private final VueEtat vueEtat;
 
     // identifiants uniques pour les vues composant la vue principale
     private static final String VUE_ETAT = "etat";
-    private static final String VUE_CREATION_CONF = "creation_conf";
+    private static final String VUE_CREATION_EVT = "creation_evt";
     private static final String VUE_CREATION_USER = "creation_user";
 
     public GUI(Controleur controleur) {
@@ -28,20 +28,20 @@ public class GUI extends IHM {
 
         // création de l'interface
         this.vueEtat = new VueEtat(this);
-        this.vueCreationConf = new VueCreationConference(this);
+        this.vueCreationEvt = new VueCreationEvenement(this);
         this.vueCreationUser = new VueCreationUtilisateur(this);
 
         this.vuePrincipale = new VuePrincipale(this);
         this.vuePrincipale.ajouterVue(this.vueEtat, GUI.VUE_ETAT);
-        this.vuePrincipale.ajouterVue(this.vueCreationConf, GUI.VUE_CREATION_CONF);
+        this.vuePrincipale.ajouterVue(this.vueCreationEvt, GUI.VUE_CREATION_EVT);
         this.vuePrincipale.ajouterVue(this.vueCreationUser, GUI.VUE_CREATION_USER);
         this.vuePrincipale.afficherVue(GUI.VUE_ETAT);
     }
 
 //-----  Éléments du dialogue  -------------------------------------------------
 
-    protected void actionCreerConference() {
-        this.controleur.saisirConference();
+    protected void actionCreerEvenement() {
+        this.controleur.saisirEvenement();
     }
 
     protected void actionCreerUtilisateur() {
@@ -63,10 +63,10 @@ public class GUI extends IHM {
         );
     }
 
-    protected void creerConference(Optional<InfosNouvelleConference> nlleConf) {
+    protected void creerEvenement(Optional<InfosNouvelEvenement> nouvelEvt) {
         this.vuePrincipale.afficherVue(GUI.VUE_ETAT);
-        nlleConf.ifPresentOrElse(
-                infos -> this.controleur.creerConference(infos),
+        nouvelEvt.ifPresentOrElse(
+                infos -> this.controleur.creerEvenement(infos),
                 () -> this.vueEtat.setEtat("")
         );
     }
@@ -99,8 +99,8 @@ public class GUI extends IHM {
     }
 
     @Override
-    public void saisirNouvelleConference(final Set<String> nomsExistants) {
-        this.vueCreationConf.setNomsExistants(nomsExistants);
-        this.vuePrincipale.afficherVue(GUI.VUE_CREATION_CONF);
+    public void saisirNouvelEvenement(final Set<String> nomsExistants) {
+        this.vueCreationEvt.setNomsExistants(nomsExistants);
+        this.vuePrincipale.afficherVue(GUI.VUE_CREATION_EVT);
     }
 }

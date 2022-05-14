@@ -1,4 +1,4 @@
-package fr.uga.iut2.genconf.vue;
+package fr.uga.iut2.genevent.vue;
 
 import java.time.LocalDate;
 import java.util.Set;
@@ -7,7 +7,7 @@ import java.util.Set;
 public abstract class IHM {
     /**
      * Classe conteneur pour les informations saisies à propos d'un
-     * {@link fr.uga.iut2.genconf.modele.Utilisateur}.
+     * {@link fr.uga.iut2.genevent.modele.Utilisateur}.
      *
      * <ul>
      * <li>Tous les attributs sont `public` par commodité d'accès.</li>
@@ -27,21 +27,21 @@ public abstract class IHM {
     }
 
     /**
-     * Classe conteneur pour les informations saisies pour une nouvelle
-     * {@link fr.uga.iut2.genconf.modele.Conference}.
+     * Classe conteneur pour les informations saisies pour un nouvel
+     * {@link fr.uga.iut2.genevent.modele.Evenement}.
      *
      * <ul>
      * <li>Tous les attributs sont `public` par commodité d'accès.</li>
      * <li>Tous les attributs sont `final` pour ne pas être modifiables.</li>
      * </ul>
      */
-    public static class InfosNouvelleConference {
+    public static class InfosNouvelEvenement {
         public final String nom;
         public final LocalDate dateDebut;
         public final LocalDate dateFin;
         public final InfosUtilisateur admin;
 
-        public InfosNouvelleConference(final String nom, final LocalDate dateDebut, final LocalDate dateFin, final InfosUtilisateur admin) {
+        public InfosNouvelEvenement(final String nom, final LocalDate dateDebut, final LocalDate dateFin, final InfosUtilisateur admin) {
             assert !dateDebut.isAfter(dateFin);
             this.nom = nom;
             this.dateDebut = dateDebut;
@@ -71,18 +71,18 @@ public abstract class IHM {
 
     /**
      * Récupère les informations à propos d'un
-     * {@link fr.uga.iut2.genconf.modele.Utilisateur}.
+     * {@link fr.uga.iut2.genevent.modele.Utilisateur}.
      *
      */
     public abstract void saisirUtilisateur();
 
     /**
-     * Récupère les informations nécessaires à la création d'une nouvelle
-     * {@link fr.uga.iut2.genconf.modele.Conference}.
+     * Récupère les informations nécessaires à la création d'un nouvel
+     * {@link fr.uga.iut2.genevent.modele.Evenement}.
      *
-     * @param nomsExistants L'ensemble des noms de conférences qui ne sont plus
+     * @param nomsExistants L'ensemble des noms d'évenements qui ne sont plus
      *     disponibles.
      *
      */
-    public abstract void saisirNouvelleConference(final Set<String> nomsExistants);
+    public abstract void saisirNouvelEvenement(final Set<String> nomsExistants);
 }

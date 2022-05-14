@@ -1,4 +1,4 @@
-package fr.uga.iut2.genconf.vue;
+package fr.uga.iut2.genevent.vue;
 
 import java.awt.CardLayout;
 import javax.swing.JPanel;
@@ -51,34 +51,34 @@ public class VuePrincipale extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        creationEvenementMenuItem = new javax.swing.JMenuItem();
+        creationUtilisateurMenuItem = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         jMenuItem4 = new javax.swing.JMenuItem();
 
         jMenuItem2.setText("jMenuItem2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("GenConf");
+        setTitle("GenEvent");
         getContentPane().setLayout(new java.awt.CardLayout());
 
         jMenu1.setText("Gestion");
 
-        jMenuItem1.setText("Créer une conférence");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        creationEvenementMenuItem.setText("Créer un évènement");
+        creationEvenementMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                actionMenuCreationConference(evt);
+                actionMenuCreationEvenement(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        jMenu1.add(creationEvenementMenuItem);
 
-        jMenuItem3.setText("Créer un utilisateur");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        creationUtilisateurMenuItem.setText("Créer un utilisateur");
+        creationUtilisateurMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 actionMenuCreationUtilisateur(evt);
             }
         });
-        jMenu1.add(jMenuItem3);
+        jMenu1.add(creationUtilisateurMenuItem);
         jMenu1.add(jSeparator2);
 
         jMenuItem4.setText("Quitter");
@@ -100,20 +100,20 @@ public class VuePrincipale extends javax.swing.JFrame {
         this.gui.actionCreerUtilisateur();
     }//GEN-LAST:event_actionMenuCreationUtilisateur
 
-    private void actionMenuCreationConference(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actionMenuCreationConference
-        this.gui.actionCreerConference();
-    }//GEN-LAST:event_actionMenuCreationConference
+    private void actionMenuCreationEvenement(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actionMenuCreationEvenement
+        this.gui.actionCreerEvenement();
+    }//GEN-LAST:event_actionMenuCreationEvenement
 
     private void actionMenuQuitter(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actionMenuQuitter
         this.gui.actionTerminer();
     }//GEN-LAST:event_actionMenuQuitter
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem creationEvenementMenuItem;
+    private javax.swing.JMenuItem creationUtilisateurMenuItem;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     // End of variables declaration//GEN-END:variables

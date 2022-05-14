@@ -1,6 +1,6 @@
-package fr.uga.iut2.genconf.vue;
+package fr.uga.iut2.genevent.vue;
 
-import fr.uga.iut2.genconf.controleur.Controleur;
+import fr.uga.iut2.genevent.controleur.Controleur;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.Collections;
@@ -47,7 +47,8 @@ public class CLI extends IHM {
 
         QUITTER(0, "Quitter"),
         CREER_UTILISATEUR(1, "Créer un nouvel utilisateur"),
-        CREER_CONFERENCE(2, "Créer une nouvelle conférence"),;
+        CREER_EVENEMENT(2, "Créer une nouvel évènement"),
+        ;
 
         private final int code;
         private final String description;
@@ -101,7 +102,7 @@ public class CLI extends IHM {
 //-----  Éléments du dialogue  -------------------------------------------------
 
     private Commande dialogueSaisirCommande() {
-        CLI.afficher("===== GenConf: Générateur Site Conférence =====");
+        CLI.afficher("===== GenEvent: Générateur Évènements =====");
         CLI.afficher(CLI.synopsisCommandes());
         CLI.afficher("===============================================");
         CLI.afficher("Saisir l'identifiant de l'action choisie :");
@@ -121,24 +122,24 @@ public class CLI extends IHM {
         return new InfosUtilisateur(email, nom, prenom);
     }
 
-    private InfosNouvelleConference dialogueSaisirNouvelleConference(final Set<String> nomsExistants) {
+    private InfosNouvelEvenement dialogueSaisirNouvelEvenement(final Set<String> nomsExistants) {
         String nom;
         LocalDate dateDebut, dateFin;
         InfosUtilisateur admin;
 
-        CLI.afficher("== Saisie d'une nouvelle conférence ==");
-        CLI.afficher("Saisir le nom de la conférence :");
+        CLI.afficher("== Saisie d'un nouvel évènement ==");
+        CLI.afficher("Saisir le nom de l'évènement :");
         nom = CLI.lireNom(nomsExistants, true);
         CLI.afficher("Date de début: ");
         dateDebut = CLI.lireDate();
         CLI.afficher("Date de fin: ");
         dateFin = CLI.lireDate(dateDebut);
 
-        CLI.afficher("Saisir les informations à propos de l'administra·teur/trice de la conférence.");
+        CLI.afficher("Saisir les informations à propos de l'administra·teur/trice de l'évènement.");
         CLI.afficher("Un·e nouvel·lle utilisa·teur/trice sera créé·e si nécessaire.");
         admin = this.dialogueSaisirUtilisateur();
 
-        return new InfosNouvelleConference(nom, dateDebut, dateFin, admin);
+        return new InfosNouvelEvenement(nom, dateDebut, dateFin, admin);
     }
 
 //-----  Implémentation des méthodes abstraites  -------------------------------
@@ -154,8 +155,8 @@ public class CLI extends IHM {
                 case CREER_UTILISATEUR:
                     this.controleur.saisirUtilisateur();
                     break;
-                case CREER_CONFERENCE:
-                    this.controleur.saisirConference();
+                case CREER_EVENEMENT:
+                    this.controleur.saisirEvenement();
                     break;
                 default:
                     assert false : "Commande inconnue.";
@@ -175,9 +176,9 @@ public class CLI extends IHM {
     }
 
     @Override
-    public void saisirNouvelleConference(final Set<String> nomsExistants) {
-        InfosNouvelleConference infos = dialogueSaisirNouvelleConference(nomsExistants);
-        controleur.creerConference(infos);
+    public void saisirNouvelEvenement(final Set<String> nomsExistants) {
+        InfosNouvelEvenement infos = dialogueSaisirNouvelEvenement(nomsExistants);
+        controleur.creerEvenement(infos);
     }
 
 //-----  Primitives d'affichage  -----------------------------------------------

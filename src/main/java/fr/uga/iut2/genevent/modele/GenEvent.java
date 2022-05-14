@@ -1,4 +1,4 @@
-package fr.uga.iut2.genconf.modele;
+package fr.uga.iut2.genevent.modele;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -6,15 +6,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class GenConf implements Serializable {
+public class GenEvent implements Serializable {
 
     private static final long serialVersionUID = 1L;  // nécessaire pour la sérialisation
     private final Map<String, Utilisateur> utilisateurs;  // association qualifiée par l'email
-    private final Map<String, Conference> conferences;  // association qualifiée par le nom
+    private final Map<String, Evenement> evenements;  // association qualifiée par le nom
 
-    public GenConf() {
+    public GenEvent() {
         this.utilisateurs = new HashMap<>();
-        this.conferences = new HashMap<>();
+        this.evenements = new HashMap<>();
     }
 
     public boolean ajouteUtilisateur(String email, String nom, String prenom) {
@@ -26,16 +26,16 @@ public class GenConf implements Serializable {
         }
     }
 
-    public Map<String, Conference> getConferences() {
-        return this.conferences;
+    public Map<String, Evenement> getEvenements() {
+        return this.evenements;
     }
 
-    public void nouvelleConference(String nom, LocalDate dateDebut, LocalDate dateFin, String adminEmail) {
-        assert !this.conferences.containsKey(nom);
+    public void nouvelEvenement(String nom, LocalDate dateDebut, LocalDate dateFin, String adminEmail) {
+        assert !this.evenements.containsKey(nom);
         assert this.utilisateurs.containsKey(adminEmail);
         Utilisateur admin = this.utilisateurs.get(adminEmail);
-        Conference conf = Conference.initialiseConference(this, nom, dateDebut, dateFin, admin);
-        this.conferences.put(nom, conf);
+        Evenement evt = Evenement.initialiseEvenement(this, nom, dateDebut, dateFin, admin);
+        this.evenements.put(nom, evt);
     }
 
 }

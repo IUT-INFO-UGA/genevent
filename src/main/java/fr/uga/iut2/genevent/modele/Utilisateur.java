@@ -1,4 +1,4 @@
-package fr.uga.iut2.genconf.modele;
+package fr.uga.iut2.genevent.modele;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -12,14 +12,14 @@ public class Utilisateur implements Serializable {
     private final String email;
     private String nom;
     private String prenom;
-    private final Map<String, Conference> conferencesAdministrees;  // association qualifiée par le nom
+    private final Map<String, Evenement> evenementsAdministres;  // association qualifiée par le nom
 
     public Utilisateur(String email, String nom, String prenom) {
         assert EmailValidator.getInstance(false, false).isValid(email);
         this.email = email;
         this.nom = nom;
         this.prenom = prenom;
-        this.conferencesAdministrees = new HashMap<>();
+        this.evenementsAdministres = new HashMap<>();
     }
 
     public String getEmail() {
@@ -42,8 +42,8 @@ public class Utilisateur implements Serializable {
         this.prenom = prenom;
     }
 
-    public void ajouteConferenceAdministree(Conference conf) {
-        assert !this.conferencesAdministrees.containsKey(conf.getNom());
-        this.conferencesAdministrees.put(conf.getNom(), conf);
+    public void ajouteEvenementAdministre(Evenement evt) {
+        assert !this.evenementsAdministres.containsKey(evt.getNom());
+        this.evenementsAdministres.put(evt.getNom(), evt);
     }
 }

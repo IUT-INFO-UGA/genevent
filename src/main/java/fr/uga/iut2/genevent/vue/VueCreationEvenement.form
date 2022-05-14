@@ -37,7 +37,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="saisieAdminPanel" alignment="1" max="32767" attributes="0"/>
-                  <Component id="jPanel1" alignment="1" max="32767" attributes="0"/>
+                  <Component id="saisieEvenementPanel" alignment="1" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       <Component id="annulerButton" min="-2" max="-2" attributes="0"/>
@@ -59,7 +59,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+              <Component id="saisieEvenementPanel" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="saisieAdminPanel" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
@@ -73,11 +73,11 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="javax.swing.JPanel" name="jPanel1">
+    <Container class="javax.swing.JPanel" name="saisieEvenementPanel">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder title="Conf&#xe9;rence"/>
+            <TitledBorder title="&#xc9;v&#xe8;nement"/>
           </Border>
         </Property>
       </Properties>
@@ -102,9 +102,9 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
                                   <Component id="nbJours" min="-2" pref="54" max="-2" attributes="0"/>
-                                  <EmptySpace min="0" pref="240" max="32767" attributes="0"/>
+                                  <EmptySpace min="0" pref="247" max="32767" attributes="0"/>
                               </Group>
-                              <Component id="nomConference" alignment="0" max="32767" attributes="0"/>
+                              <Component id="nomEvenement" alignment="0" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -117,7 +117,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="nomConference" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="nomEvenement" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -137,12 +137,12 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Nom de la conf&#xe9;rence :"/>
+            <Property name="text" type="java.lang.String" value="Nom de l&apos;&#xe9;v&#xe8;nement&#xa0;:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="nomConference">
+        <Component class="javax.swing.JTextField" name="nomEvenement">
           <Events>
-            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="verificationConference"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="verificationEvenement"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
@@ -274,7 +274,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel7">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Cr&#xe9;er une conf&#xe9;rence"/>
+        <Property name="text" type="java.lang.String" value="Cr&#xe9;er un &#xe9;v&#xe8;nement"/>
       </Properties>
     </Component>
   </SubComponents>

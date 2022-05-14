@@ -1,18 +1,18 @@
-package fr.uga.iut2.genconf.controleur;
+package fr.uga.iut2.genevent.controleur;
 
-import fr.uga.iut2.genconf.modele.GenConf;
-import fr.uga.iut2.genconf.vue.CLI;
-import fr.uga.iut2.genconf.vue.GUI;
-import fr.uga.iut2.genconf.vue.IHM;
+import fr.uga.iut2.genevent.modele.GenEvent;
+import fr.uga.iut2.genevent.vue.CLI;
+import fr.uga.iut2.genevent.vue.GUI;
+import fr.uga.iut2.genevent.vue.IHM;
 
 
 public class Controleur {
 
-    private final GenConf genconf;
+    private final GenEvent genevent;
     private final IHM ihm;
 
-    public Controleur(GenConf genconf) {
-        this.genconf = genconf;
+    public Controleur(GenEvent genevent) {
+        this.genevent = genevent;
 
         // choisir la classe CLI ou GUI
 //        this.ihm = new CLI(this);
@@ -28,7 +28,7 @@ public class Controleur {
     }
 
     public void creerUtilisateur(IHM.InfosUtilisateur infos) {
-        boolean nouvelUtilisateur = this.genconf.ajouteUtilisateur(
+        boolean nouvelUtilisateur = this.genevent.ajouteUtilisateur(
                 infos.email,
                 infos.nom,
                 infos.prenom
@@ -40,19 +40,19 @@ public class Controleur {
             );
         } else {
             this.ihm.informerUtilisateur(
-                    "L'utilisa·teur/trice " + infos.email + " est déjà connu·e de GenConf.",
+                    "L'utilisa·teur/trice " + infos.email + " est déjà connu·e de GenEvent.",
                     false
             );
         }
     }
 
-    public void saisirConference() {
-        this.ihm.saisirNouvelleConference(this.genconf.getConferences().keySet());
+    public void saisirEvenement() {
+        this.ihm.saisirNouvelEvenement(this.genevent.getEvenements().keySet());
     }
 
-    public void creerConference(IHM.InfosNouvelleConference infos) {
+    public void creerEvenement(IHM.InfosNouvelEvenement infos) {
         // création d'un Utilisateur si nécessaire
-        boolean nouvelUtilisateur = this.genconf.ajouteUtilisateur(
+        boolean nouvelUtilisateur = this.genevent.ajouteUtilisateur(
                 infos.admin.email,
                 infos.admin.nom,
                 infos.admin.prenom
@@ -63,14 +63,14 @@ public class Controleur {
             );
         }
 
-        this.genconf.nouvelleConference(
+        this.genevent.nouvelEvenement(
                 infos.nom,
                 infos.dateDebut,
                 infos.dateFin,
                 infos.admin.email
         );
         this.ihm.informerUtilisateur(
-                "Nouvelle conférence : " + infos.nom + ", administrée par " + infos.admin.email,
+                "Nouvel évènement : " + infos.nom + ", administré par " + infos.admin.email,
                 true
         );
     }

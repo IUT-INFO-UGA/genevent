@@ -1,4 +1,4 @@
-package fr.uga.iut2.genconf.vue;
+package fr.uga.iut2.genevent.vue;
 
 import java.awt.Color;
 import java.time.Instant;
@@ -12,19 +12,19 @@ import javax.swing.JSpinner;
 import org.apache.commons.validator.routines.EmailValidator;
 
 
-public class VueCreationConference extends javax.swing.JPanel {
+public class VueCreationEvenement extends javax.swing.JPanel {
     private final GUI gui;
     private Set<String> nomsExistants;
-    private boolean valideAdmin, valideConf;
+    private boolean valideAdmin, valideEvt;
 
     /**
-     * Creates new form VueCreationConference
+     * Creates new form VueCreationEvenement
      */
-    public VueCreationConference(GUI gui) {
+    public VueCreationEvenement(GUI gui) {
         this.gui = gui;
         this.nomsExistants = new HashSet<>();
         this.valideAdmin = false;
-        this.valideConf = false;
+        this.valideEvt = false;
 
         // création de l'interface générée
         this.initComponents();
@@ -55,9 +55,9 @@ public class VueCreationConference extends javax.swing.JPanel {
     private void initComponents() {
 
         jComboBox1 = new javax.swing.JComboBox<>();
-        jPanel1 = new javax.swing.JPanel();
+        saisieEvenementPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        nomConference = new javax.swing.JTextField();
+        nomEvenement = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         nbJours = new javax.swing.JSpinner();
@@ -75,13 +75,13 @@ public class VueCreationConference extends javax.swing.JPanel {
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Conférence"));
+        saisieEvenementPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Évènement"));
 
-        jLabel1.setText("Nom de la conférence :");
+        jLabel1.setText("Nom de l'évènement :");
 
-        nomConference.addKeyListener(new java.awt.event.KeyAdapter() {
+        nomEvenement.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                verificationConference(evt);
+                verificationEvenement(evt);
             }
         });
 
@@ -93,41 +93,41 @@ public class VueCreationConference extends javax.swing.JPanel {
 
         dateDebut.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), new java.util.Date(), null, java.util.Calendar.DAY_OF_MONTH));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout saisieEvenementPanelLayout = new javax.swing.GroupLayout(saisieEvenementPanel);
+        saisieEvenementPanel.setLayout(saisieEvenementPanelLayout);
+        saisieEvenementPanelLayout.setHorizontalGroup(
+            saisieEvenementPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(saisieEvenementPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(saisieEvenementPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3)
                     .addComponent(jLabel2)
                     .addComponent(jLabel1))
                 .addGap(12, 12, 12)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(saisieEvenementPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(saisieEvenementPanelLayout.createSequentialGroup()
                         .addComponent(dateDebut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(saisieEvenementPanelLayout.createSequentialGroup()
+                        .addGroup(saisieEvenementPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(saisieEvenementPanelLayout.createSequentialGroup()
                                 .addComponent(nbJours, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 240, Short.MAX_VALUE))
-                            .addComponent(nomConference))
+                                .addGap(0, 247, Short.MAX_VALUE))
+                            .addComponent(nomEvenement))
                         .addContainerGap())))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        saisieEvenementPanelLayout.setVerticalGroup(
+            saisieEvenementPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(saisieEvenementPanelLayout.createSequentialGroup()
+                .addGroup(saisieEvenementPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(nomConference, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(nomEvenement, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(saisieEvenementPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(dateDebut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(saisieEvenementPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nbJours, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addGap(0, 10, Short.MAX_VALUE))
@@ -208,7 +208,7 @@ public class VueCreationConference extends javax.swing.JPanel {
             }
         });
 
-        jLabel7.setText("Créer une conférence");
+        jLabel7.setText("Créer un évènement");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -218,7 +218,7 @@ public class VueCreationConference extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(saisieAdminPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(saisieEvenementPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(annulerButton)
@@ -235,7 +235,7 @@ public class VueCreationConference extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(saisieEvenementPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(saisieAdminPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -244,8 +244,6 @@ public class VueCreationConference extends javax.swing.JPanel {
                     .addComponent(creerButton))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        saisieAdminPanel.getAccessibleContext().setAccessibleDescription("");
     }// </editor-fold>//GEN-END:initComponents
 
     private void creerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_creerButtonActionPerformed
@@ -262,15 +260,15 @@ public class VueCreationConference extends javax.swing.JPanel {
                                       .toLocalDate();
          LocalDate dateFin = dateDebut.plusDays((Integer) nbJours.getValue() - 1);
 
-         // Infos sur la nouvelle conference
-         IHM.InfosNouvelleConference nlleConf = new IHM.InfosNouvelleConference(
-                 this.nomConference.getText(),
+         // Infos sur le nouvel évènement
+         IHM.InfosNouvelEvenement nlleEvt = new IHM.InfosNouvelEvenement(
+                 this.nomEvenement.getText(),
                  dateDebut,
                  dateFin,
                  admin
          );
 
-         this.gui.creerConference(Optional.of(nlleConf));
+         this.gui.creerEvenement(Optional.of(nlleEvt));
     }//GEN-LAST:event_creerButtonActionPerformed
 
     private void verificationAdmin(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_verificationAdmin
@@ -287,17 +285,17 @@ public class VueCreationConference extends javax.swing.JPanel {
                  && (nom != null) && (nom.length() > 0)
                  && (prenom != null) && (prenom.length() > 0);
 
-        this.creerButton.setEnabled(this.valideAdmin && this.valideConf);
+        this.creerButton.setEnabled(this.valideAdmin && this.valideEvt);
     }//GEN-LAST:event_verificationAdmin
 
-    private void verificationConference(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_verificationConference
-         this.valideConf = !nomsExistants.contains(nomConference.getText());
-         this.nomConference.setForeground(this.valideConf ? Color.black : Color.red);
-         this.creerButton.setEnabled(this.valideAdmin && this.valideConf);
-    }//GEN-LAST:event_verificationConference
+    private void verificationEvenement(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_verificationEvenement
+         this.valideEvt = !nomsExistants.contains(nomEvenement.getText());
+         this.nomEvenement.setForeground(this.valideEvt ? Color.black : Color.red);
+         this.creerButton.setEnabled(this.valideAdmin && this.valideEvt);
+    }//GEN-LAST:event_verificationEvenement
 
     private void annulerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_annulerButtonActionPerformed
-        this.gui.creerConference(Optional.empty());
+        this.gui.creerEvenement(Optional.empty());
     }//GEN-LAST:event_annulerButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -315,9 +313,9 @@ public class VueCreationConference extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JSpinner nbJours;
-    private javax.swing.JTextField nomConference;
+    private javax.swing.JTextField nomEvenement;
     private javax.swing.JPanel saisieAdminPanel;
+    private javax.swing.JPanel saisieEvenementPanel;
     // End of variables declaration//GEN-END:variables
 }

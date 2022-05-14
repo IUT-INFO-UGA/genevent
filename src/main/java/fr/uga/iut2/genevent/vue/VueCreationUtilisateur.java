@@ -1,4 +1,4 @@
-package fr.uga.iut2.genconf.vue;
+package fr.uga.iut2.genevent.vue;
 
 import java.awt.Color;
 import java.util.Optional;
