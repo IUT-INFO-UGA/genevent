@@ -1,16 +1,16 @@
-package fr.uga.iut2.genevent.vue;
+package fr.uga.iut2.genevent.vue.swing_gui;
 
 import java.awt.CardLayout;
 import javax.swing.JPanel;
 
 
 public class VuePrincipale extends javax.swing.JFrame {
-    private final GUI gui;
+    private final SwingGUI gui;
 
     /**
      * Creates new form VuePrincipale
      */
-    public VuePrincipale(GUI gui) {
+    public VuePrincipale(SwingGUI gui) {
         this.gui = gui;
 
         // création de l'interface générée

@@ -1,17 +1,18 @@
-package fr.uga.iut2.genevent.vue;
+package fr.uga.iut2.genevent.vue.swing_gui;
 
+import fr.uga.iut2.genevent.vue.IHM;
 import java.awt.Color;
 import java.util.Optional;
 import org.apache.commons.validator.routines.EmailValidator;
 
 
 public class VueCreationUtilisateur extends javax.swing.JPanel {
-    private final GUI gui;
+    private final SwingGUI gui;
 
     /**
      * Creates new form VueCreationUtilisateur
      */
-    public VueCreationUtilisateur(GUI gui) {
+    public VueCreationUtilisateur(SwingGUI gui) {
         this.gui = gui;
 
         // création de l'interface générée

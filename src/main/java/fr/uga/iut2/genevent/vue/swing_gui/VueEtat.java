@@ -1,14 +1,14 @@
-package fr.uga.iut2.genevent.vue;
+package fr.uga.iut2.genevent.vue.swing_gui;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
 public class VueEtat extends JPanel {
-    private final GUI gui;
+    private final SwingGUI gui;
     private final JLabel msgEtat;
 
-    public VueEtat(GUI gui) {
+    public VueEtat(SwingGUI gui) {
         this.gui = gui;
 
         this.msgEtat = new JLabel("");

@@ -1,12 +1,13 @@
-package fr.uga.iut2.genevent.vue;
+package fr.uga.iut2.genevent.vue.swing_gui;
 
 import fr.uga.iut2.genevent.controleur.Controleur;
+import fr.uga.iut2.genevent.vue.IHM;
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 
 
-public class GUI extends IHM {
+public class SwingGUI extends IHM {
     private final Controleur controleur;
     private final CountDownLatch eolBarrier;
 
@@ -20,10 +21,10 @@ public class GUI extends IHM {
     private static final String VUE_CREATION_EVT = "creation_evt";
     private static final String VUE_CREATION_USER = "creation_user";
 
-    public GUI(Controleur controleur) {
+    public SwingGUI(Controleur controleur) {
         this.controleur = controleur;
 
-        // initialisé à 1 pour attendre l'évènement correspondant à la fin de vie de GUI
+        // initialisé à 1 pour attendre l'évènement correspondant à la fin de vie de SwingGUI
         this.eolBarrier = new CountDownLatch(1);
 
         // création de l'interface
@@ -32,10 +33,10 @@ public class GUI extends IHM {
         this.vueCreationUser = new VueCreationUtilisateur(this);
 
         this.vuePrincipale = new VuePrincipale(this);
-        this.vuePrincipale.ajouterVue(this.vueEtat, GUI.VUE_ETAT);
-        this.vuePrincipale.ajouterVue(this.vueCreationEvt, GUI.VUE_CREATION_EVT);
-        this.vuePrincipale.ajouterVue(this.vueCreationUser, GUI.VUE_CREATION_USER);
-        this.vuePrincipale.afficherVue(GUI.VUE_ETAT);
+        this.vuePrincipale.ajouterVue(this.vueEtat, SwingGUI.VUE_ETAT);
+        this.vuePrincipale.ajouterVue(this.vueCreationEvt, SwingGUI.VUE_CREATION_EVT);
+        this.vuePrincipale.ajouterVue(this.vueCreationUser, SwingGUI.VUE_CREATION_USER);
+        this.vuePrincipale.afficherVue(SwingGUI.VUE_ETAT);
     }
 
 //-----  Éléments du dialogue  -------------------------------------------------
@@ -51,12 +52,12 @@ public class GUI extends IHM {
     protected void actionTerminer() {
         this.vuePrincipale.fermer();
 
-        // On notifie la fin de vie de GUI pour rendre la main au contrôleur
+        // On notifie la fin de vie de SwingGUI pour rendre la main au contrôleur
         this.eolBarrier.countDown();
     }
 
     protected void creerUtilisateur(Optional<InfosUtilisateur> nouvelUtilisateur) {
-        this.vuePrincipale.afficherVue(GUI.VUE_ETAT);
+        this.vuePrincipale.afficherVue(SwingGUI.VUE_ETAT);
         nouvelUtilisateur.ifPresentOrElse(
                 infos -> this.controleur.creerUtilisateur(infos),
                 () -> this.vueEtat.setEtat("")
@@ -64,7 +65,7 @@ public class GUI extends IHM {
     }
 
     protected void creerEvenement(Optional<InfosNouvelEvenement> nouvelEvt) {
-        this.vuePrincipale.afficherVue(GUI.VUE_ETAT);
+        this.vuePrincipale.afficherVue(SwingGUI.VUE_ETAT);
         nouvelEvt.ifPresentOrElse(
                 infos -> this.controleur.creerEvenement(infos),
                 () -> this.vueEtat.setEtat("")
@@ -77,7 +78,7 @@ public class GUI extends IHM {
     public void demarrerInteraction() {
         this.vuePrincipale.afficher();
 
-        // On attend que GUI ait fini avant de rendre la main au contrôleur
+        // On attend que SwingGUI ait fini avant de rendre la main au contrôleur
         // (c'est à dire au moment de l'appel de `actionTerminer`)
         try {
             this.eolBarrier.await();
@@ -95,12 +96,12 @@ public class GUI extends IHM {
 
     @Override
     public void saisirUtilisateur() {
-        this.vuePrincipale.afficherVue(GUI.VUE_CREATION_USER);
+        this.vuePrincipale.afficherVue(SwingGUI.VUE_CREATION_USER);
     }
 
     @Override
     public void saisirNouvelEvenement(final Set<String> nomsExistants) {
         this.vueCreationEvt.setNomsExistants(nomsExistants);
-        this.vuePrincipale.afficherVue(GUI.VUE_CREATION_EVT);
+        this.vuePrincipale.afficherVue(SwingGUI.VUE_CREATION_EVT);
     }
 }

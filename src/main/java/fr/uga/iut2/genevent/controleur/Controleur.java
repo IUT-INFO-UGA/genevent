@@ -2,7 +2,7 @@ package fr.uga.iut2.genevent.controleur;
 
 import fr.uga.iut2.genevent.modele.GenEvent;
 import fr.uga.iut2.genevent.vue.CLI;
-import fr.uga.iut2.genevent.vue.GUI;
+import fr.uga.iut2.genevent.vue.swing_gui.SwingGUI;
 import fr.uga.iut2.genevent.vue.IHM;
 
 
@@ -14,9 +14,9 @@ public class Controleur {
     public Controleur(GenEvent genevent) {
         this.genevent = genevent;
 
-        // choisir la classe CLI ou GUI
+        // choisir la classe CLI ou SwingGUI
 //        this.ihm = new CLI(this);
-        this.ihm = new GUI(this);
+        this.ihm = new SwingGUI(this);
     }
 
     public void demarrer() {

@@ -1,5 +1,6 @@
-package fr.uga.iut2.genevent.vue;
+package fr.uga.iut2.genevent.vue.swing_gui;
 
+import fr.uga.iut2.genevent.vue.IHM;
 import java.awt.Color;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -13,14 +14,14 @@ import org.apache.commons.validator.routines.EmailValidator;
 
 
 public class VueCreationEvenement extends javax.swing.JPanel {
-    private final GUI gui;
+    private final SwingGUI gui;
     private Set<String> nomsExistants;
     private boolean valideAdmin, valideEvt;
 
     /**
      * Creates new form VueCreationEvenement
      */
-    public VueCreationEvenement(GUI gui) {
+    public VueCreationEvenement(SwingGUI gui) {
         this.gui = gui;
         this.nomsExistants = new HashSet<>();
         this.valideAdmin = false;
