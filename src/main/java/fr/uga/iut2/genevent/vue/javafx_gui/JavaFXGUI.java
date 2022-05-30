@@ -43,7 +43,7 @@ public class JavaFXGUI extends IHM {
             startupBarrier.await();
         }
         catch (InterruptedException ex) {
-            throw new RuntimeException("Unexepected exception: ", ex);
+            throw new RuntimeException("Unexpected exception: ", ex);
         }
 
         // load views from FXML definitions
@@ -56,11 +56,9 @@ public class JavaFXGUI extends IHM {
         }
     }
 
-    private void startJavaFX() {
+    private void start(Stage primaryStage) {
         Scene scene = new Scene(this.mainView);
-        Stage primaryStage = new Stage();
 
-        primaryStage.setOnCloseRequest((WindowEvent t) -> this.exitAction());
         primaryStage.setTitle("GenEvent");
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -99,7 +97,11 @@ public class JavaFXGUI extends IHM {
 
     @Override
     public void demarrerInteraction() {
-        Platform.runLater(this::startJavaFX);
+        Platform.runLater(() -> {
+            Stage primaryStage = new Stage();
+            primaryStage.setOnCloseRequest((WindowEvent t) -> this.exitAction());
+            this.start(primaryStage);
+        });
 
         // block until the GUI reached end-of-life
         try {
