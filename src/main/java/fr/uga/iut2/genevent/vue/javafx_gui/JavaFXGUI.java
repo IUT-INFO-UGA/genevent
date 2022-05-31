@@ -7,9 +7,10 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import javafx.application.Platform;
-import javafx.scene.Node;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -27,9 +28,6 @@ public class JavaFXGUI extends IHM {
     private final Controleur controleur;
     private final CountDownLatch eolBarrier;
 
-    private final MainView mainView;
-    private final NewUserView newUserView;
-
     public JavaFXGUI(Controleur controleur) {
         this.controleur = controleur;
 
@@ -45,33 +43,16 @@ public class JavaFXGUI extends IHM {
         catch (InterruptedException ex) {
             throw new RuntimeException("Unexpected exception: ", ex);
         }
-
-        // load views from FXML definitions
-        try {
-            this.mainView = new MainView(this);
-            this.newUserView = new NewUserView(this);
-        }
-        catch (IOException ex) {
-            throw new RuntimeException(ex);
-        }
     }
 
-    private void start(Stage primaryStage) {
-        Scene scene = new Scene(this.mainView);
+    private void start(Stage primaryStage) throws IOException {
+        FXMLLoader mainViewLoader = new FXMLLoader(getClass().getResource("main-view.fxml"));
+        mainViewLoader.setController(new MainViewController(this));
+        Scene mainScene = new Scene(mainViewLoader.load());
 
         primaryStage.setTitle("GenEvent");
-        primaryStage.setScene(scene);
+        primaryStage.setScene(mainScene);
         primaryStage.show();
-    }
-
-    private void enableSecondaryView(Node view) {
-        assert view != this.mainView;
-        this.mainView.enableSecondaryView(view);
-    }
-
-    private void disableSecondaryView(Node view) {
-        assert view != this.mainView;
-        this.mainView.disableSecondaryView(view);
     }
 
 //-----  Éléments du dialogue  -------------------------------------------------
@@ -87,10 +68,9 @@ public class JavaFXGUI extends IHM {
 
     protected void createNewUser(Optional<InfosUtilisateur> newUser) {
         newUser.ifPresentOrElse(
-                data -> this.controleur.creerUtilisateur(data),
+                this.controleur::creerUtilisateur,
                 () -> {}
         );
-        this.disableSecondaryView(this.newUserView);
     }
 
 //-----  Implémentation des méthodes abstraites  -------------------------------
@@ -100,7 +80,12 @@ public class JavaFXGUI extends IHM {
         Platform.runLater(() -> {
             Stage primaryStage = new Stage();
             primaryStage.setOnCloseRequest((WindowEvent t) -> this.exitAction());
-            this.start(primaryStage);
+            try {
+                this.start(primaryStage);
+            }
+            catch (IOException exc) {
+                throw new RuntimeException(exc);
+            }
         });
 
         // block until the GUI reached end-of-life
@@ -125,7 +110,19 @@ public class JavaFXGUI extends IHM {
 
     @Override
     public void saisirUtilisateur() {
-        this.enableSecondaryView(this.newUserView);
+        try {
+            FXMLLoader newUserViewLoader = new FXMLLoader(getClass().getResource("new-user-view.fxml"));
+            newUserViewLoader.setController(new NewUserViewController(this));
+            Scene newUserScene = new Scene(newUserViewLoader.load());
+
+            Stage newUserWindow = new Stage();
+            newUserWindow.setTitle("Créer un·e utilisa·teur/trice");
+            newUserWindow.initModality(Modality.APPLICATION_MODAL);
+            newUserWindow.setScene(newUserScene);
+            newUserWindow.showAndWait();
+        } catch (IOException exc) {
+            throw new RuntimeException(exc);
+        }
     }
 
     @Override

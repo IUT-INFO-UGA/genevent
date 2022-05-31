@@ -1,47 +1,28 @@
 package fr.uga.iut2.genevent.vue.javafx_gui;
 
 import fr.uga.iut2.genevent.vue.IHM;
-import java.io.IOException;
 import java.util.Optional;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TitledPane;
 import org.apache.commons.validator.routines.EmailValidator;
 
-public class NewUserView extends TitledPane {
+public class NewUserViewController {
 
     @FXML private TextField forenameTextField;
     @FXML private TextField surnameTextField;
     @FXML private TextField emailTextField;
     @FXML private Button okButton;
+    @FXML private Button cancelButton;
 
     private final JavaFXGUI gui;
 
-    public NewUserView(JavaFXGUI gui) throws IOException {
-        // load definition from FXML
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("new-user-view.fxml"));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
-        fxmlLoader.load();
-
+    public NewUserViewController(JavaFXGUI gui) {
         this.gui = gui;
     }
 
-    private void reset() {
-        this.forenameTextField.setStyle(null);
-        this.surnameTextField.setStyle(null);
-        this.emailTextField.setStyle(null);
-
-        this.forenameTextField.setText("");
-        this.surnameTextField.setText("");
-        this.emailTextField.setText("");
-
-        this.okButton.setDisable(true);
-    }
-
-    @FXML void validateTextFields() {
+    @FXML
+    void validateTextFields() {
         boolean isValid = true;
 
         isValid &= validateNonEmptyTextField(this.forenameTextField);
@@ -78,18 +59,18 @@ public class NewUserView extends TitledPane {
 
     @FXML
     private void okButtonAction() {
-       IHM.InfosUtilisateur data = new IHM.InfosUtilisateur(
-               this.emailTextField.getText().strip().toLowerCase(),
-               this.surnameTextField.getText().strip(),
-               this.forenameTextField.getText().strip()
-       );
-       this.gui.createNewUser(Optional.of(data));
-       this.reset();
+        IHM.InfosUtilisateur data = new IHM.InfosUtilisateur(
+                this.emailTextField.getText().strip().toLowerCase(),
+                this.surnameTextField.getText().strip(),
+                this.forenameTextField.getText().strip()
+        );
+        this.gui.createNewUser(Optional.of(data));
+        this.okButton.getScene().getWindow().hide();
     }
 
     @FXML
     private void cancelButtonAction() {
         this.gui.createNewUser(Optional.empty());
-        this.reset();
+        this.cancelButton.getScene().getWindow().hide();
     }
 }

@@ -421,8 +421,7 @@ public class CLI extends IHM {
      */
     private static LocalDate lireDate(final Optional<LocalDate> apres) {
         CLI.afficher("Saisir une date au format ISO-8601 :");
-        apres.ifPresent(date -> CLI.afficher("La date doit être ultérieure à " + date.toString())
-        );
+        apres.ifPresent(date -> CLI.afficher("La date doit être ultérieure à " + date.toString()));
         return CLI.lireAvecErreurs(token -> CLI.parseDate(token, apres));
     }
 
