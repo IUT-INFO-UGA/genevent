@@ -345,7 +345,7 @@ public class CLI extends IHM {
      * @return Le nom saisi par l'utilisa·teur/trice.
      */
     private static String lireNom() {
-        return CLI.lireNom(Collections.EMPTY_SET, true);
+        return CLI.lireNom(Collections.emptySet(), true);
     }
 
     /**
