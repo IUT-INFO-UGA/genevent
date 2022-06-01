@@ -4,7 +4,6 @@ import fr.uga.iut2.genevent.modele.GenEvent;
 import fr.uga.iut2.genevent.vue.IHM;
 import fr.uga.iut2.genevent.vue.CLI;
 import fr.uga.iut2.genevent.vue.JavaFXGUI;
-import fr.uga.iut2.genevent.vue.swing_gui.SwingGUI;
 
 
 public class Controleur {
@@ -15,9 +14,8 @@ public class Controleur {
     public Controleur(GenEvent genevent) {
         this.genevent = genevent;
 
-        // choisir la classe CLI, SwingGUI, ou JavaFXGUI
+        // choisir la classe CLI ou JavaFXGUI
 //        this.ihm = new CLI(this);
-//        this.ihm = new SwingGUI(this);
         this.ihm = new JavaFXGUI(this);
     }
 
