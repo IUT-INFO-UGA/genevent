@@ -1,10 +1,10 @@
 package fr.uga.iut2.genevent.controleur;
 
 import fr.uga.iut2.genevent.modele.GenEvent;
-import fr.uga.iut2.genevent.vue.CLI;
-import fr.uga.iut2.genevent.vue.swing_gui.SwingGUI;
 import fr.uga.iut2.genevent.vue.IHM;
-import fr.uga.iut2.genevent.vue.javafx_gui.JavaFXGUI;
+import fr.uga.iut2.genevent.vue.CLI;
+import fr.uga.iut2.genevent.vue.JavaFXGUI;
+import fr.uga.iut2.genevent.vue.swing_gui.SwingGUI;
 
 
 public class Controleur {
