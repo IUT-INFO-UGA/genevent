@@ -1,7 +1,6 @@
 package fr.uga.iut2.genevent.vue;
 
 import fr.uga.iut2.genevent.controleur.Controleur;
-import fr.uga.iut2.genevent.vue.IHM;
 import java.io.IOException;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
@@ -18,18 +17,23 @@ import javafx.stage.WindowEvent;
 import org.apache.commons.validator.routines.EmailValidator;
 
 
-// JavaFXGUI n'est pas une sous-classe de javafx.application.Application pour
-// pouvoir injecter le contrôleur.
-// En conséquent le démarrage de l'application diffère des exemples classiques
-// donnés par JavaFX.
-//
-// Le code de l'IHM démarre le thread JavaFX dans son constructeur et lance
-// l'interface graphique dans la méthode demarrerInteraction.
-
+/**
+ * La classe JavaFXGUI est responsable des interactions avec
+ * l'utilisa·teur/trice en mode graphique.
+ * <p>
+ * Attention, pour pouvoir faire le lien avec le
+ * {@link fr.uga.iut2.genevent.controleur.Controleur}, JavaFXGUI n'est pas une
+ * sous-classe de {@link javafx.application.Application} !
+ * <p>
+ * Le démarrage de l'application diffère des exemples classiques trouvés dans
+ * la documentation de JavaFX : l'interface est démarrée à l'initiative du
+ * {@link fr.uga.iut2.genevent.controleur.Controleur} via l'appel de la méthode
+ * {@link #demarrerInteraction()}.
+ */
 public class JavaFXGUI extends IHM {
 
     private final Controleur controleur;
-    private final CountDownLatch eolBarrier;  // /!\ ne pas supprimer /!\: suivi de la durée de vie de l'interface
+    private final CountDownLatch eolBarrier;  // /!\ ne pas supprimer /!\ : suivi de la durée de vie de l'interface
 
     // éléments vue nouvel·le utilisa·teur/trice
     @FXML private TextField newUserForenameTextField;
@@ -44,6 +48,16 @@ public class JavaFXGUI extends IHM {
         this.eolBarrier = new CountDownLatch(1);  // /!\ ne pas supprimer /!\
     }
 
+    /**
+     * Point d'entrée principal pour le code de l'interface JavaFX.
+     *
+     * @param primaryStage stage principale de l'interface JavaFX, sur laquelle
+     *     définir des scenes.
+     *
+     * @throws IOException si le chargement de la vue FXML échoue.
+     *
+     * @see javafx.application.Application#start(Stage)
+     */
     private void start(Stage primaryStage) throws IOException {
         FXMLLoader mainViewLoader = new FXMLLoader(getClass().getResource("main-view.fxml"));
         mainViewLoader.setController(this);
@@ -57,7 +71,7 @@ public class JavaFXGUI extends IHM {
 //-----  Éléments du dialogue  -------------------------------------------------
 
     private void exitAction() {
-        // fermeture de l'interface JavaFX: on notifie sa fin de vie
+        // fermeture de l'interface JavaFX : on notifie sa fin de vie
         this.eolBarrier.countDown();
     }
 
