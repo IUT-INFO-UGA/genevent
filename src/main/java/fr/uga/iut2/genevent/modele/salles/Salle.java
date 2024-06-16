@@ -13,11 +13,27 @@ public class Salle {
         this.tables = new HashMap<>();
     }
 
+    public void addTable(Table table) {
+        tables.put(table.getId(), table);
+    }
+
     public long getNumero() {
         return numero;
     }
 
     public String getType() {
         return type;
+    }
+
+    public Table getTable(long id) {
+        return tables.get(id);
+    }
+
+    public void removeTable(long id) {
+        tables.remove(id);
+    }
+
+    public void removeTable(Table table) {
+        tables.remove(table.getId());
     }
 }

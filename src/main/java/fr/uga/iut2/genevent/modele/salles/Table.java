@@ -2,11 +2,15 @@ package fr.uga.iut2.genevent.modele.salles;
 
 public class Table {
 
+    // Attributs
+
     private final long id;
     private final String type;
     private final int nbPlaces;
     private final int taille;
     private final Salle salle;
+
+    // Constructeur
 
     public Table(long id, Salle salle, String type, int nbPlaces, int taille) {
         this.id = id;
@@ -15,6 +19,8 @@ public class Table {
         this.nbPlaces = nbPlaces;
         this.taille = taille;
     }
+
+    // Méthodes
 
     public long getId() {
         return id;
