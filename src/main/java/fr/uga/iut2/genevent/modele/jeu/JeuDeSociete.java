@@ -4,6 +4,8 @@ import java.util.Date;
 
 public class JeuDeSociete {
 
+    // Attributs
+
     private String nom;
     private String regles;
     private int nbJoueurs;
@@ -12,6 +14,8 @@ public class JeuDeSociete {
     private TailleTable tailleTable;
     private int dureePartie;
     private float prix;
+
+    // Constructeur
 
     public JeuDeSociete(String nom, String regles, int nbJoueurs, Date dateAchat, String type, TailleTable tailleTable, int dureePartie, float prix) {
         this.nom = nom;
@@ -23,6 +27,8 @@ public class JeuDeSociete {
         this.dureePartie = dureePartie;
         this.prix = prix;
     }
+
+    // Méthodes
 
     public String getNom() {
         return nom;
