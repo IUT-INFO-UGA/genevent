@@ -63,7 +63,7 @@
                               <Insets right="10.0" />
                            </HBox.margin>
                         </Label>
-                        <ChoiceBox prefWidth="150.0" />
+                        <ChoiceBox prefWidth="150.0" style="-fx-mark-color: #fc7536; -fx-background-color: #fff; -fx-border-radius: 5; -fx-background-radius: 5;"/>
                      </children></HBox>
                </children>
             </HBox>
@@ -101,28 +101,28 @@
                                  <VBox.margin>
                                     <Insets top="15.0" />
                                  </VBox.margin></Label>
-                              <TextField />
+                              <TextField style="-fx-background-color: #fff; -fx-border-color: #6b5ca5; -fx-background-radius: 5; -fx-border-radius: 5;"/>
                               <Label text="Date">
                                  <VBox.margin>
                                     <Insets top="5.0" />
                                  </VBox.margin></Label>
-                              <DatePicker />
+                              <DatePicker style="-fx-background-color: #fff; -fx-border-color: #6b5ca5; -fx-background-radius: 5; -fx-border-radius: 5;"/>
                               <Label text="Heure de début">
                                  <VBox.margin>
                                     <Insets top="5.0" />
                                  </VBox.margin></Label>
-                              <TextField />
+                              <TextField style="-fx-background-color: #fff; -fx-border-color: #6b5ca5; -fx-background-radius: 5; -fx-border-radius: 5;"/>
                               <Label layoutX="20.0" layoutY="163.0" text="Heure de fin">
                                  <VBox.margin>
                                     <Insets top="5.0" />
                                  </VBox.margin>
                               </Label>
-                              <TextField layoutX="20.0" layoutY="181.0" />
-                              <Button mnemonicParsing="false" prefWidth="200.0" text="Créer">
+                              <TextField layoutX="20.0" layoutY="181.0" style="-fx-background-color: #fff; -fx-border-color: #6b5ca5; -fx-background-radius: 5; -fx-border-radius: 5;"/>
+                              <Button mnemonicParsing="false" prefWidth="200.0" text="Créer" style="-fx-background-color: #fff; -fx-border-color: #69a197; -fx-background-radius: 5; -fx-border-radius: 5;">
                                  <VBox.margin>
                                     <Insets bottom="5.0" top="20.0" />
                                  </VBox.margin></Button>
-                              <Button layoutX="20.0" layoutY="276.0" mnemonicParsing="false" prefWidth="200.0" text="Ajouter à un év." />
+                              <Button layoutX="20.0" layoutY="276.0" mnemonicParsing="false" prefWidth="200.0" text="Ajouter à un év." style="-fx-background-color: #fff; -fx-border-color: #69a197; -fx-background-radius: 5; -fx-border-radius: 5;"/>
                            </children>
                            <padding>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
