@@ -1,9 +1,16 @@
 package fr.uga.iut2.genevent.controleur;
 
 import fr.uga.iut2.genevent.modele.GenEvent;
+import fr.uga.iut2.genevent.modele.membre.Membre;
+import fr.uga.iut2.genevent.modele.membre.MembreException;
+import fr.uga.iut2.genevent.modele.salles.Salle;
 import fr.uga.iut2.genevent.vue.IHM;
 import fr.uga.iut2.genevent.vue.CLI;
 import fr.uga.iut2.genevent.vue.JavaFXGUI;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 
 public class Controleur {
@@ -24,7 +31,7 @@ public class Controleur {
     }
 
     public void saisirUtilisateur() {
-        this.ihm.saisirUtilisateur();
+        // this.ihm.saisirUtilisateur();
     }
 
     public void creerUtilisateur(IHM.InfosUtilisateur infos) {
@@ -44,6 +51,21 @@ public class Controleur {
 //                    false
 //            );
 //        }
+    }
+
+    public void creerMembre(IHM.InfosMembre infos) throws MembreException {
+        Membre membre = new Membre(
+                genevent.getMembres().values().size() + 1, // Trouver un meilleur moyen
+                infos.nom,
+                infos.dateNaissance,
+                infos.telephone
+        );
+
+        this.genevent.addMembre(membre);
+    }
+
+    public Collection<Membre> getMembres() {
+        return Collections.unmodifiableCollection(this.genevent.getMembres().values());
     }
 
     public void saisirEvenement() {
@@ -73,5 +95,13 @@ public class Controleur {
 //                "Nouvel évènement : " + infos.nom + ", administré par " + infos.admin.email,
 //                true
 //        );
+    }
+
+    public void supprimerMembre(Membre membre) {
+        this.genevent.removeMembre(membre);
+    }
+
+    public Collection<Salle> getSalles() {
+        return genevent.getSalles().values();
     }
 }

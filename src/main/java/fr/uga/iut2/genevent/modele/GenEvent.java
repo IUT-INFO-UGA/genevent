@@ -1,11 +1,14 @@
 package fr.uga.iut2.genevent.modele;
 
 import fr.uga.iut2.genevent.modele.commande.Commande;
+import fr.uga.iut2.genevent.modele.membre.Membre;
 import fr.uga.iut2.genevent.modele.personnel.Personnel;
+import fr.uga.iut2.genevent.modele.salles.Salle;
 
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -15,14 +18,18 @@ public class GenEvent implements Serializable {
     //private final Map<String, Utilisateur> utilisateurs;  // association qualifiée par l'email
     //private final Map<String, Evenement> evenements;  // association qualifiée par le nom
 
-    private final Map<String, Personnel> personnels; // association qualifiée par l'id
-    private final Map<Integer, Commande> commandes;
+    private Map<String, Personnel> personnels; // association qualifiée par l'id
+    private Map<Integer, Commande> commandes;
+    private Map<Integer, Membre> membres;
+    private Map<Long, Salle> salles;
 
     public GenEvent() {
         //this.utilisateurs = new HashMap<>();
         //this.evenements = new HashMap<>();
         this.personnels = new HashMap<>();
         this.commandes = new HashMap<>();
+        this.membres = new HashMap<>();
+        this.salles = new HashMap<>();
     }
 
     /*public boolean ajouteUtilisateur(String email, String nom, String prenom) {
@@ -60,5 +67,21 @@ public class GenEvent implements Serializable {
 
     public Collection<Commande> getCommandes() {
         return commandes.values();
+    }
+
+    public void addMembre(Membre membre) {
+        this.membres.put(membre.getId(), membre);
+    }
+
+    public Map<Integer, Membre> getMembres() {
+        return membres;
+    }
+
+    public void removeMembre(Membre membre) {
+        this.membres.remove(membre.getId());
+    }
+
+    public Map<Long, Salle> getSalles() {
+        return salles;
     }
 }

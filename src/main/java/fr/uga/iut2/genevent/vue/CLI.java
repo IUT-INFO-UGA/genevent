@@ -169,13 +169,11 @@ public class CLI extends IHM {
         CLI.afficher((succes ? "[OK]" : "[KO]") + " " + msg);
     }
 
-    @Override
     public void saisirUtilisateur() {
         InfosUtilisateur infos = dialogueSaisirUtilisateur();
         controleur.creerUtilisateur(infos);
     }
 
-    @Override
     public void saisirNouvelEvenement(final Set<String> nomsExistants) {
         InfosNouvelEvenement infos = dialogueSaisirNouvelEvenement(nomsExistants);
         controleur.creerEvenement(infos);

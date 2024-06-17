@@ -1,6 +1,7 @@
 package fr.uga.iut2.genevent.vue;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.Set;
 
 
@@ -69,20 +70,16 @@ public abstract class IHM {
      */
     public abstract void informerUtilisateur(final String msg, final boolean succes);
 
-    /**
-     * Récupère les informations à propos d'un
-     * {@link fr.uga.iut2.genevent.modele.Utilisateur}.
-     *
-     */
-    public abstract void saisirUtilisateur();
 
-    /**
-     * Récupère les informations nécessaires à la création d'un nouvel
-     * {@link fr.uga.iut2.genevent.modele.Evenement}.
-     *
-     * @param nomsExistants L'ensemble des noms d'évenements qui ne sont plus
-     *     disponibles.
-     *
-     */
-    public abstract void saisirNouvelEvenement(final Set<String> nomsExistants);
+    public static class InfosMembre {
+        public String nom;
+        public Date dateNaissance;
+        public String telephone;
+
+        public InfosMembre(String nom, Date dateNaissance, String telephone) {
+            this.nom = nom;
+            this.dateNaissance = dateNaissance;
+            this.telephone = telephone;
+        }
+    }
 }

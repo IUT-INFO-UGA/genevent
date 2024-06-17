@@ -41,11 +41,14 @@
   <children>
       <BorderPane prefHeight="404.0" prefWidth="640.0">
          <top>
-            <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="54.0" prefWidth="640.0" style="-fx-background-color: #f5f5f5;" BorderPane.alignment="CENTER">
+            <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="54.0" prefWidth="640.0" style="-fx-background-color: #fd8c58;" BorderPane.alignment="CENTER">
                <children>
                   <HBox>
                      <children>
-                        <ImageView fitHeight="54.0" fitWidth="166.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="logo" fitHeight="54.0" fitWidth="166.0" onMouseClicked="#onHeaderButtonClick" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/logo.png" />
+                           </image></ImageView>
                      </children>
                      <HBox.margin>
                         <Insets right="100.0" />
@@ -77,10 +80,10 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button minHeight="100.0" minWidth="250.0" mnemonicParsing="false" style="-fx-background-color: #fff; -fx-border-color: #fc7536; -fx-border-radius: 5; -fx-background-radius: 5;" text="Stocks et commandes" />
-                  <Button layoutX="45.0" layoutY="36.0" minHeight="100.0" minWidth="250.0" mnemonicParsing="false" style="-fx-background-color: #fff; -fx-border-color: #fc7536; -fx-border-radius: 5; -fx-background-radius: 5;" text="Membres" GridPane.columnIndex="1" />
-                  <Button layoutX="365.0" layoutY="36.0" minHeight="100.0" minWidth="250.0" mnemonicParsing="false" style="-fx-background-color: #fff; -fx-border-color: #fc7536; -fx-border-radius: 5; -fx-background-radius: 5;" text="Salles et tables" GridPane.rowIndex="1" />
-                  <Button layoutX="45.0" layoutY="188.0" minHeight="100.0" minWidth="250.0" mnemonicParsing="false" style="-fx-background-color: #fff; -fx-border-color: #fc7536; -fx-border-radius: 5; -fx-background-radius: 5;" text="Planning" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Button fx:id="stocks" minHeight="100.0" minWidth="250.0" mnemonicParsing="false" onAction="#onMainButtonClicked" onMouseClicked="#onMainButtonClicked" style="-fx-background-color: #fff; -fx-border-color: #fc7536; -fx-border-radius: 5; -fx-background-radius: 5;" text="Stocks et commandes" />
+                  <Button fx:id="members" layoutX="45.0" layoutY="36.0" minHeight="100.0" minWidth="250.0" mnemonicParsing="false" onAction="#onMainButtonClicked" onMouseClicked="#onMainButtonClicked" style="-fx-background-color: #fff; -fx-border-color: #fc7536; -fx-border-radius: 5; -fx-background-radius: 5;" text="Membres" GridPane.columnIndex="1" />
+                  <Button fx:id="salles" layoutX="365.0" layoutY="36.0" minHeight="100.0" minWidth="250.0" mnemonicParsing="false" onAction="#onMainButtonClicked" onMouseClicked="#onMainButtonClicked" style="-fx-background-color: #fff; -fx-border-color: #fc7536; -fx-border-radius: 5; -fx-background-radius: 5;" text="Salles et tables" GridPane.rowIndex="1" />
+                  <Button fx:id="planning" layoutX="45.0" layoutY="188.0" minHeight="100.0" minWidth="250.0" mnemonicParsing="false" onAction="#onMainButtonClicked" onMouseClicked="#onMainButtonClicked" style="-fx-background-color: #fff; -fx-border-color: #fc7536; -fx-border-radius: 5; -fx-background-radius: 5;" text="Planning" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
                <BorderPane.margin>
                   <Insets />

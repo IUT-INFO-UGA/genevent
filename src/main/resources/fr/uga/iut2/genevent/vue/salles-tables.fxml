@@ -38,15 +38,19 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
   <children>
       <BorderPane prefHeight="404.0" prefWidth="640.0">
          <top>
-            <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="54.0" prefWidth="640.0" BorderPane.alignment="CENTER">
+            <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="54.0" prefWidth="640.0" style="-fx-background-color: #fd8c58;" BorderPane.alignment="CENTER">
                <children>
                   <HBox>
                      <children>
-                        <ImageView fitHeight="54.0" fitWidth="166.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="logo" fitHeight="54.0" fitWidth="166.0" onMouseClicked="#onHeaderButtonClick" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/logo.png" />
+                           </image></ImageView>
                      </children>
                      <HBox.margin>
                         <Insets right="100.0" />
@@ -70,8 +74,8 @@
          <center>
             <GridPane alignment="CENTER" BorderPane.alignment="CENTER">
               <columnConstraints>
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="314.0" minWidth="10.0" prefWidth="279.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="464.0" minWidth="10.0" prefWidth="361.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -80,9 +84,9 @@
                   <Insets />
                </BorderPane.margin>
                <children>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
+                  <VBox prefHeight="346.0" prefWidth="305.0">
                      <children>
-                        <Label text="Stocks">
+                        <Label text="Salles">
                            <VBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </VBox.margin>
@@ -90,12 +94,18 @@
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <TableView prefHeight="300.0" prefWidth="200.0">
+                        <TableView fx:id="sallesList" prefHeight="300.0" prefWidth="252.0">
                           <columns>
-                            <TableColumn prefWidth="100.0" text="Nom" />
-                            <TableColumn minWidth="0.0" prefWidth="76.0" text="Nb joueurs" />
-                              <TableColumn minWidth="0.0" prefWidth="96.0" text="Type" />
-                              <TableColumn minWidth="0.0" prefWidth="47.0" text="Prix" />
+                            <TableColumn prefWidth="45.0" text="N°">
+                                <cellValueFactory>
+                                    <PropertyValueFactory property="numero" />
+                                </cellValueFactory>
+                            </TableColumn>
+                            <TableColumn minWidth="0.0" prefWidth="233.0" text="Type">
+                                <cellValueFactory>
+                                    <PropertyValueFactory property="type" />
+                                </cellValueFactory>
+                            </TableColumn>
                           </columns>
                         </TableView>
                         <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0">
@@ -105,8 +115,7 @@
                                     <Insets right="10.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button mnemonicParsing="false" style="-fx-background-color: #fff; -fx-border-color: #6b5ca5; -fx-background-radius: 5; -fx-border-radius: 5;" text="Modifier" />
-                              <Button mnemonicParsing="false" style="-fx-background-color: #fff; -fx-border-color: #ff3a33; -fx-background-radius: 5; -fx-border-radius: 5;" text="Supprimer">
+                              <Button disable="true" mnemonicParsing="false" style="-fx-background-color: #fff; -fx-border-color: #ff3a33; -fx-background-radius: 5; -fx-border-radius: 5;" text="Supprimer">
                                  <HBox.margin>
                                     <Insets right="10.0" />
                                  </HBox.margin>
@@ -117,7 +126,7 @@
                   </VBox>
                   <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
                      <children>
-                        <Label text="Commandes">
+                        <Label text="Tables">
                            <VBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </VBox.margin>
@@ -125,22 +134,38 @@
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <TableView prefHeight="300.0" prefWidth="200.0">
+                        <TableView fx:id="tablesList" prefHeight="300.0" prefWidth="200.0">
                           <columns>
-                            <TableColumn prefWidth="29.0" text="N°" />
-                            <TableColumn prefWidth="141.0" text="Nom" />
-                              <TableColumn prefWidth="82.0" text="Quantité" />
-                              <TableColumn prefWidth="65.0" text="Prix" />
+                              <TableColumn prefWidth="29.0" text="N°">
+                                  <cellValueFactory>
+                                      <PropertyValueFactory property="id" />
+                                  </cellValueFactory>
+                              </TableColumn>
+                              <TableColumn prefWidth="141.0" text="Type">
+                                  <cellValueFactory>
+                                      <PropertyValueFactory property="type" />
+                                  </cellValueFactory>
+                              </TableColumn>
+                              <TableColumn prefWidth="82.0" text="Nb places">
+                                <cellValueFactory>
+                                    <PropertyValueFactory property="nbPlaces" />
+                                </cellValueFactory>
+                              </TableColumn>
+                              <TableColumn prefWidth="108.0" text="Taille">
+                                <cellValueFactory>
+                                    <PropertyValueFactory property="taille" />
+                                </cellValueFactory>
+                              </TableColumn>
                           </columns>
                         </TableView>
                         <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0">
                            <children>
-                              <Button mnemonicParsing="false" text="Créer" style="-fx-background-color: #fff; -fx-border-color: #69a197; -fx-background-radius: 5; -fx-border-radius: 5;">
+                              <Button disable="true" mnemonicParsing="false" style="-fx-background-color: #fff; -fx-border-color: #69a197; -fx-background-radius: 5; -fx-border-radius: 5;" text="Créer">
                                  <HBox.margin>
                                     <Insets right="10.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button mnemonicParsing="false" text="Marquer comme reçue" style="-fx-background-color: #fff; -fx-border-color: #69a197; -fx-background-radius: 5; -fx-border-radius: 5;"/>
+                              <Button disable="true" mnemonicParsing="false" style="-fx-background-color: #fff; -fx-border-color: #ff3a33; -fx-background-radius: 5; -fx-border-radius: 5;" text="Supprimer" />
                            </children>
                         </HBox>
                      </children>

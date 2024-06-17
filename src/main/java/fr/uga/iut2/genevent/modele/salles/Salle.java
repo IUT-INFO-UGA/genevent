@@ -78,4 +78,12 @@ public class Salle implements Serializable {
     public void removeTable(Table table) {
         tables.remove(table.getId());
     }
+
+    /**
+     * Récupère l'ensemble des tables contenues dans la salle.
+     * @return Un {@link HashMap} contenant les tables de la salle.
+     */
+    public HashMap<Long, Table> getTables() {
+        return tables;
+    }
 }
