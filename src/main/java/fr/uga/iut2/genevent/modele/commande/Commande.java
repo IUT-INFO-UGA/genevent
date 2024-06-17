@@ -1,12 +1,14 @@
 package fr.uga.iut2.genevent.modele.commande;
 
+import java.io.Serializable;
+
 /**
  * Classe représentant une commande de jeux de société.
  * Une commande possède un numéro, permettant de l'identifier,
  * ainsi que le nom du jeu à commander, la quantité de jeux,
  * et le pris du jeu à l'unité à commander.
  */
-public class Commande {
+public class Commande implements Serializable {
 
     // Attributs
 

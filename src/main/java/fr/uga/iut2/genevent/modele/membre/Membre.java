@@ -1,5 +1,6 @@
 package fr.uga.iut2.genevent.modele.membre;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -9,7 +10,7 @@ import java.util.regex.Pattern;
  * Un membre n'est cependant pas un utilisateur du logiciel.
  * Un membre possède un identifiant unique, un nom, une date de naissance et un numéro de téléphone.
  */
-public class Membre {
+public class Membre implements Serializable {
 
     // Constantes
 
