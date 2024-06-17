@@ -25,15 +25,15 @@
             <Label text="Nom :" />
             <Label text="Prénom :" GridPane.rowIndex="1" />
             <Label text="Email :" GridPane.rowIndex="2" />
-            <TextField fx:id="newUserForenameTextField" onInputMethodTextChanged="#validateTextFields" onKeyPressed="#validateTextFields" onKeyReleased="#validateTextFields" onKeyTyped="#validateTextFields" GridPane.columnIndex="1" />
-            <TextField fx:id="newUserSurnameTextField" onInputMethodTextChanged="#validateTextFields" onKeyPressed="#validateTextFields" onKeyReleased="#validateTextFields" onKeyTyped="#validateTextFields" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="newUserEmailTextField" onInputMethodTextChanged="#validateTextFields" onKeyPressed="#validateTextFields" onKeyReleased="#validateTextFields" onKeyTyped="#validateTextFields" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="newUserForenameTextField" style="-fx-border-color: #6b5ca5; -fx-background-radius: 5; -fx-border-radius: 5;" onInputMethodTextChanged="#validateTextFields" onKeyPressed="#validateTextFields" onKeyReleased="#validateTextFields" onKeyTyped="#validateTextFields" GridPane.columnIndex="1" />
+            <TextField fx:id="newUserSurnameTextField" style="-fx-border-color: #6b5ca5; -fx-background-radius: 5; -fx-border-radius: 5;" onInputMethodTextChanged="#validateTextFields" onKeyPressed="#validateTextFields" onKeyReleased="#validateTextFields" onKeyTyped="#validateTextFields" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="newUserEmailTextField" style="-fx-border-color: #6b5ca5; -fx-background-radius: 5; -fx-border-radius: 5;" onInputMethodTextChanged="#validateTextFields" onKeyPressed="#validateTextFields" onKeyReleased="#validateTextFields" onKeyTyped="#validateTextFields" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
       </GridPane>
       <ButtonBar prefHeight="40.0" prefWidth="200.0">
         <buttons>
-          <Button fx:id="newUserCancelButton" cancelButton="true" mnemonicParsing="false" onAction="#cancelNewUserAction" text="Annuler" />
-            <Button fx:id="newUserOkButton" defaultButton="true" disable="true" mnemonicParsing="false" onAction="#createNewUserAction" text="Créer" />
+          <Button fx:id="newUserCancelButton" cancelButton="true" mnemonicParsing="false" onAction="#cancelNewUserAction" style="-fx-background-color: #fff; -fx-border-color: #ff3a33; -fx-background-radius: 5; -fx-border-radius: 5;" text="Annuler" />
+            <Button fx:id="newUserOkButton" defaultButton="true" disable="true" mnemonicParsing="false" onAction="#createNewUserAction" style="-fx-background-color: #fff; -fx-border-color: #69a197; -fx-background-radius: 5; -fx-border-radius: 5;" text="Créer" />
         </buttons>
       </ButtonBar>
    </children>

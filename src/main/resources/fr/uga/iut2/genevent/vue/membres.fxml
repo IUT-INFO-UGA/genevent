@@ -62,7 +62,7 @@
                               <Insets right="10.0" />
                            </HBox.margin>
                         </Label>
-                        <ChoiceBox prefWidth="150.0" />
+                        <ChoiceBox prefWidth="150.0" style="-fx-mark-color: #fc7536; -fx-background-color: #fff; -fx-border-radius: 5; -fx-background-radius: 5;" />
                      </children></HBox>
                </children>
             </HBox>
@@ -100,12 +100,12 @@
                         </TableView>
                         <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0">
                            <children>
-                              <Button disable="true" mnemonicParsing="false" text="Modifier">
+                              <Button disable="true" mnemonicParsing="false" style="-fx-background-color: #fff; -fx-border-color: #69a197; -fx-background-radius: 5; -fx-border-radius: 5;" text="Modifier">
                                  <HBox.margin>
                                     <Insets right="10.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button disable="true" mnemonicParsing="false" text="Supprimer">
+                              <Button disable="true" mnemonicParsing="false" style="-fx-background-color: #fff; -fx-border-color: #ff3a33; -fx-background-radius: 5; -fx-border-radius: 5;" text="Supprimer">
                                  <HBox.margin>
                                     <Insets right="10.0" />
                                  </HBox.margin>
@@ -130,18 +130,18 @@
                                  <VBox.margin>
                                     <Insets top="45.0" />
                                  </VBox.margin></Label>
-                              <TextField />
+                              <TextField style="-fx-border-color: #6b5ca5; -fx-background-radius: 5; -fx-border-radius: 5;" />
                               <Label text="Date de naissance">
                                  <VBox.margin>
                                     <Insets top="5.0" />
                                  </VBox.margin></Label>
-                              <DatePicker />
+                              <DatePicker style="-fx-border-color: #6b5ca5; -fx-background-radius: 5; -fx-border-radius: 5;" />
                               <Label text="Téléphone">
                                  <VBox.margin>
                                     <Insets top="5.0" />
                                  </VBox.margin></Label>
-                              <TextField />
-                              <Button mnemonicParsing="false" prefWidth="200.0" text="Créer">
+                              <TextField style="-fx-border-color: #6b5ca5; -fx-background-radius: 5; -fx-border-radius: 5;" />
+                              <Button mnemonicParsing="false" prefWidth="200.0" style="-fx-background-color: #fff; -fx-border-color: #69a197; -fx-background-radius: 5; -fx-border-radius: 5;" text="Créer">
                                  <VBox.margin>
                                     <Insets bottom="20.0" top="20.0" />
                                  </VBox.margin></Button>

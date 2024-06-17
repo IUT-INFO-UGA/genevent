@@ -12,14 +12,14 @@ public class Utilisateur implements Serializable {
     private final String email;
     private String nom;
     private String prenom;
-    private final Map<String, Evenement> evenementsAdministres;  // association qualifiée par le nom
+    //private final Map<String, Evenement> evenementsAdministres;  // association qualifiée par le nom
 
     public Utilisateur(String email, String nom, String prenom) {
         assert EmailValidator.getInstance(false, false).isValid(email);
         this.email = email;
         this.nom = nom;
         this.prenom = prenom;
-        this.evenementsAdministres = new HashMap<>();
+        //this.evenementsAdministres = new HashMap<>();
     }
 
     public String getEmail() {
@@ -42,8 +42,4 @@ public class Utilisateur implements Serializable {
         this.prenom = prenom;
     }
 
-    public void ajouteEvenementAdministre(Evenement evt) {
-        assert !this.evenementsAdministres.containsKey(evt.getNom());
-        this.evenementsAdministres.put(evt.getNom(), evt);
-    }
 }

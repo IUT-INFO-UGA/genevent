@@ -62,7 +62,7 @@
                               <Insets right="10.0" />
                            </HBox.margin>
                         </Label>
-                        <ChoiceBox prefWidth="150.0" />
+                        <ChoiceBox prefWidth="150.0" style="-fx-mark-color: #fc7536; -fx-background-color: #fff; -fx-border-radius: 5; -fx-background-radius: 5;" />
                      </children></HBox>
                </children>
             </HBox>
@@ -100,17 +100,17 @@
                         </TableView>
                         <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0">
                            <children>
-                              <Button mnemonicParsing="false" text="Ajouter">
+                              <Button mnemonicParsing="false" style="-fx-background-color: #fff; -fx-border-color: #69a197; -fx-background-radius: 5; -fx-border-radius: 5;" text="Ajouter">
                                  <HBox.margin>
                                     <Insets right="10.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button mnemonicParsing="false" text="Supprimer">
+                              <Button mnemonicParsing="false" style="-fx-background-color: #fff; -fx-border-color: #6b5ca5; -fx-background-radius: 5; -fx-border-radius: 5;" text="Modifier" />
+                              <Button mnemonicParsing="false" style="-fx-background-color: #fff; -fx-border-color: #ff3a33; -fx-background-radius: 5; -fx-border-radius: 5;" text="Supprimer">
                                  <HBox.margin>
                                     <Insets right="10.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button mnemonicParsing="false" text="Modifier" />
                            </children>
                         </HBox>
                      </children>
@@ -135,12 +135,12 @@
                         </TableView>
                         <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0">
                            <children>
-                              <Button mnemonicParsing="false" text="Créer">
+                              <Button mnemonicParsing="false" text="Créer" style="-fx-background-color: #fff; -fx-border-color: #69a197; -fx-background-radius: 5; -fx-border-radius: 5;">
                                  <HBox.margin>
                                     <Insets right="10.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button mnemonicParsing="false" text="Marquer comme reçue" />
+                              <Button mnemonicParsing="false" text="Marquer comme reçue" style="-fx-background-color: #fff; -fx-border-color: #69a197; -fx-background-radius: 5; -fx-border-radius: 5;"/>
                            </children>
                         </HBox>
                      </children>
