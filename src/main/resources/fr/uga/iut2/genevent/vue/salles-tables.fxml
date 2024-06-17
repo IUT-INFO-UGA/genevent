@@ -36,6 +36,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
   <children>
@@ -74,17 +75,77 @@
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
-               <children>
-                  <Button minHeight="100.0" minWidth="250.0" mnemonicParsing="false" text="Stocks et commandes" />
-                  <Button layoutX="45.0" layoutY="36.0" minHeight="100.0" minWidth="250.0" mnemonicParsing="false" text="Membres" GridPane.columnIndex="1" />
-                  <Button layoutX="365.0" layoutY="36.0" minHeight="100.0" minWidth="250.0" mnemonicParsing="false" text="Salles et tables" GridPane.rowIndex="1" />
-                  <Button layoutX="45.0" layoutY="188.0" minHeight="100.0" minWidth="250.0" mnemonicParsing="false" text="Planning" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-               </children>
                <BorderPane.margin>
                   <Insets />
                </BorderPane.margin>
+               <children>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Label text="Stocks">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Label>
+                        <TableView prefHeight="300.0" prefWidth="200.0">
+                          <columns>
+                            <TableColumn prefWidth="100.0" text="Nom" />
+                            <TableColumn minWidth="0.0" prefWidth="76.0" text="Nb joueurs" />
+                              <TableColumn minWidth="0.0" prefWidth="96.0" text="Type" />
+                              <TableColumn minWidth="0.0" prefWidth="47.0" text="Prix" />
+                          </columns>
+                        </TableView>
+                        <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0">
+                           <children>
+                              <Button mnemonicParsing="false" text="Ajouter">
+                                 <HBox.margin>
+                                    <Insets right="10.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button mnemonicParsing="false" text="Supprimer">
+                                 <HBox.margin>
+                                    <Insets right="10.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button mnemonicParsing="false" text="Modifier" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
+                     <children>
+                        <Label text="Commandes">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Label>
+                        <TableView prefHeight="300.0" prefWidth="200.0">
+                          <columns>
+                            <TableColumn prefWidth="29.0" text="N°" />
+                            <TableColumn prefWidth="141.0" text="Nom" />
+                              <TableColumn prefWidth="82.0" text="Quantité" />
+                              <TableColumn prefWidth="65.0" text="Prix" />
+                          </columns>
+                        </TableView>
+                        <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0">
+                           <children>
+                              <Button mnemonicParsing="false" text="Créer">
+                                 <HBox.margin>
+                                    <Insets right="10.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button mnemonicParsing="false" text="Marquer comme reçue" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
             </GridPane>
          </center>
       </BorderPane>

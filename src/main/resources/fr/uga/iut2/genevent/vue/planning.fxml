@@ -32,14 +32,16 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 
+<?import com.calendarfx.view.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="500.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
   <children>
-      <BorderPane prefHeight="404.0" prefWidth="640.0">
+      <BorderPane prefHeight="501.0" prefWidth="640.0">
          <top>
             <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="54.0" prefWidth="640.0" BorderPane.alignment="CENTER">
                <children>
@@ -69,22 +71,66 @@
          <center>
             <GridPane alignment="CENTER" BorderPane.alignment="CENTER">
               <columnConstraints>
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="463.0" minWidth="10.0" prefWidth="463.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="464.0" minWidth="10.0" prefWidth="177.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
-               <children>
-                  <Button minHeight="100.0" minWidth="250.0" mnemonicParsing="false" text="Stocks et commandes" />
-                  <Button layoutX="45.0" layoutY="36.0" minHeight="100.0" minWidth="250.0" mnemonicParsing="false" text="Membres" GridPane.columnIndex="1" />
-                  <Button layoutX="365.0" layoutY="36.0" minHeight="100.0" minWidth="250.0" mnemonicParsing="false" text="Salles et tables" GridPane.rowIndex="1" />
-                  <Button layoutX="45.0" layoutY="188.0" minHeight="100.0" minWidth="250.0" mnemonicParsing="false" text="Planning" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-               </children>
                <BorderPane.margin>
                   <Insets />
                </BorderPane.margin>
+               <children>
+                  <VBox prefHeight="346.0" prefWidth="305.0">
+                     <children>
+                        <CalendarView prefHeight="446.0" prefWidth="463.0" showToolBar="false" />
+                     </children></VBox>
+                  <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
+                     <children>
+                        <Label text="Créer une séance">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Label>
+                        <VBox prefHeight="315.0" prefWidth="203.0">
+                           <children>
+                              <Label text="Nom">
+                                 <VBox.margin>
+                                    <Insets top="15.0" />
+                                 </VBox.margin></Label>
+                              <TextField />
+                              <Label text="Date">
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin></Label>
+                              <DatePicker />
+                              <Label text="Heure de début">
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin></Label>
+                              <TextField />
+                              <Label layoutX="20.0" layoutY="163.0" text="Heure de fin">
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <TextField layoutX="20.0" layoutY="181.0" />
+                              <Button mnemonicParsing="false" prefWidth="200.0" text="Créer">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" top="20.0" />
+                                 </VBox.margin></Button>
+                              <Button layoutX="20.0" layoutY="276.0" mnemonicParsing="false" prefWidth="200.0" text="Ajouter à un év." />
+                           </children>
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </VBox>
+                     </children>
+                  </VBox>
+               </children>
             </GridPane>
          </center>
       </BorderPane>
