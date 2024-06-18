@@ -47,6 +47,27 @@ public class JavaFXGUI extends IHM {
 
     private final Controleur controleur;
     private final CountDownLatch eolBarrier;  // /!\ ne pas supprimer /!\ : suivi de la durée de vie de l'interface
+    
+    @FXML
+    public TextField tfNomDuJeu;
+    @FXML
+    public TextArea taRegles;
+    @FXML
+    public Spinner spNbJoueurs;
+    @FXML
+    public DatePicker dpDateAchat;
+    @FXML
+    public ComboBox cbType;
+    @FXML
+    public Spinner spTailleTable;
+    @FXML
+    public Spinner spDureePartie;
+    @FXML
+    public Spinner spPrix;
+    @FXML
+    public Button btnEnregistrer;
+    @FXML
+    public Button btnCancel;
 
     @FXML
     private Button stocks, members, salles, planning;
@@ -288,7 +309,19 @@ public class JavaFXGUI extends IHM {
 
     @FXML
     private void onStocksAddButtonAction(ActionEvent event) {
-        // ...
+        try {
+            FXMLLoader newUserViewLoader = new FXMLLoader(getClass().getResource("add-to-stock.fxml"));
+            newUserViewLoader.setController(this);
+            Scene newUserScene = new Scene(newUserViewLoader.load());
+
+            Stage newUserWindow = new Stage();
+            newUserWindow.setTitle("Ajouter un jeu au stock");
+            newUserWindow.initModality(Modality.WINDOW_MODAL);
+            newUserWindow.setScene(newUserScene);
+            newUserWindow.showAndWait();
+        } catch (IOException exc) {
+            throw new RuntimeException(exc);
+        }
     }
 
     @FXML
