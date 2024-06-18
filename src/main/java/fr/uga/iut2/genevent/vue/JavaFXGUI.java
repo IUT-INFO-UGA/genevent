@@ -7,7 +7,6 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,6 +14,8 @@ import java.util.regex.Pattern;
 import fr.uga.iut2.genevent.modele.Role;
 import fr.uga.iut2.genevent.modele.commande.Commande;
 import fr.uga.iut2.genevent.modele.jeu.JeuDeSociete;
+import fr.uga.iut2.genevent.modele.jeu.JeuDeSocieteException;
+import fr.uga.iut2.genevent.modele.jeu.TailleTable;
 import fr.uga.iut2.genevent.modele.membre.Membre;
 import fr.uga.iut2.genevent.modele.membre.MembreException;
 import fr.uga.iut2.genevent.modele.personnel.Animateur;
@@ -54,23 +55,25 @@ public class JavaFXGUI extends IHM {
 
     private final Controleur controleur;
     private final CountDownLatch eolBarrier;  // /!\ ne pas supprimer /!\ : suivi de la durée de vie de l'interface
+
+    private Stage newJeuWindow;
     
     @FXML
     public TextField tfNomDuJeu;
     @FXML
     public TextArea taRegles;
     @FXML
-    public Spinner spNbJoueurs;
+    public Spinner<Integer> spNbJoueurs;
     @FXML
     public DatePicker dpDateAchat;
     @FXML
-    public ComboBox cbType;
+    public TextField tfType;
     @FXML
-    public Spinner spTailleTable;
+    public ComboBox<String> cbTailleTable;
     @FXML
-    public Spinner spDureePartie;
+    public Spinner<Integer> spDureePartie;
     @FXML
-    public Spinner spPrix;
+    public Spinner<Double> spPrix;
     @FXML
     public Button btnEnregistrer;
     @FXML
@@ -191,10 +194,7 @@ public class JavaFXGUI extends IHM {
             sallesList.refresh();
         }
 
-        if (stocksList != null) {
-            stocksList.getItems().addAll(controleur.getJeux());
-            stocksList.refresh();
-        }
+        refreshTableStock();
 
         if (commandesList != null) {
             commandesList.getItems().addAll(controleur.getCommandes());
@@ -270,18 +270,18 @@ public class JavaFXGUI extends IHM {
 
     @FXML
     private void addMemberButtonAction() {
-        boolean isValid = validateNonEmptyTextField(memberNameField)
-                & validateNonEmptyTextField(memberPhoneNbField)
+        boolean isValid = validateNonEmptyTextInputControl(memberNameField)
+                & validateNonEmptyTextInputControl(memberPhoneNbField)
                 & validateNonEmptyDatePicker(memberBirthDateField);
 
         if (!matchesPattern(memberNameField.getText(), Membre.PATERNE_NOM)) {
             isValid = false;
-            markTextFieldErrorStatus(memberNameField, false);
+            markControlErrorStatus(memberNameField, false);
         }
 
         if (!matchesPattern(memberPhoneNbField.getText(), Membre.PATERNE_TELEPHONE)) {
             isValid = false;
-            markTextFieldErrorStatus(memberPhoneNbField, false);
+            markControlErrorStatus(memberPhoneNbField, false);
         }
 
         if (!isValid) {
@@ -311,8 +311,16 @@ public class JavaFXGUI extends IHM {
 
     private void refreshMemberTable() {
         memberList.getItems().clear();
-        memberList.getItems().addAll(new ArrayList<>(controleur.getMembres()));
+        memberList.getItems().addAll(controleur.getMembres());
         memberList.refresh();
+    }
+
+    private void refreshTableStock() {
+        if (stocksList != null) {
+            stocksList.getItems().clear();
+            stocksList.getItems().addAll(controleur.getJeux());
+            stocksList.refresh();
+        }
     }
 
     @FXML
@@ -341,8 +349,10 @@ public class JavaFXGUI extends IHM {
     private void onMemberDeleteButtonAction() {
         Membre selectedItem = memberList.getSelectionModel().getSelectedItem();
 
-        controleur.supprimerMembre(selectedItem);
-        refreshMemberTable();
+        if (selectedItem != null) {
+            controleur.supprimerMembre(selectedItem);
+            refreshMemberTable();
+        }
     }
 
     // vue salles
@@ -385,11 +395,12 @@ public class JavaFXGUI extends IHM {
             newUserViewLoader.setController(this);
             Scene newUserScene = new Scene(newUserViewLoader.load());
 
-            Stage newUserWindow = new Stage();
-            newUserWindow.setTitle("Ajouter un jeu au stock");
-            newUserWindow.initModality(Modality.WINDOW_MODAL);
-            newUserWindow.setScene(newUserScene);
-            newUserWindow.showAndWait();
+            newJeuWindow = new Stage();
+            newJeuWindow.setTitle("Ajouter un jeu au stock");
+            newJeuWindow.initModality(Modality.WINDOW_MODAL);
+            newJeuWindow.setScene(newUserScene);
+            newJeuWindow.showAndWait();
+            refreshTableStock();
         } catch (IOException exc) {
             throw new RuntimeException(exc);
         }
@@ -402,7 +413,12 @@ public class JavaFXGUI extends IHM {
 
     @FXML
     private void onStocksDeleteButtonAction(ActionEvent event) {
-        // ...
+        JeuDeSociete selectedItem = stocksList.getSelectionModel().getSelectedItem();
+
+        if (selectedItem != null) {
+            controleur.supprimerJeu(selectedItem);
+            refreshTableStock();
+        }
     }
 
     @FXML
@@ -413,6 +429,65 @@ public class JavaFXGUI extends IHM {
     @FXML
     private void onCommandeSetStatusButtonAction(ActionEvent event) {
         // ...
+    }
+
+    // vue ajout d'un jeu au stock
+
+    @FXML
+    private void onBtnEnregistrerAction(ActionEvent event) {
+        boolean valide = true;
+        if (!validateNonEmptyTextInputControl(tfNomDuJeu)) {
+            valide = false;
+        }
+        String nomDuJeu = tfNomDuJeu.getText();
+
+        if (!validateNonEmptyTextInputControl(taRegles)) {
+            valide = false;
+        }
+        String regles = taRegles.getText();
+
+        int nbJoueurs = spNbJoueurs.getValue();
+        if (nbJoueurs < 1) {
+            valide = false;
+        }
+
+        if (!validateNonEmptyDatePicker(dpDateAchat)) {
+            valide = false;
+        }
+        Date date = Date.from(dpDateAchat.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+        if (!validateNonEmptyTextInputControl(tfType)) {
+            valide = false;
+        }
+        String type = tfType.getText();
+
+        String nomTailleTable = cbTailleTable.getValue();
+        TailleTable tailleTable = TailleTable.getByName(nomTailleTable);
+
+        int dureePartie = spDureePartie.getValue();
+        if (dureePartie < 1) {
+            valide = false;
+        }
+        double prix = spPrix.getValue();
+        if (prix <= 0) {
+            valide = false;
+        }
+
+        if (valide) {
+            try {
+                controleur.creerJeu(new InfosJeu(nomDuJeu, regles, date, type, tailleTable, dureePartie, prix, nbJoueurs));
+            } catch (JeuDeSocieteException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle(e.getMessage());
+                alert.showAndWait();
+            }
+        }
+        newJeuWindow.close();
+    }
+
+    @FXML
+    private void onBtnCancelAction(ActionEvent event) {
+        newJeuWindow.close();
     }
 
     // vue planning
@@ -452,43 +527,35 @@ public class JavaFXGUI extends IHM {
 
     // -------------------------------
 
-    private static void markTextFieldErrorStatus(TextField textField, boolean isValid) {
+    private static void markControlErrorStatus(Control control, boolean isValid) {
         if (isValid) {
-            textField.setStyle(null);
+            control.setStyle(null);
         } else {
-            textField.setStyle("-fx-control-inner-background: f8d7da");
+            control.setStyle("-fx-control-inner-background: f8d7da");
         }
     }
 
-    private static boolean validateNonEmptyTextField(TextField textField) {
-        boolean isValid = !textField.getText().strip().isEmpty();
+    private static boolean validateNonEmptyTextInputControl(TextInputControl textInputControl) {
+        boolean isValid = !textInputControl.getText().strip().isEmpty();
 
-        markTextFieldErrorStatus(textField, isValid);
+        markControlErrorStatus(textInputControl, isValid);
 
         return isValid;
-    }
-
-    private static void markDatePickerErrorStatus(DatePicker datePicker, boolean isValid) {
-        if (isValid) {
-            datePicker.setStyle(null);
-        } else {
-            datePicker.setStyle("-fx-control-inner-background: f8d7da");
-        }
     }
 
     private static boolean validateNonEmptyDatePicker(DatePicker datePicker) {
         boolean isValid = datePicker.getValue() != null;
 
-        markDatePickerErrorStatus(datePicker, isValid);
+        markControlErrorStatus(datePicker, isValid);
 
         return isValid;
     }
 
-    private static boolean validateEmailTextField(TextField textField) {
+    private static boolean validateEmailTextField(TextInputControl textInputControl) {
         EmailValidator validator = EmailValidator.getInstance(false, false);
-        boolean isValid = validator.isValid(textField.getText().strip().toLowerCase());
+        boolean isValid = validator.isValid(textInputControl.getText().strip().toLowerCase());
 
-        markTextFieldErrorStatus(textField, isValid);
+        markControlErrorStatus(textInputControl, isValid);
 
         return isValid;
     }
