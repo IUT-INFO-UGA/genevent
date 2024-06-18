@@ -5,14 +5,14 @@ import fr.uga.iut2.genevent.controleur.Controleur;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.*;
 import java.util.concurrent.CountDownLatch;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import fr.uga.iut2.genevent.modele.Role;
 import fr.uga.iut2.genevent.modele.commande.Commande;
+import fr.uga.iut2.genevent.modele.commande.CommandeException;
 import fr.uga.iut2.genevent.modele.jeu.JeuDeSociete;
 import fr.uga.iut2.genevent.modele.jeu.JeuDeSocieteException;
 import fr.uga.iut2.genevent.modele.jeu.TailleTable;
@@ -52,7 +52,7 @@ public class JavaFXGUI extends IHM {
     private final Controleur controleur;
     private final CountDownLatch eolBarrier;  // /!\ ne pas supprimer /!\ : suivi de la durée de vie de l'interface
 
-    private Stage newJeuWindow;
+    private Stage creationWindow;
     
     @FXML
     public TextField tfNomDuJeu;
@@ -70,6 +70,8 @@ public class JavaFXGUI extends IHM {
     public Spinner<Integer> spDureePartie;
     @FXML
     public Spinner<Double> spPrix;
+    @FXML
+    public Spinner<Integer> spQuantite;
     @FXML
     public Button btnEnregistrer;
     @FXML
@@ -190,12 +192,8 @@ public class JavaFXGUI extends IHM {
             sallesList.refresh();
         }
 
-        refreshTableStock();
-
-        if (commandesList != null) {
-            // commandesList.getItems().addAll(controleur.getCommandes());
-            commandesList.refresh();
-        }
+        refreshStockTable();
+        refreshCommandeTable();
     }
 
     // vue accueil
@@ -294,11 +292,27 @@ public class JavaFXGUI extends IHM {
         memberList.refresh();
     }
 
-    private void refreshTableStock() {
+    private void refreshStockTable() {
         if (stocksList != null) {
             stocksList.getItems().clear();
             stocksList.getItems().addAll(controleur.getJeux());
             stocksList.refresh();
+        }
+    }
+
+    private void refreshCommandeTable() {
+        Commande commande;
+        Collection<Commande> commandes = controleur.getCommandes();
+        Iterator<Commande> it = commandes.iterator();
+        if (commandesList != null) {
+            commandesList.getItems().clear();
+            while (it.hasNext()) {
+                commande = it.next();
+                if (!commande.estRecue()) {
+                    commandesList.getItems().add(commande);
+                }
+            }
+            commandesList.refresh();
         }
     }
 
@@ -372,14 +386,14 @@ public class JavaFXGUI extends IHM {
         try {
             FXMLLoader newUserViewLoader = new FXMLLoader(getClass().getResource("add-to-stock.fxml"));
             newUserViewLoader.setController(this);
-            Scene newUserScene = new Scene(newUserViewLoader.load());
+            Scene newJeuScene = new Scene(newUserViewLoader.load());
 
-            newJeuWindow = new Stage();
-            newJeuWindow.setTitle("Ajouter un jeu au stock");
-            newJeuWindow.initModality(Modality.WINDOW_MODAL);
-            newJeuWindow.setScene(newUserScene);
-            newJeuWindow.showAndWait();
-            refreshTableStock();
+            creationWindow = new Stage();
+            creationWindow.setTitle("Ajouter un jeu au stock");
+            creationWindow.initModality(Modality.WINDOW_MODAL);
+            creationWindow.setScene(newJeuScene);
+            creationWindow.showAndWait();
+            refreshStockTable();
         } catch (IOException exc) {
             throw new RuntimeException(exc);
         }
@@ -387,7 +401,25 @@ public class JavaFXGUI extends IHM {
 
     @FXML
     private void onStocksModifyButtonAction(ActionEvent event) {
-        // ...
+        JeuDeSociete jds = stocksList.getSelectionModel().getSelectedItem();
+
+        if (jds != null) {
+            try {
+                FXMLLoader newUserViewLoader = new FXMLLoader(getClass().getResource("add-to-stock.fxml"));
+                newUserViewLoader.setController(this);
+                Scene modifyJeuScene = new Scene(newUserViewLoader.load());
+
+                creationWindow = new Stage();
+                creationWindow.setTitle("Modification du jeu \"" + jds.getNom() + "\"");
+                creationWindow.initModality(Modality.WINDOW_MODAL);
+                creationWindow.setScene(modifyJeuScene);
+                // TODO
+                creationWindow.showAndWait();
+                refreshStockTable();
+            } catch (IOException exc) {
+                throw new RuntimeException(exc);
+            }
+        }
     }
 
     @FXML
@@ -396,24 +428,72 @@ public class JavaFXGUI extends IHM {
 
         if (selectedItem != null) {
             controleur.supprimerJeu(selectedItem);
-            refreshTableStock();
+            refreshStockTable();
         }
     }
 
     @FXML
     private void onCommandeCreateButtonAction(ActionEvent event) {
-        // ...
+        try {
+            FXMLLoader newUserViewLoader = new FXMLLoader(getClass().getResource("add-commande.fxml"));
+            newUserViewLoader.setController(this);
+            Scene newCommandeScene = new Scene(newUserViewLoader.load());
+
+            creationWindow = new Stage();
+            creationWindow.setTitle("Ajouter une commande");
+            creationWindow.initModality(Modality.WINDOW_MODAL);
+            creationWindow.setScene(newCommandeScene);
+            creationWindow.showAndWait();
+            refreshCommandeTable();
+        } catch (IOException exc) {
+            throw new RuntimeException(exc);
+        }
     }
 
     @FXML
     private void onCommandeSetStatusButtonAction(ActionEvent event) {
-        // ...
+        Commande selectedItem = commandesList.getSelectionModel().getSelectedItem();
+        if (selectedItem != null) {
+            selectedItem.marquerCommeRecue();
+        }
+        refreshCommandeTable();
     }
 
     // vue ajout d'un jeu au stock
 
     @FXML
-    private void onBtnEnregistrerAction(ActionEvent event) {
+    private void onBtnEnregistrerCommandeAction(ActionEvent event) {
+        boolean valide = true;
+
+        if (!validateNonEmptyTextInputControl(tfNomDuJeu)) {
+            valide = false;
+        }
+        String nomDuJeu = tfNomDuJeu.getText();
+
+        int quantite = spQuantite.getValue();
+        if (quantite < 1) {
+            valide = false;
+        }
+
+        double prix = spPrix.getValue();
+        if (prix <= 0) {
+            valide = false;
+        }
+
+        if (valide) {
+            try {
+                controleur.creerCommande(new InfosCommande(controleur.getCommandes().size(), nomDuJeu, quantite, prix));
+            } catch (CommandeException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle(e.getMessage());
+                alert.showAndWait();
+            }
+        }
+        creationWindow.close();
+    }
+
+    @FXML
+    private void onBtnEnregistrerJeuAction(ActionEvent event) {
         boolean valide = true;
         if (!validateNonEmptyTextInputControl(tfNomDuJeu)) {
             valide = false;
@@ -461,12 +541,12 @@ public class JavaFXGUI extends IHM {
                 alert.showAndWait();
             }
         }
-        newJeuWindow.close();
+        creationWindow.close();
     }
 
     @FXML
     private void onBtnCancelAction(ActionEvent event) {
-        newJeuWindow.close();
+        creationWindow.close();
     }
 
     // vue planning
