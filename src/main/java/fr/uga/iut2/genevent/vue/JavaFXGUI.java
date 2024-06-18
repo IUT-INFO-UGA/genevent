@@ -1,10 +1,13 @@
 package fr.uga.iut2.genevent.vue;
 
+import com.calendarfx.model.Entry;
 import com.calendarfx.view.CalendarView;
 import fr.uga.iut2.genevent.controleur.Controleur;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.CountDownLatch;
@@ -19,10 +22,14 @@ import fr.uga.iut2.genevent.modele.jeu.TailleTable;
 import fr.uga.iut2.genevent.modele.membre.Membre;
 import fr.uga.iut2.genevent.modele.membre.MembreException;
 import fr.uga.iut2.genevent.modele.personnel.Animateur;
+import fr.uga.iut2.genevent.modele.personnel.Gestionnaire;
 import fr.uga.iut2.genevent.modele.personnel.Personnel;
 import fr.uga.iut2.genevent.modele.salles.Salle;
 import fr.uga.iut2.genevent.modele.salles.Table;
+import fr.uga.iut2.genevent.modele.seance.Seance;
+import fr.uga.iut2.genevent.modele.seance.SeanceException;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -34,6 +41,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import javafx.util.StringConverter;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.controlsfx.control.CheckComboBox;
 
@@ -193,6 +201,8 @@ public class JavaFXGUI extends IHM {
             sallesList.getItems().addAll(controleur.getSalles());
             sallesList.refresh();
         }
+
+        refreshPlanningView();
 
         refreshTableStock();
 
@@ -364,8 +374,13 @@ public class JavaFXGUI extends IHM {
     private TableView<Table> tablesList;
 
     @FXML
+    private Button tableCreateButton, tableDeleteButton;
+
+    @FXML
     private void onSalleSelected(MouseEvent event) {
         Salle salle = sallesList.getSelectionModel().getSelectedItem();
+        tableCreateButton.setDisable(salle == null);
+        tableDeleteButton.setDisable(salle == null);
 
         if (salle != null) {
             tablesList.getItems().clear();
@@ -508,6 +523,9 @@ public class JavaFXGUI extends IHM {
     private CheckBox eventCheckBox;
 
     @FXML
+    private ChoiceBox<Table> planningTableList;
+
+    @FXML
     private CheckComboBox<String> jeuxList, animateursList;
 
     @FXML
@@ -517,12 +535,106 @@ public class JavaFXGUI extends IHM {
 
     @FXML
     private void onCreateEventButtonAction() {
-        // ...
+        boolean valide = validateNonEmptyTextInputControl(planningNameField)
+                & validateNonEmptyDatePicker(planningDatePicker)
+                & validateNonEmptyTextInputControl(planningStartHourField, isNumeric(planningStartHourField.getText()))
+                & validateNonEmptyTextInputControl(planningEndHourField, isNumeric(planningEndHourField.getText()));
+
+        if (valide) {
+            String type = planningNameField.getText();
+            int start = Integer.parseInt(planningStartHourField.getText());
+            int end = Integer.parseInt(planningEndHourField.getText());
+            LocalDate date = planningDatePicker.getValue();
+
+            ArrayList<JeuDeSociete> jeux = new ArrayList<>();
+
+            for (String checkedItem : jeuxList.getCheckModel().getCheckedItems()) {
+                jeux.add(controleur.getJeu(checkedItem));
+            }
+
+            Table selectedItem = tablesList.getSelectionModel().getSelectedItem();
+
+            if (selectedItem == null) {
+                markControlErrorStatus(tablesList, true);
+                // TODO : Message d'erreur
+                return;
+            }
+
+            if (eventCheckBox.isSelected()) {
+                ObservableList<String> items = animateursList.getCheckModel().getCheckedItems();
+                ArrayList<Animateur> personnels = new ArrayList<>();
+
+                if (items.isEmpty()) {
+                    markControlErrorStatus(animateursList, true);
+                    // TODO : Message d'erreur
+                    return;
+                }
+
+                for (String item : items) {
+                    personnels.add(((Animateur) controleur.getPersonnel(item)));
+                }
+
+                try {
+                    controleur.creerEvenement(new InfosEvenement(
+                            type,
+                            Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant()),
+                            selectedItem,
+                            start,
+                            end,
+                            selectedItem.getNbPlaces(), // TODO
+                            personnels
+                    ));
+                } catch (SeanceException e) {
+                    // TODO
+                }
+            } else {
+                controleur.creerSeance(new InfosSeance(
+                        type,
+                        Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant()),
+                        selectedItem,
+                        start,
+                        end
+                ));
+            }
+            refreshPlanningView();
+        }
     }
 
     private void refreshPlanningView() {
-        planningView.getCalendarSources().clear();
-        // ...
+        if (planningView != null) {
+            planningTableList.setConverter(new StringConverter<>() {
+                @Override
+                public String toString(Table table) {
+                    return table.getSalle().getNumero() + "-" + table.getId();
+                }
+
+                @Override
+                public Table fromString(String s) {
+                    String[] splittedName = s.split("-");
+
+                    return controleur.getSalle(Integer.parseInt(splittedName[0])).getTable(Long.parseLong(splittedName[1]));
+                }
+            });
+
+            planningTableList.getItems().clear();
+            for (Salle salle : controleur.getSalles()) {
+                salle.getTables().forEach((id, table) -> {
+                    planningTableList.getItems().add(table);
+                });
+            }
+
+            planningView.getCalendarSources().clear();
+            for (Seance seance : controleur.getSeances()) {
+                ZonedDateTime d = ZonedDateTime.ofInstant(seance.getDate().toInstant(),
+                        ZoneId.systemDefault());
+
+                Entry<?> entry = planningView.createEntryAt(d);
+                entry.changeStartTime(LocalTime.of(seance.getHeureDebut(), 0));
+                entry.changeEndTime(LocalTime.of(seance.getHeureFin(), 0));
+                entry.setTitle(seance.getType());
+                entry.setLocation("Table " + seance.getTable().getSalle().getNumero() + "-" + seance.getTable().getId());
+            }
+        }
     }
 
     // -------------------------------
@@ -543,12 +655,27 @@ public class JavaFXGUI extends IHM {
         return isValid;
     }
 
+    private static boolean validateNonEmptyTextInputControl(TextInputControl textInputControl, boolean isValid) {
+        markControlErrorStatus(textInputControl, isValid);
+
+        return isValid;
+    }
+
     private static boolean validateNonEmptyDatePicker(DatePicker datePicker) {
         boolean isValid = datePicker.getValue() != null;
 
         markControlErrorStatus(datePicker, isValid);
 
         return isValid;
+    }
+
+    private static boolean isNumeric(String string) {
+        try {
+            Integer.parseInt(string);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 
     private static boolean validateEmailTextField(TextInputControl textInputControl) {

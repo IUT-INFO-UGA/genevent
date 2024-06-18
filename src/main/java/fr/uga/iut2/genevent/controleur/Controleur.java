@@ -162,6 +162,10 @@ public class Controleur {
         this.genevent.supprimerJeu(jeuDeSociete);
     }
 
+    public JeuDeSociete getJeu(String name) {
+        return genevent.getJeu(name);
+    }
+
     public Collection<JeuDeSociete> getJeux() {
         return genevent.getJeuxDeSociete();
     }
@@ -183,6 +187,7 @@ public class Controleur {
         Seance se = new Seance(
                 seance.type,
                 seance.date,
+                seance.table,
                 seance.heureDebut,
                 seance.heureFin
         );
@@ -198,6 +203,7 @@ public class Controleur {
         Evenement ev = new Evenement(
                 evenement.type,
                 evenement.date,
+                evenement.table,
                 evenement.heureDebut,
                 evenement.heureFin,
                 evenement.nbPlaces
@@ -214,5 +220,9 @@ public class Controleur {
 
     public Collection<Personnel> getPersonnel() {
         return genevent.getPersonnels();
+    }
+
+    public Personnel getPersonnel(String login) {
+        return genevent.getPersonnel(login);
     }
 }

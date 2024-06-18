@@ -93,7 +93,7 @@
                      <children>
                         <Label text="Créer une séance">
                            <VBox.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                              <Insets bottom="3.0" left="5.0" right="5.0" top="0.0" />
                            </VBox.margin>
                            <font>
                               <Font name="System Bold" size="13.0" />
@@ -101,9 +101,9 @@
                         </Label>
                         <VBox prefHeight="315.0" prefWidth="203.0">
                            <children>
-                              <Label text="Nom">
+                              <Label text="Type">
                                  <VBox.margin>
-                                    <Insets top="15.0" />
+                                    <Insets top="0.0" />
                                  </VBox.margin></Label>
                               <TextField fx:id="planningNameField" style="-fx-background-color: #fff; -fx-border-color: #6b5ca5; -fx-background-radius: 5; -fx-border-radius: 5;" />
                               <Label text="Date">
@@ -128,6 +128,12 @@
                                  </VBox.margin>
                               </Label>
                               <CheckComboBox fx:id="jeuxList" prefHeight="200.0" prefWidth="200.0" />
+                              <Label layoutX="20.0" layoutY="188.0" text="Table">
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <ChoiceBox fx:id="planningTableList" prefHeight="200.0" prefWidth="200.0" />
                               <CheckBox onAction="#onEventCheckClick" fx:id="eventCheckBox" mnemonicParsing="false" text="Événement">
                                  <VBox.margin>
                                     <Insets bottom="5.0" right="5.0" top="5.0" />
@@ -143,9 +149,9 @@
                                     <CheckComboBox fx:id="animateursList" prefHeight="200.0" prefWidth="200.0" />
                                  </children>
                               </VBox>
-                              <Button mnemonicParsing="false" prefWidth="200.0" style="-fx-background-color: #fff; -fx-border-color: #69a197; -fx-background-radius: 5; -fx-border-radius: 5;" text="Créer">
+                              <Button onAction="#onCreateEventButtonAction" mnemonicParsing="false" prefWidth="200.0" style="-fx-background-color: #fff; -fx-border-color: #69a197; -fx-background-radius: 5; -fx-border-radius: 5;" text="Créer">
                                  <VBox.margin>
-                                    <Insets bottom="5.0" top="20.0" />
+                                    <Insets bottom="5.0" top="5.0" />
                                  </VBox.margin></Button>
                            </children>
                            <padding>

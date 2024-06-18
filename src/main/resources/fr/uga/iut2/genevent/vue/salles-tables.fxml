@@ -34,11 +34,11 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<?import javafx.scene.control.cell.PropertyValueFactory?>
 <VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
   <children>
       <BorderPane prefHeight="404.0" prefWidth="640.0">
@@ -160,7 +160,7 @@
                         </TableView>
                         <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0">
                            <children>
-                              <Button disable="true" mnemonicParsing="false" style="-fx-background-color: #fff; -fx-border-color: #69a197; -fx-background-radius: 5; -fx-border-radius: 5;" text="Créer">
+                              <Button fx:id="tableCreateButton" disable="true" mnemonicParsing="false" style="-fx-background-color: #fff; -fx-border-color: #69a197; -fx-background-radius: 5; -fx-border-radius: 5;" text="Créer">
                                  <HBox.margin>
                                     <Insets right="10.0" />
                                  </HBox.margin>

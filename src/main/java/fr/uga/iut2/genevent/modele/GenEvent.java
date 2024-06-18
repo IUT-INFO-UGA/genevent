@@ -91,6 +91,10 @@ public class GenEvent implements Serializable {
         return personnels.values();
     }
 
+    public Personnel getPersonnel(String login) {
+        return personnels.get(login);
+    }
+
     // JEUX DE SOCIETE
 
     public void addJeuDeSociete(JeuDeSociete jeu) {
@@ -103,6 +107,10 @@ public class GenEvent implements Serializable {
 
     public Collection<JeuDeSociete> getJeuxDeSociete() {
         return jeuxDeSociete.values();
+    }
+
+    public JeuDeSociete getJeu(String name) {
+        return jeuxDeSociete.get(name);
     }
 
     // COMMANDES

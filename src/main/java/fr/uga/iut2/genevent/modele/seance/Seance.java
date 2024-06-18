@@ -2,6 +2,7 @@ package fr.uga.iut2.genevent.modele.seance;
 
 import fr.uga.iut2.genevent.modele.jeu.JeuDeSociete;
 import fr.uga.iut2.genevent.modele.membre.Membre;
+import fr.uga.iut2.genevent.modele.salles.Table;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class Seance implements Serializable {
 
     private String type;
     private Date date;
+    private Table table;
     private int heureDebut;
     private int heureFin;
     private final ArrayList<Membre> membres;
@@ -32,9 +34,10 @@ public class Seance implements Serializable {
      * @param heureDebut L'heure de début de la séance.
      * @param heureFin L'heure de fin de la séance.
      */
-    public Seance(String type, Date date, int heureDebut, int heureFin) {
+    public Seance(String type, Date date, Table table, int heureDebut, int heureFin) {
         this.type = type;
         this.date = date;
+        this.table = table;
         this.heureDebut = heureDebut;
         this.heureFin = heureFin;
         this.membres = new ArrayList<>();
@@ -57,6 +60,14 @@ public class Seance implements Serializable {
      */
     public Date getDate() {
         return date;
+    }
+
+    /**
+     * Récupère la table de la séance
+     * @return la table de la séance
+     */
+    public Table getTable() {
+        return table;
     }
 
     /**

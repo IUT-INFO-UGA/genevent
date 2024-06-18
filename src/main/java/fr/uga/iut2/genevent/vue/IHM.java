@@ -3,6 +3,8 @@ package fr.uga.iut2.genevent.vue;
 import fr.uga.iut2.genevent.modele.jeu.TailleTable;
 import fr.uga.iut2.genevent.modele.personnel.Animateur;
 import fr.uga.iut2.genevent.modele.salles.Salle;
+import fr.uga.iut2.genevent.modele.salles.Table;
+import javafx.scene.control.Tab;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -151,11 +153,13 @@ public abstract class IHM {
     public static class InfosSeance {
         public String type;
         public Date date;
+        public Table table;
         public int heureDebut, heureFin;
 
-        public InfosSeance(String type, Date date, int heureDebut, int heureFin) {
+        public InfosSeance(String type, Date date, Table table, int heureDebut, int heureFin) {
             this.type = type;
             this.date = date;
+            this.table = table;
             this.heureDebut = heureDebut;
             this.heureFin = heureFin;
         }
@@ -164,12 +168,14 @@ public abstract class IHM {
     public static class InfosEvenement {
         public String type;
         public Date date;
+        public Table table;
         public int heureDebut, heureFin, nbPlaces;
         public ArrayList<Animateur> animateurs;
 
-        public InfosEvenement(String type, Date date, int heureDebut, int heureFin, int nbPlaces, ArrayList<Animateur> animateurs) {
+        public InfosEvenement(String type, Date date, Table table, int heureDebut, int heureFin, int nbPlaces, ArrayList<Animateur> animateurs) {
             this.type = type;
             this.date = date;
+            this.table = table;
             this.heureDebut = heureDebut;
             this.heureFin = heureFin;
             this.nbPlaces = nbPlaces;

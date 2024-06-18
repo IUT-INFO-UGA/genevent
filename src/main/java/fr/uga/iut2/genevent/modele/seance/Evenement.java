@@ -1,6 +1,7 @@
 package fr.uga.iut2.genevent.modele.seance;
 
 import fr.uga.iut2.genevent.modele.personnel.Animateur;
+import fr.uga.iut2.genevent.modele.salles.Table;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,8 +28,8 @@ public class Evenement extends Seance {
      * @param heureFin L'heure de fin de l'évènement.
      * @param nbPlaces Le nombre de places de l'évènement.
      */
-    public Evenement(String type, Date date, int heureDebut, int heureFin, int nbPlaces) throws SeanceException {
-        super(type, date, heureDebut, heureFin);
+    public Evenement(String type, Date date, Table table, int heureDebut, int heureFin, int nbPlaces) throws SeanceException {
+        super(type, date, table, heureDebut, heureFin);
         setNbPlaces(nbPlaces);
         this.animateurs = new ArrayList<>();
     }
