@@ -33,13 +33,13 @@
             <Label text="Nom du jeu à commander :" />
             <Label text="Quantité à commander :" GridPane.rowIndex="1" />
             <Label text="Prix du jeu à l'unité :" GridPane.rowIndex="2" />
-            <TextField fx:id="tfNomDuJeu" GridPane.columnIndex="1" />
-            <Spinner fx:id="spQuantite" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <TextField fx:id="tfNomDuJeu" GridPane.columnIndex="1" style="-fx-border-color: #6b5ca5; -fx-background-radius: 5; -fx-border-radius: 5;" />
+            <Spinner fx:id="spQuantite" GridPane.columnIndex="1" GridPane.rowIndex="1" style="-fx-border-color: #69a197; -fx-background-radius: 5; -fx-border-radius: 5;" >
                 <valueFactory>
                     <SpinnerValueFactory.IntegerSpinnerValueFactory amountToStepBy="1" initialValue="1" max="2147483647" min="1" />
                 </valueFactory>
             </Spinner>
-             <Spinner fx:id="spPrix" GridPane.columnIndex="1" GridPane.rowIndex="2">
+             <Spinner fx:id="spPrix" GridPane.columnIndex="1" GridPane.rowIndex="2" style="-fx-border-color: #69a197; -fx-background-radius: 5; -fx-border-radius: 5;">
                  <valueFactory>
                      <SpinnerValueFactory.DoubleSpinnerValueFactory amountToStepBy="0.01" initialValue="1.0" max="2147483647.0" min="0.01" />
                  </valueFactory>
@@ -51,12 +51,12 @@
       </GridPane>
       <HBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
          <children>
-            <Button fx:id="btnEnregistrer" mnemonicParsing="false" onAction="#onBtnEnregistrerCommandeAction" text="Enregistrer">
+            <Button fx:id="btnEnregistrer" mnemonicParsing="false" onAction="#onBtnEnregistrerCommandeAction" text="Enregistrer" style="-fx-background-color: #fff; -fx-border-color: #69a197; -fx-border-radius: 5; -fx-background-radius: 5;">
                <HBox.margin>
                   <Insets />
                </HBox.margin>
             </Button>
-            <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#onBtnCancelAction" text="Annuler" />
+            <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#onBtnCancelAction" text="Annuler" style="-fx-background-color: #fff; -fx-border-color: #ff3a33; -fx-border-radius: 5; -fx-background-radius: 5;"/>
          </children>
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

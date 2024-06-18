@@ -1,5 +1,6 @@
 package fr.uga.iut2.genevent.vue;
 
+import fr.uga.iut2.genevent.modele.Role;
 import fr.uga.iut2.genevent.modele.jeu.TailleTable;
 import fr.uga.iut2.genevent.modele.personnel.Animateur;
 import fr.uga.iut2.genevent.modele.salles.Salle;
@@ -181,6 +182,20 @@ public abstract class IHM {
             this.heureFin = heureFin;
             this.nbPlaces = nbPlaces;
             this.animateurs = animateurs;
+        }
+    }
+
+    public static class InfosPersonnel {
+        public String login, nom, prenom;
+        public Role role;
+        public String telephone;
+
+        public InfosPersonnel(String login, String nom, String prenom, Role role, String telephone) {
+            this.login = login;
+            this.nom = nom;
+            this.prenom = prenom;
+            this.role = role;
+            this.telephone = telephone;
         }
     }
 }

@@ -8,7 +8,7 @@ import fr.uga.iut2.genevent.modele.jeu.JeuDeSociete;
 import fr.uga.iut2.genevent.modele.jeu.JeuDeSocieteException;
 import fr.uga.iut2.genevent.modele.membre.Membre;
 import fr.uga.iut2.genevent.modele.membre.MembreException;
-import fr.uga.iut2.genevent.modele.personnel.Personnel;
+import fr.uga.iut2.genevent.modele.personnel.*;
 import fr.uga.iut2.genevent.modele.salles.Salle;
 import fr.uga.iut2.genevent.modele.salles.Table;
 import fr.uga.iut2.genevent.modele.seance.Evenement;
@@ -224,5 +224,33 @@ public class Controleur {
 
     public Personnel getPersonnel(String login) {
         return genevent.getPersonnel(login);
+    }
+
+    public void creerPersonnel(IHM.InfosPersonnel personnel) throws PersonnelException {
+        Personnel p;
+
+        switch (personnel.role) {
+            case GERANT:
+                p = new Gerant(personnel.login, personnel.prenom, personnel.nom);
+                break;
+            case ANIMATEUR:
+                p = new Animateur(personnel.login, personnel.prenom, personnel.nom);
+                break;
+            case GESTIONNAIRE:
+                p = new Gestionnaire(personnel.login, personnel.prenom, personnel.nom);
+                break;
+            default:
+                return;
+        }
+
+        if (!personnel.telephone.isEmpty()) {
+            p.setNumTel(personnel.telephone);
+        }
+
+        genevent.addPersonnel(p);
+    }
+
+    public void supprimerPersonnel(Personnel personnel) {
+        genevent.supprimerPersonnel(personnel);
     }
 }

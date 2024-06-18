@@ -32,17 +32,16 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 
-<?import com.calendarfx.view.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<?import org.controlsfx.control.*?>
 
-<VBox prefHeight="500.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
   <children>
-      <BorderPane prefHeight="501.0" prefWidth="640.0">
+      <BorderPane prefHeight="404.0" prefWidth="640.0">
          <top>
             <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="54.0" prefWidth="640.0" style="-fx-background-color: #fd8c58;" BorderPane.alignment="CENTER">
                <children>
@@ -87,13 +86,54 @@
                <children>
                   <VBox prefHeight="346.0" prefWidth="305.0">
                      <children>
-                        <CalendarView prefHeight="446.0" prefWidth="463.0" showToolBar="false" />
-                     </children></VBox>
+                        <Label text="Personnel">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Label>
+                        <TableView fx:id="personnelList" onMouseClicked="#onPersonnelListValueClick" prefHeight="300.0" prefWidth="252.0">
+                          <columns>
+                              <TableColumn minWidth="0.0" prefWidth="68.0" text="Login">
+                                 <cellValueFactory>
+                                    <PropertyValueFactory property="id" />
+                                 </cellValueFactory>
+                              </TableColumn>
+                            <TableColumn minWidth="0.0" prefWidth="100.0" text="Nom">
+                               <cellValueFactory><PropertyValueFactory property="nom" /></cellValueFactory>
+                            </TableColumn>
+                              <TableColumn minWidth="0.0" prefWidth="97.0" text="Prénom">
+                                 <cellValueFactory><PropertyValueFactory property="prenom" /></cellValueFactory>
+                              </TableColumn>
+
+                              <TableColumn prefWidth="92.0" text="Rang">
+                                 <cellValueFactory><PropertyValueFactory property="" /></cellValueFactory>
+                              </TableColumn>
+                              <TableColumn minWidth="0.0" prefWidth="105.0" text="Téléphone">
+                                 <cellValueFactory>
+                                    <PropertyValueFactory property="numTel" />
+                                 </cellValueFactory>
+                              </TableColumn>
+                          </columns>
+                        </TableView>
+                        <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0">
+                           <children>
+                              <Button fx:id="personnelDeleteButton" disable="true" mnemonicParsing="false" onAction="#onPersonnelDeleteButtonAction" style="-fx-background-color: #fff; -fx-border-color: #ff3a33; -fx-background-radius: 5; -fx-border-radius: 5;" text="Supprimer">
+                                 <HBox.margin>
+                                    <Insets right="10.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
                   <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
                      <children>
-                        <Label text="Créer une séance">
+                        <Label text="Ajouter un personnel">
                            <VBox.margin>
-                              <Insets bottom="3.0" left="5.0" right="5.0" top="0.0" />
+                              <Insets left="5.0" right="5.0" top="5.0" />
                            </VBox.margin>
                            <font>
                               <Font name="System Bold" size="13.0" />
@@ -101,58 +141,41 @@
                         </Label>
                         <VBox prefHeight="315.0" prefWidth="203.0">
                            <children>
-                              <Label text="Type">
-                                 <VBox.margin>
-                                    <Insets top="0.0" />
-                                 </VBox.margin></Label>
-                              <TextField fx:id="planningNameField" style="-fx-background-color: #fff; -fx-border-color: #6b5ca5; -fx-background-radius: 5; -fx-border-radius: 5;" />
-                              <Label text="Date">
+                              <Label layoutX="20.0" layoutY="65.0" text="Login" />
+                              <TextField fx:id="personnelLoginField" layoutX="20.0" layoutY="83.0" style="-fx-border-color: #6b5ca5; -fx-background-radius: 5; -fx-border-radius: 5;" />
+                              <Label text="Nom">
                                  <VBox.margin>
                                     <Insets top="5.0" />
                                  </VBox.margin></Label>
-                              <DatePicker fx:id="planningDatePicker" style="-fx-background-color: #fff; -fx-border-color: #6b5ca5; -fx-background-radius: 5; -fx-border-radius: 5;" />
-                              <Label text="Heure de début">
+                              <TextField fx:id="personnelFirstNameField" style="-fx-border-color: #6b5ca5; -fx-background-radius: 5; -fx-border-radius: 5;" />
+                              <Label text="Prénom">
                                  <VBox.margin>
                                     <Insets top="5.0" />
                                  </VBox.margin></Label>
-                              <TextField fx:id="planningStartHourField" style="-fx-background-color: #fff; -fx-border-color: #6b5ca5; -fx-background-radius: 5; -fx-border-radius: 5;" />
-                              <Label layoutX="20.0" layoutY="163.0" text="Heure de fin">
+                              <TextField fx:id="personnelNameField" layoutX="20.0" layoutY="89.0" style="-fx-border-color: #6b5ca5; -fx-background-radius: 5; -fx-border-radius: 5;" />
+                              <Label text="Téléphone">
                                  <VBox.margin>
                                     <Insets top="5.0" />
-                                 </VBox.margin>
+                                 </VBox.margin></Label>
+                              <TextField fx:id="personnelPhoneNbField" style="-fx-border-color: #6b5ca5; -fx-background-radius: 5; -fx-border-radius: 5;" />
+                              <Label text="Format attendu : 0XXXXXXXXX">
+                                 <font>
+                                    <Font name="System Italic" size="11.0" />
+                                 </font>
                               </Label>
-                              <TextField fx:id="planningEndHourField" layoutX="20.0" layoutY="181.0" style="-fx-background-color: #fff; -fx-border-color: #6b5ca5; -fx-background-radius: 5; -fx-border-radius: 5;" />
-                              <Label layoutX="20.0" layoutY="188.0" text="Jeu(x) de société">
+                              <Label layoutX="20.0" layoutY="173.0" text="Rang" />
+                              <ChoiceBox fx:id="personnelRankField" prefWidth="151600.0" />
+                              <Button fx:id="personnelCreateButton" mnemonicParsing="false" onAction="#addPersonnelButtonAction" prefWidth="200.0" style="-fx-background-color: #fff; -fx-border-color: #69a197; -fx-background-radius: 5; -fx-border-radius: 5;" text="Créer">
                                  <VBox.margin>
-                                    <Insets top="5.0" />
+                                    <Insets top="15.0" />
                                  </VBox.margin>
-                              </Label>
-                              <CheckComboBox fx:id="jeuxList" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #fff;" />
-                              <Label layoutX="20.0" layoutY="188.0" text="Table">
-                                 <VBox.margin>
-                                    <Insets top="5.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <ChoiceBox fx:id="planningTableList" prefHeight="200.0" prefWidth="200.0" style="-fx-mark-color: #fc7536; -fx-background-color: #fff; -fx-border-radius: 5; -fx-background-radius: 5;" />
-                              <CheckBox fx:id="eventCheckBox" mnemonicParsing="false" onAction="#onEventCheckClick" text="Événement">
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" right="5.0" top="5.0" />
-                                 </VBox.margin>
-                              </CheckBox>
-                              <VBox fx:id="eventBox" prefHeight="200.0" prefWidth="100.0" visible="false">
-                                 <children>
-                                    <Label text="Animateur(s)">
-                                       <VBox.margin>
-                                          <Insets />
-                                       </VBox.margin>
-                                    </Label>
-                                    <CheckComboBox fx:id="animateursList" prefHeight="200.0" prefWidth="200.0" />
-                                 </children>
-                              </VBox>
-                              <Button mnemonicParsing="false" onAction="#onCreateEventButtonAction" prefWidth="200.0" style="-fx-background-color: #fff; -fx-border-color: #69a197; -fx-background-radius: 5; -fx-border-radius: 5;" text="Créer">
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" top="5.0" />
-                                 </VBox.margin></Button>
+                                 <graphic>
+                                    <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@images/dice.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic></Button>
                            </children>
                            <padding>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
