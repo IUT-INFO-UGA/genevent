@@ -9,6 +9,7 @@ module genevent {
     opens fr.uga.iut2.genevent.modele.commande to javafx.base;
     opens fr.uga.iut2.genevent.modele.membre to javafx.base;
     opens fr.uga.iut2.genevent.modele.jeu to javafx.base;
+    opens fr.uga.iut2.genevent.modele.salles to javafx.base;
 
     exports fr.uga.iut2.genevent;
 }
