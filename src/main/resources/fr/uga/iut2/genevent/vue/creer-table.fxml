@@ -17,7 +17,7 @@
 <?import javafx.scene.text.Font?>
 
 <?import java.lang.String?>
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.uga.iut2.genevent.controleur.popup.CreationTableController">
    <children>
       <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="200.0" style="-fx-background-color: #69a197;">
          <children>
@@ -67,7 +67,7 @@
       </GridPane>
       <HBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
          <children>
-            <Button fx:id="btnEnregistrer" mnemonicParsing="false" onAction="#onBtnEnregistrerTableAction" text="Enregistrer">
+            <Button fx:id="btnEnregistrer" mnemonicParsing="false" onAction="#onBtnEnregistrerAction" text="Enregistrer">
                <HBox.margin>
                   <Insets />
                </HBox.margin>

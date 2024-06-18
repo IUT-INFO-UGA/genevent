@@ -1,49 +1,17 @@
 package fr.uga.iut2.genevent.vue;
 
-import com.calendarfx.model.Entry;
-import com.calendarfx.view.CalendarView;
 import fr.uga.iut2.genevent.controleur.Controleur;
-import fr.uga.iut2.genevent.modele.Role;
-import fr.uga.iut2.genevent.modele.commande.Commande;
-import fr.uga.iut2.genevent.modele.commande.CommandeException;
-import fr.uga.iut2.genevent.modele.jeu.JeuDeSociete;
-import fr.uga.iut2.genevent.modele.jeu.JeuDeSocieteException;
-import fr.uga.iut2.genevent.modele.jeu.TailleTable;
-import fr.uga.iut2.genevent.modele.membre.Membre;
-import fr.uga.iut2.genevent.modele.membre.MembreException;
-import fr.uga.iut2.genevent.modele.personnel.*;
-import fr.uga.iut2.genevent.modele.salles.Salle;
-import fr.uga.iut2.genevent.modele.salles.Table;
-import fr.uga.iut2.genevent.modele.seance.Seance;
-import fr.uga.iut2.genevent.modele.seance.SeanceException;
+import fr.uga.iut2.genevent.controleur.MainViewController;
 import javafx.application.Platform;
-import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import javafx.util.StringConverter;
-import org.apache.commons.validator.routines.EmailValidator;
-import org.controlsfx.control.CheckComboBox;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.util.*;
 import java.util.concurrent.CountDownLatch;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 
 /**
@@ -63,60 +31,11 @@ public class JavaFXGUI extends IHM {
 
     private final Controleur controleur;
     private final CountDownLatch eolBarrier;  // /!\ ne pas supprimer /!\ : suivi de la durée de vie de l'interface
-    private Salle salleSelectionnee;
-
-    private Stage creationWindow;
-    
-    @FXML
-    public TextField tfNomDuJeu;
-    @FXML
-    public TextArea taRegles;
-    @FXML
-    public Spinner<Integer> spNbJoueurs;
-    @FXML
-    public DatePicker dpDateAchat;
-    @FXML
-    public TextField tfType;
-    @FXML
-    public ComboBox<String> cbTailleTable;
-    @FXML
-    public Spinner<Integer> spDureePartie;
-    @FXML
-    public Spinner<Double> spPrix;
-    @FXML
-    public Spinner<Integer> spQuantite;
-    @FXML
-    public Button btnEnregistrer;
-    @FXML
-    public Button btnCancel;
-
-    @FXML
-    private Button stocks, members, salles, planning, personnels;
 
     public JavaFXGUI(Controleur controleur) {
         this.controleur = controleur;
 
         this.eolBarrier = new CountDownLatch(1);  // /!\ ne pas supprimer /!\
-    }
-
-    /**
-     * Point d'entrée principal pour le code de l'interface JavaFX.
-     *
-     * @param primaryStage stage principale de l'interface JavaFX, sur laquelle
-     *     définir des scenes.
-     *
-     * @throws IOException si le chargement de la vue FXML échoue.
-     *
-     * @see javafx.application.Application#start(Stage)
-     */
-    private void start(Stage primaryStage) throws IOException {
-        FXMLLoader mainViewLoader = new FXMLLoader(getClass().getResource("main-view.fxml"));
-        mainViewLoader.setController(this);
-        Scene mainScene = new Scene(mainViewLoader.load());
-
-        primaryStage.setTitle("GenEvent");
-        primaryStage.setScene(mainScene);
-        primaryStage.show();
     }
 
 //-----  Éléments du dialogue  -------------------------------------------------
@@ -134,60 +53,11 @@ public class JavaFXGUI extends IHM {
         this.exitAction();
     }
 
-    // en-tête
-
-    @FXML
-    private void onHeaderButtonClick(MouseEvent event) throws IOException {
-        if (event.getSource() instanceof ImageView) {
-            ImageView button = (ImageView) event.getSource();
-            if (button.getId().equals("logo")) {
-                FXMLLoader mainViewLoader = new FXMLLoader(getClass().getResource("main-view.fxml"));
-                mainViewLoader.setController(this);
-                Scene mainScene = new Scene(mainViewLoader.load());
-
-                Stage stage = (Stage) button.getScene().getWindow();
-                stage.setScene(mainScene);
-                stage.show();
-            }
-        }
-    }
-
-    @FXML
-    private ChoiceBox<String> rolesList;
-
-    @FXML
-    private void onRoleButtonClick(MouseEvent event) throws IOException {
-        String value = rolesList.getValue();
-
-        System.out.println(value);
-
-        if (value == null) {
-            return;
-        }
-
-        Role role = Role.getByName(value);
-        System.out.println(role);
-
-        if (controleur.getRole() == role) {
-            return;
-        }
-
-        System.out.println("Mise à jour rôle");
-        controleur.setRole(role);
-        start(((Stage) rolesList.getScene().getWindow()));
-    }
-
     // initialisation
 
+    /*
     @FXML
     private void initialize() {
-        rolesList.getItems().clear();
-
-        for (Role role : Role.values()) {
-            rolesList.getItems().add(role.getName());
-        }
-
-        rolesList.setValue(controleur.getRole().getName());
 
         if (members != null) {
             members.setDisable(!controleur.getRole().isAccesMembres());
@@ -195,15 +65,6 @@ public class JavaFXGUI extends IHM {
             planning.setDisable(!controleur.getRole().isAccesPlanning());
             salles.setDisable(!controleur.getRole().isAccesSalles());
         }
-
-        if (memberList != null) {
-            refreshMemberTable();
-        }
-
-        refreshSallesTable();
-        refreshPlanningView();
-        refreshStockTable();
-        refreshCommandeTable();
 
         if (jeuxList != null) {
             jeuxList.getItems().clear();
@@ -246,694 +107,7 @@ public class JavaFXGUI extends IHM {
             });
         }
     }
-
-    // vue accueil
-
-    @FXML
-    private void onMainButtonClicked(ActionEvent event) throws IOException {
-        FXMLLoader loader;
-
-        if (!(event.getSource() instanceof Button)) {
-            return;
-        }
-
-        Button button = (Button) event.getSource();
-
-        switch (button.getId()) {
-            case "stocks":
-                loader = new FXMLLoader(getClass().getResource("stock-commandes.fxml"));
-                break;
-            case "members":
-                loader = new FXMLLoader(getClass().getResource("membres.fxml"));
-                break;
-            case "salles":
-                loader = new FXMLLoader(getClass().getResource("salles-tables.fxml"));
-                break;
-            case "planning":
-                loader = new FXMLLoader(getClass().getResource("planning.fxml"));
-                break;
-            case "personnels":
-                loader = new FXMLLoader(getClass().getResource("personnels.fxml"));
-                break;
-            default:
-                return;
-        }
-
-        loader.setController(this);
-        Scene scene = new Scene(loader.load());
-        Stage stage = (Stage) button.getScene().getWindow();
-
-        stage.setScene(scene);
-        stage.show();
-    }
-
-
-    // Vue membres
-
-    @FXML
-    private TableView<Membre> memberList;
-
-    @FXML
-    private TextField memberNameField, memberPhoneNbField;
-
-    @FXML
-    private DatePicker memberBirthDateField;
-
-    @FXML
-    private void addMemberButtonAction() {
-        boolean isValid = validateNonEmptyTextInputControl(memberNameField)
-                & validateNonEmptyTextInputControl(memberPhoneNbField)
-                & validateNonEmptyDatePicker(memberBirthDateField);
-
-        if (!matchesPattern(memberNameField.getText(), Membre.PATERNE_NOM)) {
-            isValid = false;
-            markControlErrorStatus(memberNameField, false);
-        }
-
-        if (!matchesPattern(memberPhoneNbField.getText(), Membre.PATERNE_TELEPHONE)) {
-            isValid = false;
-            markControlErrorStatus(memberPhoneNbField, false);
-        }
-
-        if (!isValid) {
-            return;
-        }
-
-        try {
-            LocalDate value = memberBirthDateField.getValue();
-            Date birthDate = Date.from(value.atStartOfDay(ZoneId.systemDefault()).toInstant());
-
-            controleur.creerMembre(new IHM.InfosMembre(
-                    memberNameField.getText().strip(),
-                    birthDate,
-                    memberPhoneNbField.getText().strip()
-            ));
-
-            memberNameField.clear();
-            memberPhoneNbField.clear();
-            memberBirthDateField.setValue(null);
-        } catch (MembreException e) {
-            isValid = false;
-            e.printStackTrace();
-        }
-
-        refreshMemberTable();
-    }
-
-    private void refreshMemberTable() {
-        memberList.getItems().clear();
-        memberList.getItems().addAll(controleur.getMembres());
-        memberList.refresh();
-    }
-
-    private void refreshStockTable() {
-        if (stocksList != null) {
-            stocksList.getItems().clear();
-            stocksList.getItems().addAll(controleur.getJeux());
-            stocksList.refresh();
-        }
-    }
-
-    private void refreshCommandeTable() {
-        Commande commande;
-        Collection<Commande> commandes = controleur.getCommandes();
-        Iterator<Commande> it = commandes.iterator();
-        if (commandesList != null) {
-            commandesList.getItems().clear();
-            while (it.hasNext()) {
-                commande = it.next();
-                if (!commande.estRecue()) {
-                    commandesList.getItems().add(commande);
-                }
-            }
-            commandesList.refresh();
-        }
-    }
-
-    private void refreshSallesTable() {
-        if (sallesList != null) {
-            sallesList.getItems().clear();
-            sallesList.getItems().addAll(controleur.getSalles());
-            sallesList.refresh();
-        }
-    }
-
-    private void refreshTablesTable(Salle salle) {
-        if (tablesList != null) {
-            tablesList.getItems().clear();
-            if (salle != null) {
-                tablesList.getItems().addAll(salle.getTables().values());
-            }
-            tablesList.refresh();
-        }
-    }
-
-    @FXML
-    private void onBtnEnregistrerTableAction(ActionEvent event) {
-        if (salleSelectionnee == null) {
-            refreshTablesTable(null);
-            creationWindow.close();
-            return;
-        }
-        if (validateNonEmptyTextInputControl(tfType)
-                & validateSpinnerValue(spNbJoueurs, 1, false)
-                & validateComboBoxValue(cbTailleTable)
-        ) {
-            controleur.creerTable(
-                    new InfosTable(
-                            salleSelectionnee.getTables().size(),
-                            salleSelectionnee,
-                            tfType.getText(),
-                            spNbJoueurs.getValue(),
-                            TailleTable.getByName(cbTailleTable.getValue())
-                    )
-            );
-            refreshTablesTable(salleSelectionnee);
-            creationWindow.close();
-        }
-    }
-
-    @FXML
-    private Button memberModifyButton, memberDeleteButton;
-
-    @FXML
-    private void onMemberListValueClick(MouseEvent event) {
-        Membre selectedItem = memberList.getSelectionModel().getSelectedItem();
-
-        memberModifyButton.setDisable(selectedItem == null);
-        memberDeleteButton.setDisable(selectedItem == null);
-    }
-
-    @FXML
-    private void onMemberModifyButtonAction() {
-        Membre selectedItem = memberList.getSelectionModel().getSelectedItem();
-
-        memberNameField.setText(selectedItem.getNom());
-        memberPhoneNbField.setText(selectedItem.getTelephone());
-        memberBirthDateField.setValue(selectedItem.getDateNaissance().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-
-        // TODO: implémenter la modification
-    }
-
-    @FXML
-    private void onMemberDeleteButtonAction() {
-        Membre selectedItem = memberList.getSelectionModel().getSelectedItem();
-
-        if (selectedItem != null) {
-            controleur.supprimerMembre(selectedItem);
-            refreshMemberTable();
-        }
-    }
-
-    // vue salles
-
-    @FXML
-    private TableView<Salle> sallesList;
-
-    @FXML
-    private TableView<Table> tablesList;
-
-    @FXML
-    private Button tableCreateButton, tableDeleteButton;
-
-    @FXML
-    private void onSalleSelected(MouseEvent event) {
-        salleSelectionnee = sallesList.getSelectionModel().getSelectedItem();
-        tableCreateButton.setDisable(salleSelectionnee == null);
-        tableDeleteButton.setDisable(salleSelectionnee == null);
-
-        refreshTablesTable(salleSelectionnee);
-    }
-
-    @FXML
-    private void onCreerSalleAction(ActionEvent event) {
-        if (validateNonEmptyTextInputControl(tfType)) {
-            // TODO : changer la  façon dont les identifiants sont générés
-            controleur.creerSalle(new InfosSalle(controleur.getSalles().size(), tfType.getText()));
-            refreshSallesTable();
-        }
-    }
-
-    @FXML
-    private void onSupprimerSalleAction(ActionEvent event) {
-        Salle selectedItem = sallesList.getSelectionModel().getSelectedItem();
-        if (salles != null) {
-            // ...
-        }
-    }
-
-    @FXML
-    private void onCreerTableAction(ActionEvent event) {
-        try {
-            FXMLLoader newUserViewLoader = new FXMLLoader(getClass().getResource("creer-table.fxml"));
-            newUserViewLoader.setController(this);
-            Scene newTableScene = new Scene(newUserViewLoader.load());
-
-            creationWindow = new Stage();
-            creationWindow.setTitle("Ajouter une table");
-            creationWindow.initModality(Modality.WINDOW_MODAL);
-            creationWindow.setScene(newTableScene);
-            creationWindow.show();
-        } catch (IOException exc) {
-            throw new RuntimeException(exc);
-        }
-    }
-
-    @FXML
-    private void onSupprimerTableAction(ActionEvent event) {
-        Table selectedItem = tablesList.getSelectionModel().getSelectedItem();
-        if (selectedItem != null) {
-            selectedItem.getSalle().removeTable(selectedItem);
-        }
-        refreshTablesTable(salleSelectionnee);
-    }
-
-    // vue stocks
-
-    @FXML
-    private TableView<JeuDeSociete> stocksList;
-
-    @FXML
-    private TableView<Commande> commandesList;
-
-    @FXML
-    private Button stocksAddButton, stocksModifyButton, stocksDeleteButton;
-
-    @FXML
-    private Button commandeCreateButton, commandeSetStatusButton;
-
-    @FXML
-    private void onStocksAddButtonAction(ActionEvent event) {
-        try {
-            FXMLLoader newUserViewLoader = new FXMLLoader(getClass().getResource("add-to-stock.fxml"));
-            newUserViewLoader.setController(this);
-            Scene newJeuScene = new Scene(newUserViewLoader.load());
-
-            creationWindow = new Stage();
-            creationWindow.setTitle("Ajouter un jeu au stock");
-            creationWindow.initModality(Modality.WINDOW_MODAL);
-            creationWindow.setScene(newJeuScene);
-            creationWindow.showAndWait();
-            refreshStockTable();
-        } catch (IOException exc) {
-            throw new RuntimeException(exc);
-        }
-    }
-
-    @FXML
-    private void onStocksModifyButtonAction(ActionEvent event) {
-        JeuDeSociete jds = stocksList.getSelectionModel().getSelectedItem();
-
-        if (jds != null) {
-            try {
-                FXMLLoader newUserViewLoader = new FXMLLoader(getClass().getResource("add-to-stock.fxml"));
-                newUserViewLoader.setController(this);
-                Scene modifyJeuScene = new Scene(newUserViewLoader.load());
-
-                creationWindow = new Stage();
-                creationWindow.setTitle("Modification du jeu \"" + jds.getNom() + "\"");
-                creationWindow.initModality(Modality.WINDOW_MODAL);
-                creationWindow.setScene(modifyJeuScene);
-                // TODO
-                creationWindow.showAndWait();
-                refreshStockTable();
-            } catch (IOException exc) {
-                throw new RuntimeException(exc);
-            }
-        }
-    }
-
-    @FXML
-    private void onStocksDeleteButtonAction(ActionEvent event) {
-        JeuDeSociete selectedItem = stocksList.getSelectionModel().getSelectedItem();
-
-        if (selectedItem != null) {
-            controleur.supprimerJeu(selectedItem);
-            refreshStockTable();
-        }
-    }
-
-    @FXML
-    private void onCommandeCreateButtonAction(ActionEvent event) {
-        try {
-            FXMLLoader newUserViewLoader = new FXMLLoader(getClass().getResource("add-commande.fxml"));
-            newUserViewLoader.setController(this);
-            Scene newCommandeScene = new Scene(newUserViewLoader.load());
-
-            creationWindow = new Stage();
-            creationWindow.setTitle("Ajouter une commande");
-            creationWindow.initModality(Modality.WINDOW_MODAL);
-            creationWindow.setScene(newCommandeScene);
-            creationWindow.showAndWait();
-            refreshCommandeTable();
-        } catch (IOException exc) {
-            throw new RuntimeException(exc);
-        }
-    }
-
-    @FXML
-    private void onCommandeSetStatusButtonAction(ActionEvent event) {
-        Commande selectedItem = commandesList.getSelectionModel().getSelectedItem();
-        if (selectedItem != null) {
-            selectedItem.marquerCommeRecue();
-        }
-        refreshCommandeTable();
-    }
-
-    // vue ajout d'un jeu au stock
-
-    @FXML
-    private void onBtnEnregistrerCommandeAction(ActionEvent event) {
-        if (validateNonEmptyTextInputControl(tfNomDuJeu)
-                & validateSpinnerValue(spQuantite, 1, false)
-                & validateSpinnerValue(spPrix, 0, true)
-        ) {
-            try {
-                controleur.creerCommande(new InfosCommande(controleur.getCommandes().size(), tfNomDuJeu.getText(), spQuantite.getValue(), spPrix.getValue()));
-                creationWindow.close();
-            } catch (CommandeException e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle(e.getMessage());
-                alert.showAndWait();
-            }
-        }
-    }
-
-    @FXML
-    private void onBtnEnregistrerJeuAction(ActionEvent event) {
-        if (validateNonEmptyTextInputControl(tfNomDuJeu)
-                & validateNonEmptyTextInputControl(taRegles)
-                & validateSpinnerValue(spNbJoueurs, 1, false)
-                & validateNonEmptyDatePicker(dpDateAchat)
-                & validateNonEmptyTextInputControl(tfType)
-                & validateSpinnerValue(spDureePartie, 1, false)
-                & validateSpinnerValue(spPrix, 0, true)
-                & validateComboBoxValue(cbTailleTable)
-        ) {
-            try {
-                controleur.creerJeu(
-                        new InfosJeu(
-                                tfNomDuJeu.getText(),
-                                taRegles.getText(),
-                                Date.from(dpDateAchat.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()),
-                                tfType.getText(),
-                                TailleTable.getByName(cbTailleTable.getValue()),
-                                spDureePartie.getValue(),
-                                spPrix.getValue(),
-                                spNbJoueurs.getValue()
-                        )
-                );
-            } catch (JeuDeSocieteException e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle(e.getMessage());
-                alert.showAndWait();
-            }
-            creationWindow.close();
-        }
-    }
-
-    @FXML
-    private void onBtnCancelAction(ActionEvent event) {
-        creationWindow.close();
-    }
-
-    // vue planning
-
-    @FXML
-    private CalendarView planningView;
-
-    @FXML
-    private DatePicker planningDatePicker;
-
-    @FXML
-    private TextField planningNameField, planningStartHourField, planningEndHourField;
-
-    @FXML
-    private VBox eventBox;
-
-    @FXML
-    private CheckBox eventCheckBox;
-
-    @FXML
-    private ChoiceBox<Table> planningTableList;
-
-    @FXML
-    private CheckComboBox<String> jeuxList, animateursList;
-
-    @FXML
-    private void onEventCheckClick(ActionEvent event) {
-        eventBox.setVisible(eventCheckBox.isSelected());
-    }
-
-    @FXML
-    private void onCreateEventButtonAction() {
-        boolean valide = validateNonEmptyTextInputControl(planningNameField)
-                & validateNonEmptyDatePicker(planningDatePicker)
-                & validateNonEmptyTextInputControl(planningStartHourField, isNumeric(planningStartHourField.getText()))
-                & validateNonEmptyTextInputControl(planningEndHourField, isNumeric(planningEndHourField.getText()));
-
-        if (valide) {
-            String type = planningNameField.getText();
-            int start = Integer.parseInt(planningStartHourField.getText());
-            int end = Integer.parseInt(planningEndHourField.getText());
-            LocalDate date = planningDatePicker.getValue();
-
-            ArrayList<JeuDeSociete> jeux = new ArrayList<>();
-
-            for (String checkedItem : jeuxList.getCheckModel().getCheckedItems()) {
-                jeux.add(controleur.getJeu(checkedItem));
-            }
-
-            Table selectedItem = tablesList.getSelectionModel().getSelectedItem();
-
-            if (selectedItem == null) {
-                markControlErrorStatus(tablesList, true);
-                // TODO : Message d'erreur
-                return;
-            }
-
-            if (eventCheckBox.isSelected()) {
-                ObservableList<String> items = animateursList.getCheckModel().getCheckedItems();
-                ArrayList<Animateur> personnels = new ArrayList<>();
-
-                if (items.isEmpty()) {
-                    markControlErrorStatus(animateursList, true);
-                    // TODO : Message d'erreur
-                    return;
-                }
-
-                for (String item : items) {
-                    personnels.add(((Animateur) controleur.getPersonnel(item)));
-                }
-
-                try {
-                    controleur.creerEvenement(new InfosEvenement(
-                            type,
-                            Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant()),
-                            selectedItem,
-                            start,
-                            end,
-                            selectedItem.getNbPlaces(), // TODO
-                            personnels
-                    ));
-                } catch (SeanceException e) {
-                    // TODO
-                }
-            } else {
-                controleur.creerSeance(new InfosSeance(
-                        type,
-                        Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant()),
-                        selectedItem,
-                        start,
-                        end
-                ));
-            }
-            refreshPlanningView();
-        }
-    }
-
-    private void refreshPlanningView() {
-        if (planningView != null) {
-            planningTableList.setConverter(new StringConverter<>() {
-                @Override
-                public String toString(Table table) {
-                    return table.getSalle().getNumero() + "-" + table.getId();
-                }
-
-                @Override
-                public Table fromString(String s) {
-                    String[] splittedName = s.split("-");
-
-                    return controleur.getSalle(Integer.parseInt(splittedName[0])).getTable(Long.parseLong(splittedName[1]));
-                }
-            });
-
-            planningTableList.getItems().clear();
-            for (Salle salle : controleur.getSalles()) {
-                salle.getTables().forEach((id, table) -> {
-                    planningTableList.getItems().add(table);
-                });
-            }
-
-            planningView.getCalendarSources().clear();
-            for (Seance seance : controleur.getSeances()) {
-                ZonedDateTime d = ZonedDateTime.ofInstant(seance.getDate().toInstant(),
-                        ZoneId.systemDefault());
-
-                Entry<?> entry = planningView.createEntryAt(d);
-                entry.changeStartTime(LocalTime.of(seance.getHeureDebut(), 0));
-                entry.changeEndTime(LocalTime.of(seance.getHeureFin(), 0));
-                entry.setTitle(seance.getType());
-                entry.setLocation("Table " + seance.getTable().getSalle().getNumero() + "-" + seance.getTable().getId());
-            }
-        }
-    }
-
-    // Vue personnel
-
-    @FXML
-    private Button personnelDeleteButton;
-
-    @FXML
-    private TextField personnelLoginField, personnelFirstNameField, personnelNameField, personnelPhoneNbField;
-
-    @FXML
-    private ChoiceBox<String> personnelRankField;
-
-    @FXML
-    private TableView<Personnel> personnelList;
-
-    @FXML
-    private void addPersonnelButtonAction(ActionEvent event) {
-        boolean valid = validateNonEmptyTextInputControl(personnelLoginField)
-                & validateNonEmptyTextInputControl(personnelFirstNameField)
-                & validateNonEmptyTextInputControl(personnelNameField)
-                & personnelRankField.getValue() != null;
-
-        if (!personnelPhoneNbField.getText().isEmpty()) {
-            valid &= validateNonEmptyTextInputControl(personnelPhoneNbField, matchesPattern(personnelPhoneNbField.getText(), Membre.PATERNE_TELEPHONE));
-        }
-
-        if (controleur.getPersonnel(personnelLoginField.getText()) != null) {
-            // TODO : erreur existe déjà
-        }
-
-        if (valid) {
-            Role role = Role.getByName(personnelRankField.getValue());
-
-            try {
-                controleur.creerPersonnel(new InfosPersonnel(
-                        personnelLoginField.getText(),
-                        personnelFirstNameField.getText(),
-                        personnelNameField.getText(),
-                        role,
-                        personnelPhoneNbField.getText()
-                ));
-            } catch (PersonnelException e) {
-                // TODO : Message d'erreur
-                e.printStackTrace();
-            }
-        }
-
-        refreshPersonnelTable();
-    }
-
-    private void refreshPersonnelTable() {
-        personnelList.getItems().clear();
-        for (Personnel personnel : controleur.getPersonnel()) {
-            personnelList.getItems().add(personnel);
-        }
-        personnelList.refresh();
-    }
-
-    @FXML
-    private void onPersonnelListValueClick(MouseEvent event) {
-        Personnel selectedItem = personnelList.getSelectionModel().getSelectedItem();
-
-        personnelDeleteButton.setDisable(selectedItem == null);
-    }
-
-    @FXML
-    private void onPersonnelDeleteButtonAction() {
-        Personnel selectedItem = personnelList.getSelectionModel().getSelectedItem();
-
-        if (selectedItem != null) {
-            controleur.supprimerPersonnel(selectedItem);
-            refreshPersonnelTable();
-        }
-    }
-
-    // -------------------------------
-
-    private static void markControlErrorStatus(Control control, boolean isValid) {
-        if (isValid) {
-            control.setStyle(null);
-        } else {
-            control.setStyle("-fx-control-inner-background: f8d7da");
-        }
-    }
-
-    private static boolean validateSpinnerValue(Spinner<? extends Number> spinner, int min, boolean strict) {
-        double spinnerValue = spinner.getValue().doubleValue();
-        if (spinnerValue > min || (!strict && spinnerValue == min)) {
-            markControlErrorStatus(spinner, true);
-            return true;
-        } else {
-            markControlErrorStatus(spinner, false);
-            return false;
-        }
-    }
-
-    private static boolean validateComboBoxValue(ComboBox<String> comboBox) {
-        String value = comboBox.getValue();
-        if (value != null) {
-            markControlErrorStatus(comboBox, true);
-            return true;
-        } else {
-            markControlErrorStatus(comboBox, false);
-            return false;
-        }
-    }
-
-    private static boolean validateNonEmptyTextInputControl(TextInputControl textInputControl) {
-        boolean isValid = !textInputControl.getText().strip().isEmpty();
-
-        markControlErrorStatus(textInputControl, isValid);
-
-        return isValid;
-    }
-
-    private static boolean validateNonEmptyTextInputControl(TextInputControl textInputControl, boolean isValid) {
-        markControlErrorStatus(textInputControl, isValid);
-
-        return isValid;
-    }
-
-    private static boolean validateNonEmptyDatePicker(DatePicker datePicker) {
-        boolean isValid = datePicker.getValue() != null;
-
-        markControlErrorStatus(datePicker, isValid);
-
-        return isValid;
-    }
-
-    private static boolean isNumeric(String string) {
-        try {
-            Integer.parseInt(string);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
-
-    private static boolean validateEmailTextField(TextInputControl textInputControl) {
-        EmailValidator validator = EmailValidator.getInstance(false, false);
-        boolean isValid = validator.isValid(textInputControl.getText().strip().toLowerCase());
-
-        markControlErrorStatus(textInputControl, isValid);
-
-        return isValid;
-    }
+    */
 
 //-----  Implémentation des méthodes abstraites  -------------------------------
 
@@ -944,7 +118,7 @@ public class JavaFXGUI extends IHM {
             Stage primaryStage = new Stage();
             primaryStage.setOnCloseRequest((WindowEvent t) -> this.exitAction());
             try {
-                this.start(primaryStage);
+                start(primaryStage, controleur);
             }
             catch (IOException exc) {
                 throw new RuntimeException(exc);
@@ -961,6 +135,29 @@ public class JavaFXGUI extends IHM {
         }
     }
 
+    /**
+     * Point d'entrée principal pour le code de l'interface JavaFX.
+     *
+     * @param primaryStage stage principale de l'interface JavaFX, sur laquelle
+     *     définir des scenes.
+     *
+     * @throws IOException si le chargement de la vue FXML échoue.
+     *
+     * @see javafx.application.Application#start(Stage)
+     */
+    public static void start(Stage primaryStage, Controleur controleur) throws IOException {
+        FXMLLoader mainViewLoader = new FXMLLoader(JavaFXGUI.class.getResource("main-view.fxml"));
+        Scene mainScene = new Scene(mainViewLoader.load());
+        MainViewController mainViewController = mainViewLoader.getController();
+        mainViewController.setControleur(controleur);
+        mainViewController.setStage(primaryStage);
+        mainViewController.initialiserRoles();
+
+        primaryStage.setTitle("GenEvent");
+        primaryStage.setScene(mainScene);
+        primaryStage.show();
+    }
+
     @Override
     public void informerUtilisateur(String msg, boolean succes) {
         final Alert alert = new Alert(
@@ -969,12 +166,6 @@ public class JavaFXGUI extends IHM {
         alert.setTitle("DashBoardGame");
         alert.setContentText(msg);
         alert.showAndWait();
-    }
-
-    private static boolean matchesPattern(String text, Pattern pattern) {
-        Matcher matcher = pattern.matcher(text);
-
-        return matcher.find();
     }
 
     // IMPORTANT : Pour les formulaires de création de salles, ...
