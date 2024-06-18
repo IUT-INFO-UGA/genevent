@@ -112,10 +112,21 @@ public class JavaFXGUI extends IHM {
         }
     }
 
+    @FXML
+    private ChoiceBox<String> rolesList;
+
+    @FXML
+    private void onRoleButtonClick(MouseEvent event) {
+
+    }
+
     // initialisation
 
     @FXML
     private void initialize() {
+        rolesList.getItems().clear();
+        rolesList.getItems().addAll("Gestionnaire", "Animateur", "Entraîneur", "Gérant");
+
         if (memberList != null) {
             refreshMemberTable();
         }

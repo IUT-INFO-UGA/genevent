@@ -66,7 +66,7 @@
                               <Insets right="10.0" />
                            </HBox.margin>
                         </Label>
-                        <ChoiceBox prefWidth="150.0" style="-fx-mark-color: #fc7536; -fx-background-color: #fff; -fx-border-radius: 5; -fx-background-radius: 5;" />
+                        <ChoiceBox fx:id="rolesList" onMouseClicked="#onRoleButtonClick" prefWidth="150.0" style="-fx-mark-color: #fc7536; -fx-background-color: #fff; -fx-border-radius: 5; -fx-background-radius: 5;" />
                      </children></HBox>
                </children>
             </HBox>
@@ -154,7 +154,14 @@
                               <Button fx:id="memberCreateButton" mnemonicParsing="false" onAction="#addMemberButtonAction" prefWidth="200.0" style="-fx-background-color: #fff; -fx-border-color: #69a197; -fx-background-radius: 5; -fx-border-radius: 5;" text="Créer">
                                  <VBox.margin>
                                     <Insets bottom="20.0" top="20.0" />
-                                 </VBox.margin></Button>
+                                 </VBox.margin>
+                                 <graphic>
+                                    <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@images/dice.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic></Button>
                            </children>
                            <padding>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
