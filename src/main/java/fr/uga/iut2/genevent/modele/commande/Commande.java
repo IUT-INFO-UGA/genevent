@@ -16,6 +16,7 @@ public class Commande implements Serializable {
     private String nomDuJeu;
     private int quantite;
     private double prix;
+    private boolean recue;
 
     // Constructeur
 
@@ -32,9 +33,18 @@ public class Commande implements Serializable {
         setNomDuJeu(nomDuJeu);
         setQuantite(quantite);
         setPrix(prix);
+        this.recue = false;
     }
 
     // Méthodes
+
+    /**
+     * Vérifie si la commande a déjà été reçue.
+     * @return <code>true</code> si la commande a été reçue, <code>false</code> sinon.
+     */
+    public boolean estRecue() {
+        return recue;
+    }
 
     /**
      * Récupère le numéro de la commande.
@@ -77,15 +87,22 @@ public class Commande implements Serializable {
     }
 
     /**
+     * Marque la commande comme reçue.
+     */
+    public void marquerCommeRecue() {
+        this.recue = true;
+    }
+
+    /**
      * Remplace la quantité de jeux de société à commander par la valeur en paramètre.
      * La quantité ne peut pas être nulle ou négative.
      * @param quantite La nouvelle quantité de jeux de société à commander.
      * @throws CommandeException Exception levée lorsque la quantité est négative ou nulle.
      */
     public void setQuantite(int quantite) throws CommandeException {
-        if (prix > 0) {
+        if (quantite > 0) {
             this.quantite = quantite;
-        } else if (prix == 0) {
+        } else if (quantite == 0) {
             throw new CommandeException("Quantité nulle");
         } else {
             throw new CommandeException("Quantité négative");

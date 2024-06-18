@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="200.0" style="-fx-background-color: #69a197;">
+         <children>
+            <Label text="Entrez les informations de la commande :">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </HBox>
+      <GridPane prefHeight="237.0" prefWidth="560.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Nom du jeu à commander :" />
+            <Label text="Quantité à commander :" GridPane.rowIndex="1" />
+            <Label text="Prix du jeu à l'unité :" GridPane.rowIndex="2" />
+            <TextField fx:id="tfNomDuJeu" GridPane.columnIndex="1" />
+            <Spinner fx:id="spQuantite" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <valueFactory>
+                    <SpinnerValueFactory.IntegerSpinnerValueFactory amountToStepBy="1" initialValue="1" max="2147483647" min="1" />
+                </valueFactory>
+            </Spinner>
+             <Spinner fx:id="spPrix" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                 <valueFactory>
+                     <SpinnerValueFactory.DoubleSpinnerValueFactory amountToStepBy="0.01" initialValue="1.0" max="2147483647.0" min="0.01" />
+                 </valueFactory>
+             </Spinner>
+         </children>
+         <VBox.margin>
+            <Insets left="20.0" right="20.0" />
+         </VBox.margin>
+      </GridPane>
+      <HBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
+         <children>
+            <Button fx:id="btnEnregistrer" mnemonicParsing="false" onAction="#onBtnEnregistrerCommandeAction" text="Enregistrer">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#onBtnCancelAction" text="Annuler" />
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </HBox>
+   </children>
+</VBox>
