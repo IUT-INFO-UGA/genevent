@@ -1,6 +1,7 @@
 package fr.uga.iut2.genevent.controleur;
 
 import fr.uga.iut2.genevent.modele.GenEvent;
+import fr.uga.iut2.genevent.modele.Role;
 import fr.uga.iut2.genevent.modele.membre.Membre;
 import fr.uga.iut2.genevent.modele.membre.MembreException;
 import fr.uga.iut2.genevent.modele.salles.Salle;
@@ -100,5 +101,13 @@ public class Controleur {
 
     public Collection<Salle> getSalles() {
         return genevent.getSalles().values();
+    }
+
+    public Role getRole() {
+        return genevent.getRole();
+    }
+
+    public void setRole(Role role) {
+        genevent.setRole(role);
     }
 }

@@ -12,6 +12,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import fr.uga.iut2.genevent.modele.Role;
 import fr.uga.iut2.genevent.modele.commande.Commande;
 import fr.uga.iut2.genevent.modele.jeu.JeuDeSociete;
 import fr.uga.iut2.genevent.modele.membre.Membre;
@@ -137,8 +138,25 @@ public class JavaFXGUI extends IHM {
     private ChoiceBox<String> rolesList;
 
     @FXML
-    private void onRoleButtonClick(MouseEvent event) {
+    private void onRoleButtonClick(MouseEvent event) throws IOException {
+        String value = rolesList.getValue();
 
+        System.out.println(value);
+
+        if (value == null) {
+            return;
+        }
+
+        Role role = Role.getByName(value);
+        System.out.println(role);
+
+        if (controleur.getRole() == role) {
+            return;
+        }
+
+        System.out.println("Mise à jour rôle");
+        controleur.setRole(role);
+        start(((Stage) rolesList.getScene().getWindow()));
     }
 
     // initialisation
@@ -146,7 +164,19 @@ public class JavaFXGUI extends IHM {
     @FXML
     private void initialize() {
         rolesList.getItems().clear();
-        rolesList.getItems().addAll("Gestionnaire", "Animateur", "Entraîneur", "Gérant");
+
+        for (Role role : Role.values()) {
+            rolesList.getItems().add(role.getName());
+        }
+
+        rolesList.setValue(controleur.getRole().getName());
+
+        if (members != null) {
+            members.setDisable(!controleur.getRole().isAccesMembres());
+            stocks.setDisable(!controleur.getRole().isAccesStocks());
+            planning.setDisable(!controleur.getRole().isAccesPlanning());
+            salles.setDisable(!controleur.getRole().isAccesSalles());
+        }
 
         if (memberList != null) {
             refreshMemberTable();

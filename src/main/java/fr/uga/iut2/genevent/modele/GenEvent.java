@@ -38,6 +38,7 @@ public class GenEvent implements Serializable {
         }
     }
 
+    private Role role;
     private Map<String, Personnel> personnels; // association qualifiée par l'id
     private Map<String, JeuDeSociete> jeuxDeSociete;
     private Map<Integer, Commande> commandes;
@@ -48,6 +49,7 @@ public class GenEvent implements Serializable {
     public GenEvent() {
         //this.utilisateurs = new HashMap<>();
         //this.evenements = new HashMap<>();
+        this.role = Role.GERANT;
         this.personnels = new HashMap<>();
         this.jeuxDeSociete = new HashMap<>();
         this.commandes = new HashMap<>();
@@ -157,5 +159,13 @@ public class GenEvent implements Serializable {
 
     public Map<Long, Salle> getSalles() {
         return salles;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }
