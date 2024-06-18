@@ -9,6 +9,10 @@ import fr.uga.iut2.genevent.modele.jeu.JeuDeSocieteException;
 import fr.uga.iut2.genevent.modele.membre.Membre;
 import fr.uga.iut2.genevent.modele.membre.MembreException;
 import fr.uga.iut2.genevent.modele.salles.Salle;
+import fr.uga.iut2.genevent.modele.salles.Table;
+import fr.uga.iut2.genevent.modele.seance.Evenement;
+import fr.uga.iut2.genevent.modele.seance.Seance;
+import fr.uga.iut2.genevent.modele.seance.SeanceException;
 import fr.uga.iut2.genevent.vue.IHM;
 import fr.uga.iut2.genevent.vue.JavaFXGUI;
 
@@ -103,8 +107,29 @@ public class Controleur {
         this.genevent.supprimerMembre(membre);
     }
 
+    public void creerSalle(IHM.InfosSalle salle) {
+        this.genevent.addSalle(new Salle(
+                salle.numero,
+                salle.type
+        ));
+    }
+
     public Collection<Salle> getSalles() {
         return genevent.getSalles().values();
+    }
+
+    public void creerTable(IHM.InfosTable table) {
+        table.salle.addTable(new Table(
+                table.id,
+                table.salle,
+                table.type,
+                table.nbPlaces,
+                table.taille
+        ));
+    }
+
+    public Salle getSalle(long numero) {
+        return this.genevent.getSalles().get(numero);
     }
 
     public Role getRole() {
@@ -147,5 +172,38 @@ public class Controleur {
 
     public Collection<Commande> getCommandes() {
         return genevent.getCommandes();
+    }
+
+    public void creerSeance(IHM.InfosSeance seance) {
+        Seance se = new Seance(
+                seance.type,
+                seance.date,
+                seance.heureDebut,
+                seance.heureFin
+        );
+
+        genevent.addSeance(se);
+    }
+
+    public void supprimerSeance(Seance seance) {
+        genevent.supprimerSeance(seance);
+    }
+
+    public void creerEvenement(IHM.InfosEvenement evenement) throws SeanceException {
+        Evenement ev = new Evenement(
+                evenement.type,
+                evenement.date,
+                evenement.heureDebut,
+                evenement.heureFin,
+                evenement.nbPlaces
+        );
+
+        evenement.animateurs.forEach(ev::addAnimateur);
+
+        genevent.addSeance(ev);
+    }
+
+    public Collection<Seance> getSeances() {
+        return genevent.getSeances();
     }
 }
