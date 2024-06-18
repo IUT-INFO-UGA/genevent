@@ -20,7 +20,7 @@ public class GenEvent implements Serializable {
     private Map<String, Personnel> personnels; // association qualifiée par l'id
     private Map<String, JeuDeSociete> jeuxDeSociete;
     private Map<Integer, Commande> commandes;
-    private Map<Integer, Membre> membres;
+    private Map<String, Membre> membres;
     private Map<Long, Salle> salles;
     private List<Seance> seances;
 
@@ -99,7 +99,7 @@ public class GenEvent implements Serializable {
     // MEMBRES
 
     public void addMembre(Membre membre) {
-        this.membres.put(membre.getId(), membre);
+        this.membres.put(membre.getNom(), membre);
     }
 
     public Collection<Membre> getMembres() {
@@ -107,7 +107,7 @@ public class GenEvent implements Serializable {
     }
 
     public void supprimerMembre(Membre membre) {
-        this.membres.remove(membre.getId());
+        this.membres.remove(membre.getNom());
     }
 
     // SEANCES

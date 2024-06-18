@@ -53,7 +53,6 @@ public class Controleur {
 
     public void creerMembre(IHM.InfosMembre infos) throws MembreException {
         Membre membre = new Membre(
-                genevent.getMembres().size() + 1, // Trouver un meilleur moyen
                 infos.nom,
                 infos.dateNaissance,
                 infos.telephone

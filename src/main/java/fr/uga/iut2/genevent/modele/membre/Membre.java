@@ -19,7 +19,6 @@ public class Membre implements Serializable {
 
     // Attributs
 
-    private final int id;
     private String nom;
     private Date dateNaissance;
     private String telephone;
@@ -28,27 +27,17 @@ public class Membre implements Serializable {
 
     /**
      * Crée un nouveau membre à partir de ses informations personnelles.
-     * @param id L'identifiant du membre, il doit être unique.
      * @param nom Le nom du membre.
      * @param dateNaissance La date de naissance du membre.
      * @param telephone Le numéro de téléphone du membre.
      */
-    public Membre(int id, String nom, Date dateNaissance, String telephone) throws MembreException {
-        this.id = id;
+    public Membre(String nom, Date dateNaissance, String telephone) throws MembreException {
         setNom(nom);
         setDateNaissance(dateNaissance);
         setTelephone(telephone);
     }
 
     // Méthodes
-
-    /**
-     * Récupère l'identifiant du membre.
-     * @return L'identifiant du membre.
-     */
-    public int getId() {
-        return id;
-    }
 
     /**
      * Récupère le nom complet du membre.
@@ -88,7 +77,7 @@ public class Membre implements Serializable {
      * @param nom Le nouveau nom complet du membre.
      * @throws MembreException Exception levée si le nom ne correspond pas à l'expression régulière.
      */
-    public void setNom(String nom) throws MembreException {
+    private void setNom(String nom) throws MembreException {
         Matcher matcher = PATERNE_NOM.matcher(nom);
         if (matcher.find()) {
             int indiceEspace = nom.indexOf(' ');
