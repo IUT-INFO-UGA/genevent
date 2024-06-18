@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import fr.uga.iut2.genevent.modele.commande.Commande;
 import fr.uga.iut2.genevent.modele.jeu.JeuDeSociete;
@@ -207,35 +209,42 @@ public class JavaFXGUI extends IHM {
     @FXML
     private void addMemberButtonAction() {
         boolean isValid = validateNonEmptyTextField(memberNameField)
-                & validateNonEmptyTextField(memberPhoneNbField);
+                & validateNonEmptyTextField(memberPhoneNbField)
+                & validateNonEmptyDatePicker(memberBirthDateField);
 
-        System.out.println(controleur.getMembres());
+        if (!matchesPattern(memberNameField.getText(), Membre.PATERNE_NOM)) {
+            isValid = false;
+            markTextFieldErrorStatus(memberNameField, false);
+        }
 
-        if (isValid) {
-            try {
-                LocalDate value = memberBirthDateField.getValue();
-                Date birthDate = Date.from(value.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        if (!matchesPattern(memberPhoneNbField.getText(), Membre.PATERNE_TELEPHONE)) {
+            isValid = false;
+            markTextFieldErrorStatus(memberPhoneNbField, false);
+        }
 
-                controleur.creerMembre(new IHM.InfosMembre(
-                        memberNameField.getText().strip(),
-                        birthDate,
-                        memberPhoneNbField.getText().strip()
-                ));
+        if (!isValid) {
+            return;
+        }
 
-                memberNameField.clear();
-                memberPhoneNbField.clear();
-                memberBirthDateField.setValue(null);
-            } catch (MembreException e) {
-                isValid = false;
-                e.printStackTrace();
-            }
+        try {
+            LocalDate value = memberBirthDateField.getValue();
+            Date birthDate = Date.from(value.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+            controleur.creerMembre(new IHM.InfosMembre(
+                    memberNameField.getText().strip(),
+                    birthDate,
+                    memberPhoneNbField.getText().strip()
+            ));
+
+            memberNameField.clear();
+            memberPhoneNbField.clear();
+            memberBirthDateField.setValue(null);
+        } catch (MembreException e) {
+            isValid = false;
+            e.printStackTrace();
         }
 
         refreshMemberTable();
-
-        if (!isValid) {
-            // TODO: afficher un message d'erreur
-        }
     }
 
     private void refreshMemberTable() {
@@ -376,9 +385,25 @@ public class JavaFXGUI extends IHM {
     }
 
     private static boolean validateNonEmptyTextField(TextField textField) {
-        boolean isValid = textField.getText().strip().length() > 0;
+        boolean isValid = !textField.getText().strip().isEmpty();
 
         markTextFieldErrorStatus(textField, isValid);
+
+        return isValid;
+    }
+
+    private static void markDatePickerErrorStatus(DatePicker datePicker, boolean isValid) {
+        if (isValid) {
+            datePicker.setStyle(null);
+        } else {
+            datePicker.setStyle("-fx-control-inner-background: f8d7da");
+        }
+    }
+
+    private static boolean validateNonEmptyDatePicker(DatePicker datePicker) {
+        boolean isValid = datePicker.getValue() != null;
+
+        markDatePickerErrorStatus(datePicker, isValid);
 
         return isValid;
     }
@@ -426,6 +451,12 @@ public class JavaFXGUI extends IHM {
         alert.setTitle("DashBoardGame");
         alert.setContentText(msg);
         alert.showAndWait();
+    }
+
+    private static boolean matchesPattern(String text, Pattern pattern) {
+        Matcher matcher = pattern.matcher(text);
+
+        return matcher.find();
     }
 
     // IMPORTANT : Pour les formulaires de création de salles, ...

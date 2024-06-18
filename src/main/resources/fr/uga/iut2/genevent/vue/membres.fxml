@@ -96,9 +96,6 @@
                         </Label>
                         <TableView fx:id="memberList" onMouseClicked="#onMemberListValueClick" prefHeight="300.0" prefWidth="252.0">
                           <columns>
-                            <TableColumn prefWidth="45.0" text="N°">
-                               <cellValueFactory><PropertyValueFactory property="id" /></cellValueFactory>
-                            </TableColumn>
                             <TableColumn minWidth="0.0" prefWidth="147.0" text="Nom">
                                <cellValueFactory><PropertyValueFactory property="nom" /></cellValueFactory>
                             </TableColumn>
@@ -106,7 +103,7 @@
                                  <cellValueFactory><PropertyValueFactory property="telephone" /></cellValueFactory>
                               </TableColumn>
 
-                              <TableColumn prefWidth="135.0" text="Date de naissance">
+                              <TableColumn prefWidth="180.0" text="Date de naissance">
                                  <cellValueFactory><PropertyValueFactory property="dateNaissance" /></cellValueFactory>
                               </TableColumn>
                           </columns>
