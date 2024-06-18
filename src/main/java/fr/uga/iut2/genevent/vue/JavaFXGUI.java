@@ -17,6 +17,8 @@ import fr.uga.iut2.genevent.modele.commande.Commande;
 import fr.uga.iut2.genevent.modele.jeu.JeuDeSociete;
 import fr.uga.iut2.genevent.modele.membre.Membre;
 import fr.uga.iut2.genevent.modele.membre.MembreException;
+import fr.uga.iut2.genevent.modele.personnel.Animateur;
+import fr.uga.iut2.genevent.modele.personnel.Personnel;
 import fr.uga.iut2.genevent.modele.salles.Salle;
 import fr.uga.iut2.genevent.modele.salles.Table;
 import javafx.application.Platform;
@@ -27,10 +29,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import org.apache.commons.validator.routines.EmailValidator;
+import org.controlsfx.control.CheckComboBox;
 
 
 /**
@@ -188,13 +192,30 @@ public class JavaFXGUI extends IHM {
         }
 
         if (stocksList != null) {
-            // stocksList.getItems().addAll(controleur.getJeux());
+            stocksList.getItems().addAll(controleur.getJeux());
             stocksList.refresh();
         }
 
         if (commandesList != null) {
-            // commandesList.getItems().addAll(controleur.getCommandes());
+            commandesList.getItems().addAll(controleur.getCommandes());
             commandesList.refresh();
+        }
+
+        if (jeuxList != null) {
+            jeuxList.getItems().clear();
+            for (JeuDeSociete jeux : controleur.getJeux()) {
+                jeuxList.getItems().add(jeux.getNom());
+            }
+        }
+
+        if (animateursList != null) {
+            animateursList.getItems().clear();
+
+            for (Personnel personnel : controleur.getPersonnel()) {
+                if (personnel instanceof Animateur) {
+                    animateursList.getItems().add(personnel.getId());
+                }
+            }
         }
     }
 
@@ -404,6 +425,20 @@ public class JavaFXGUI extends IHM {
 
     @FXML
     private TextField planningNameField, planningStartHourField, planningEndHourField;
+
+    @FXML
+    private VBox eventBox;
+
+    @FXML
+    private CheckBox eventCheckBox;
+
+    @FXML
+    private CheckComboBox<String> jeuxList, animateursList;
+
+    @FXML
+    private void onEventCheckClick(ActionEvent event) {
+        eventBox.setVisible(eventCheckBox.isSelected());
+    }
 
     @FXML
     private void onCreateEventButtonAction() {

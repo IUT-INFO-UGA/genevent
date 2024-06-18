@@ -8,6 +8,7 @@ import fr.uga.iut2.genevent.modele.jeu.JeuDeSociete;
 import fr.uga.iut2.genevent.modele.jeu.JeuDeSocieteException;
 import fr.uga.iut2.genevent.modele.membre.Membre;
 import fr.uga.iut2.genevent.modele.membre.MembreException;
+import fr.uga.iut2.genevent.modele.personnel.Personnel;
 import fr.uga.iut2.genevent.modele.salles.Salle;
 import fr.uga.iut2.genevent.modele.salles.Table;
 import fr.uga.iut2.genevent.modele.seance.Evenement;
@@ -105,6 +106,10 @@ public class Controleur {
 
     public void supprimerMembre(Membre membre) {
         this.genevent.supprimerMembre(membre);
+    }
+
+    public boolean existeSalle(long numero) {
+        return getSalle(numero) != null;
     }
 
     public void creerSalle(IHM.InfosSalle salle) {
@@ -205,5 +210,9 @@ public class Controleur {
 
     public Collection<Seance> getSeances() {
         return genevent.getSeances();
+    }
+
+    public Collection<Personnel> getPersonnel() {
+        return genevent.getPersonnels();
     }
 }

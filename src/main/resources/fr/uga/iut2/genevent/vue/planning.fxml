@@ -38,6 +38,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
+<?import org.controlsfx.control.*?>
 
 <VBox prefHeight="500.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
   <children>
@@ -121,11 +122,31 @@
                                  </VBox.margin>
                               </Label>
                               <TextField fx:id="planningEndHourField" layoutX="20.0" layoutY="181.0" style="-fx-background-color: #fff; -fx-border-color: #6b5ca5; -fx-background-radius: 5; -fx-border-radius: 5;" />
+                              <Label layoutX="20.0" layoutY="188.0" text="Jeu(x) de société">
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <CheckComboBox fx:id="jeuxList" prefHeight="200.0" prefWidth="200.0" />
+                              <CheckBox onAction="#onEventCheckClick" fx:id="eventCheckBox" mnemonicParsing="false" text="Événement">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" right="5.0" top="5.0" />
+                                 </VBox.margin>
+                              </CheckBox>
+                              <VBox fx:id="eventBox" prefHeight="200.0" prefWidth="100.0" visible="false">
+                                 <children>
+                                    <Label text="Animateur(s)">
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </Label>
+                                    <CheckComboBox fx:id="animateursList" prefHeight="200.0" prefWidth="200.0" />
+                                 </children>
+                              </VBox>
                               <Button mnemonicParsing="false" prefWidth="200.0" style="-fx-background-color: #fff; -fx-border-color: #69a197; -fx-background-radius: 5; -fx-border-radius: 5;" text="Créer">
                                  <VBox.margin>
                                     <Insets bottom="5.0" top="20.0" />
                                  </VBox.margin></Button>
-                              <Button layoutX="20.0" layoutY="276.0" mnemonicParsing="false" prefWidth="200.0" style="-fx-background-color: #fff; -fx-border-color: #69a197; -fx-background-radius: 5; -fx-border-radius: 5;" text="Ajouter à un év." />
                            </children>
                            <padding>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
