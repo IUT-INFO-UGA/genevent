@@ -5,12 +5,10 @@ import fr.uga.iut2.genevent.modele.membre.Membre;
 import fr.uga.iut2.genevent.modele.membre.MembreException;
 import fr.uga.iut2.genevent.modele.salles.Salle;
 import fr.uga.iut2.genevent.vue.IHM;
-import fr.uga.iut2.genevent.vue.CLI;
 import fr.uga.iut2.genevent.vue.JavaFXGUI;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 
 public class Controleur {
@@ -55,7 +53,7 @@ public class Controleur {
 
     public void creerMembre(IHM.InfosMembre infos) throws MembreException {
         Membre membre = new Membre(
-                genevent.getMembres().values().size() + 1, // Trouver un meilleur moyen
+                genevent.getMembres().size() + 1, // Trouver un meilleur moyen
                 infos.nom,
                 infos.dateNaissance,
                 infos.telephone
@@ -65,7 +63,7 @@ public class Controleur {
     }
 
     public Collection<Membre> getMembres() {
-        return Collections.unmodifiableCollection(this.genevent.getMembres().values());
+        return Collections.unmodifiableCollection(this.genevent.getMembres());
     }
 
     public void saisirEvenement() {
@@ -98,7 +96,7 @@ public class Controleur {
     }
 
     public void supprimerMembre(Membre membre) {
-        this.genevent.removeMembre(membre);
+        this.genevent.supprimerMembre(membre);
     }
 
     public Collection<Salle> getSalles() {
