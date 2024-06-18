@@ -202,11 +202,7 @@ public class JavaFXGUI extends IHM {
             refreshMemberTable();
         }
 
-        if (sallesList != null) {
-            sallesList.getItems().addAll(controleur.getSalles());
-            sallesList.refresh();
-        }
-
+        refreshSallesTable();
         refreshPlanningView();
         refreshStockTable();
         refreshCommandeTable();
@@ -376,6 +372,14 @@ public class JavaFXGUI extends IHM {
         }
     }
 
+    private void refreshSallesTable() {
+        if (sallesList != null) {
+            sallesList.getItems().clear();
+            sallesList.getItems().addAll(controleur.getSalles());
+            sallesList.refresh();
+        }
+    }
+
     @FXML
     private Button memberModifyButton, memberDeleteButton;
 
@@ -430,6 +434,33 @@ public class JavaFXGUI extends IHM {
             tablesList.getItems().addAll(new ArrayList<>(salle.getTables().values()));
             tablesList.refresh();
         }
+    }
+
+    @FXML
+    private void onCreerSalleAction(ActionEvent event) {
+        if (validateNonEmptyTextInputControl(tfType)) {
+            // TODO : changer la  façon dont les identifiants sont générés
+            controleur.creerSalle(new InfosSalle(controleur.getSalles().size(), tfType.getText()));
+            refreshSallesTable();
+        }
+    }
+
+    @FXML
+    private void onSupprimerSalleAction(ActionEvent event) {
+        Salle selectedItem = sallesList.getSelectionModel().getSelectedItem();
+        if (salles != null) {
+            // ...
+        }
+    }
+
+    @FXML
+    private void onCreerTableAction(ActionEvent event) {
+        // ...
+    }
+
+    @FXML
+    private void onSupprimerTableAction(ActionEvent event) {
+        // ...
     }
 
     // vue stocks
