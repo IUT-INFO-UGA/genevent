@@ -1,5 +1,7 @@
 package fr.uga.iut2.genevent.modele.salles;
 
+import fr.uga.iut2.genevent.modele.jeu.TailleTable;
+
 import java.io.Serializable;
 
 /**
@@ -14,7 +16,7 @@ public class Table implements Serializable {
     private final long id;
     private final String type;
     private final int nbPlaces;
-    private final int taille;
+    private final TailleTable taille;
     private final Salle salle;
 
     // Constructeur
@@ -27,7 +29,7 @@ public class Table implements Serializable {
      * @param nbPlaces Le nombre de places disponibles à la table.
      * @param taille La taille de la table.
      */
-    public Table(long id, Salle salle, String type, int nbPlaces, int taille) {
+    public Table(long id, Salle salle, String type, int nbPlaces, TailleTable taille) {
         this.id = id;
         this.salle = salle;
         this.type = type;
@@ -73,7 +75,7 @@ public class Table implements Serializable {
      * Récupère la taille de la table.
      * @return La taille de la table.
      */
-    public int getTaille() {
+    public TailleTable getTaille() {
         return taille;
     }
 }

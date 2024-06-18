@@ -39,10 +39,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Iterator;
+import java.util.*;
 import java.util.concurrent.CountDownLatch;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -65,6 +62,7 @@ public class JavaFXGUI extends IHM {
 
     private final Controleur controleur;
     private final CountDownLatch eolBarrier;  // /!\ ne pas supprimer /!\ : suivi de la durée de vie de l'interface
+    private Salle salleSelectionnee;
 
     private Stage creationWindow;
     
@@ -352,6 +350,41 @@ public class JavaFXGUI extends IHM {
         }
     }
 
+    private void refreshTablesTable(Salle salle) {
+        if (tablesList != null) {
+            tablesList.getItems().clear();
+            if (salle != null) {
+                tablesList.getItems().addAll(salle.getTables().values());
+            }
+            tablesList.refresh();
+        }
+    }
+
+    @FXML
+    private void onBtnEnregistrerTableAction(ActionEvent event) {
+        if (salleSelectionnee == null) {
+            refreshTablesTable(null);
+            creationWindow.close();
+            return;
+        }
+        if (validateNonEmptyTextInputControl(tfType)
+                & validateSpinnerValue(spNbJoueurs, 1, false)
+                & validateComboBoxValue(cbTailleTable)
+        ) {
+            controleur.creerTable(
+                    new InfosTable(
+                            salleSelectionnee.getTables().size(),
+                            salleSelectionnee,
+                            tfType.getText(),
+                            spNbJoueurs.getValue(),
+                            TailleTable.getByName(cbTailleTable.getValue())
+                    )
+            );
+            refreshTablesTable(salleSelectionnee);
+            creationWindow.close();
+        }
+    }
+
     @FXML
     private Button memberModifyButton, memberDeleteButton;
 
@@ -397,15 +430,11 @@ public class JavaFXGUI extends IHM {
 
     @FXML
     private void onSalleSelected(MouseEvent event) {
-        Salle salle = sallesList.getSelectionModel().getSelectedItem();
-        tableCreateButton.setDisable(salle == null);
-        tableDeleteButton.setDisable(salle == null);
+        salleSelectionnee = sallesList.getSelectionModel().getSelectedItem();
+        tableCreateButton.setDisable(salleSelectionnee == null);
+        tableDeleteButton.setDisable(salleSelectionnee == null);
 
-        if (salle != null) {
-            tablesList.getItems().clear();
-            tablesList.getItems().addAll(new ArrayList<>(salle.getTables().values()));
-            tablesList.refresh();
-        }
+        refreshTablesTable(salleSelectionnee);
     }
 
     @FXML
@@ -427,12 +456,28 @@ public class JavaFXGUI extends IHM {
 
     @FXML
     private void onCreerTableAction(ActionEvent event) {
-        // ...
+        try {
+            FXMLLoader newUserViewLoader = new FXMLLoader(getClass().getResource("creer-table.fxml"));
+            newUserViewLoader.setController(this);
+            Scene newTableScene = new Scene(newUserViewLoader.load());
+
+            creationWindow = new Stage();
+            creationWindow.setTitle("Ajouter une table");
+            creationWindow.initModality(Modality.WINDOW_MODAL);
+            creationWindow.setScene(newTableScene);
+            creationWindow.show();
+        } catch (IOException exc) {
+            throw new RuntimeException(exc);
+        }
     }
 
     @FXML
     private void onSupprimerTableAction(ActionEvent event) {
-        // ...
+        Table selectedItem = tablesList.getSelectionModel().getSelectedItem();
+        if (selectedItem != null) {
+            selectedItem.getSalle().removeTable(selectedItem);
+        }
+        refreshTablesTable(salleSelectionnee);
     }
 
     // vue stocks
@@ -531,85 +576,52 @@ public class JavaFXGUI extends IHM {
 
     @FXML
     private void onBtnEnregistrerCommandeAction(ActionEvent event) {
-        boolean valide = true;
-
-        if (!validateNonEmptyTextInputControl(tfNomDuJeu)) {
-            valide = false;
-        }
-        String nomDuJeu = tfNomDuJeu.getText();
-
-        int quantite = spQuantite.getValue();
-        if (quantite < 1) {
-            valide = false;
-        }
-
-        double prix = spPrix.getValue();
-        if (prix <= 0) {
-            valide = false;
-        }
-
-        if (valide) {
+        if (validateNonEmptyTextInputControl(tfNomDuJeu)
+                & validateSpinnerValue(spQuantite, 1, false)
+                & validateSpinnerValue(spPrix, 0, true)
+        ) {
             try {
-                controleur.creerCommande(new InfosCommande(controleur.getCommandes().size(), nomDuJeu, quantite, prix));
+                controleur.creerCommande(new InfosCommande(controleur.getCommandes().size(), tfNomDuJeu.getText(), spQuantite.getValue(), spPrix.getValue()));
+                creationWindow.close();
             } catch (CommandeException e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle(e.getMessage());
                 alert.showAndWait();
             }
         }
-        creationWindow.close();
     }
 
     @FXML
     private void onBtnEnregistrerJeuAction(ActionEvent event) {
-        boolean valide = true;
-        if (!validateNonEmptyTextInputControl(tfNomDuJeu)) {
-            valide = false;
-        }
-        String nomDuJeu = tfNomDuJeu.getText();
-
-        if (!validateNonEmptyTextInputControl(taRegles)) {
-            valide = false;
-        }
-        String regles = taRegles.getText();
-
-        int nbJoueurs = spNbJoueurs.getValue();
-        if (nbJoueurs < 1) {
-            valide = false;
-        }
-
-        if (!validateNonEmptyDatePicker(dpDateAchat)) {
-            valide = false;
-        }
-        Date date = Date.from(dpDateAchat.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
-
-        if (!validateNonEmptyTextInputControl(tfType)) {
-            valide = false;
-        }
-        String type = tfType.getText();
-
-        String nomTailleTable = cbTailleTable.getValue();
-        TailleTable tailleTable = TailleTable.getByName(nomTailleTable);
-
-        int dureePartie = spDureePartie.getValue();
-        if (dureePartie < 1) {
-            valide = false;
-        }
-        double prix = spPrix.getValue();
-        if (prix <= 0) {
-            valide = false;
-        }
-
-        if (valide) {
+        if (validateNonEmptyTextInputControl(tfNomDuJeu)
+                & validateNonEmptyTextInputControl(taRegles)
+                & validateSpinnerValue(spNbJoueurs, 1, false)
+                & validateNonEmptyDatePicker(dpDateAchat)
+                & validateNonEmptyTextInputControl(tfType)
+                & validateSpinnerValue(spDureePartie, 1, false)
+                & validateSpinnerValue(spPrix, 0, true)
+                & validateComboBoxValue(cbTailleTable)
+        ) {
             try {
-                controleur.creerJeu(new InfosJeu(nomDuJeu, regles, date, type, tailleTable, dureePartie, prix, nbJoueurs));
+                controleur.creerJeu(
+                        new InfosJeu(
+                                tfNomDuJeu.getText(),
+                                taRegles.getText(),
+                                Date.from(dpDateAchat.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()),
+                                tfType.getText(),
+                                TailleTable.getByName(cbTailleTable.getValue()),
+                                spDureePartie.getValue(),
+                                spPrix.getValue(),
+                                spNbJoueurs.getValue()
+                        )
+                );
             } catch (JeuDeSocieteException e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle(e.getMessage());
                 alert.showAndWait();
             }
+            creationWindow.close();
         }
-        creationWindow.close();
     }
 
     @FXML
@@ -756,6 +768,28 @@ public class JavaFXGUI extends IHM {
             control.setStyle(null);
         } else {
             control.setStyle("-fx-control-inner-background: f8d7da");
+        }
+    }
+
+    private static boolean validateSpinnerValue(Spinner<? extends Number> spinner, int min, boolean strict) {
+        double spinnerValue = spinner.getValue().doubleValue();
+        if (spinnerValue > min || (!strict && spinnerValue == min)) {
+            markControlErrorStatus(spinner, true);
+            return true;
+        } else {
+            markControlErrorStatus(spinner, false);
+            return false;
+        }
+    }
+
+    private static boolean validateComboBoxValue(ComboBox<String> comboBox) {
+        String value = comboBox.getValue();
+        if (value != null) {
+            markControlErrorStatus(comboBox, true);
+            return true;
+        } else {
+            markControlErrorStatus(comboBox, false);
+            return false;
         }
     }
 

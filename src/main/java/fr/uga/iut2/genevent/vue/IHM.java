@@ -139,9 +139,10 @@ public abstract class IHM {
         public long id;
         public Salle salle;
         public String type;
-        public int nbPlaces, taille;
+        public int nbPlaces;
+        public TailleTable taille;
 
-        public InfosTable(long id, Salle salle, String type, int nbPlaces, int taille) {
+        public InfosTable(long id, Salle salle, String type, int nbPlaces, TailleTable taille) {
             this.id = id;
             this.salle = salle;
             this.type = type;
