@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Copyright (c) 2015, 2019, Gluon and/or its affiliates.
+  All rights reserved. Use is subject to license terms.
+
+  This file is available and licensed under the following license:
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions
+  are met:
+
+  - Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in
+    the documentation and/or other materials provided with the distribution.
+  - Neither the name of Oracle Corporation nor the names of its
+    contributors may be used to endorse or promote products derived
+    from this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+  <children>
+      <BorderPane prefHeight="404.0" prefWidth="640.0">
+         <top>
+            <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="54.0" prefWidth="640.0" style="-fx-background-color: #fd8c58;" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox>
+                     <children>
+                        <ImageView fx:id="logo" fitHeight="54.0" fitWidth="166.0" onMouseClicked="#onHeaderButtonClick" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/logo.png" />
+                           </image></ImageView>
+                     </children>
+                     <HBox.margin>
+                        <Insets right="100.0" />
+                     </HBox.margin>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <HBox.margin>
+                        <Insets left="100.0" />
+                     </HBox.margin>
+                     <children>
+                        <Label text="Rôle :">
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </Label>
+                        <ChoiceBox fx:id="rolesList" onMouseClicked="#onRoleButtonClick" prefWidth="150.0" style="-fx-mark-color: #fc7536; -fx-background-color: #fff; -fx-border-radius: 5; -fx-background-radius: 5;" />
+                     </children></HBox>
+               </children>
+            </HBox>
+         </top>
+         <center>
+            <GridPane alignment="CENTER" BorderPane.alignment="CENTER">
+              <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="463.0" minWidth="10.0" prefWidth="463.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="464.0" minWidth="10.0" prefWidth="177.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
+               <children>
+                  <VBox prefHeight="346.0" prefWidth="305.0">
+                     <children>
+                        <Label text="Personnel">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Label>
+                        <TableView fx:id="personnelList" onMouseClicked="#onPersonnelListValueClick" prefHeight="300.0" prefWidth="252.0">
+                          <columns>
+                              <TableColumn minWidth="0.0" prefWidth="68.0" text="Login">
+                                 <cellValueFactory>
+                                    <PropertyValueFactory property="id" />
+                                 </cellValueFactory>
+                              </TableColumn>
+                            <TableColumn minWidth="0.0" prefWidth="100.0" text="Nom">
+                               <cellValueFactory><PropertyValueFactory property="nom" /></cellValueFactory>
+                            </TableColumn>
+                              <TableColumn minWidth="0.0" prefWidth="97.0" text="Prénom">
+                                 <cellValueFactory><PropertyValueFactory property="prenom" /></cellValueFactory>
+                              </TableColumn>
+
+                              <TableColumn prefWidth="92.0" text="Rang">
+                                 <cellValueFactory><PropertyValueFactory property="" /></cellValueFactory>
+                              </TableColumn>
+                              <TableColumn minWidth="0.0" prefWidth="105.0" text="Téléphone">
+                                 <cellValueFactory>
+                                    <PropertyValueFactory property="numTel" />
+                                 </cellValueFactory>
+                              </TableColumn>
+                          </columns>
+                        </TableView>
+                        <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0">
+                           <children>
+                              <Button fx:id="personnelDeleteButton" disable="true" mnemonicParsing="false" onAction="#onPersonnelDeleteButtonAction" style="-fx-background-color: #fff; -fx-border-color: #ff3a33; -fx-background-radius: 5; -fx-border-radius: 5;" text="Supprimer">
+                                 <HBox.margin>
+                                    <Insets right="10.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
+                     <children>
+                        <Label text="Ajouter un personnel">
+                           <VBox.margin>
+                              <Insets left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Label>
+                        <VBox prefHeight="315.0" prefWidth="203.0">
+                           <children>
+                              <Label layoutX="20.0" layoutY="65.0" text="Login" />
+                              <TextField fx:id="personnelLoginField" layoutX="20.0" layoutY="83.0" style="-fx-border-color: #6b5ca5; -fx-background-radius: 5; -fx-border-radius: 5;" />
+                              <Label text="Nom">
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin></Label>
+                              <TextField fx:id="personnelFirstNameField" style="-fx-border-color: #6b5ca5; -fx-background-radius: 5; -fx-border-radius: 5;" />
+                              <Label text="Prénom">
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin></Label>
+                              <TextField fx:id="personnelNameField" layoutX="20.0" layoutY="89.0" style="-fx-border-color: #6b5ca5; -fx-background-radius: 5; -fx-border-radius: 5;" />
+                              <Label text="Téléphone">
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin></Label>
+                              <TextField fx:id="personnelPhoneNbField" style="-fx-border-color: #6b5ca5; -fx-background-radius: 5; -fx-border-radius: 5;" />
+                              <Label text="Format attendu : 0XXXXXXXXX">
+                                 <font>
+                                    <Font name="System Italic" size="11.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="20.0" layoutY="173.0" text="Rang" />
+                              <ChoiceBox fx:id="personnelRankField" prefWidth="151600.0" />
+                              <Button fx:id="personnelCreateButton" mnemonicParsing="false" onAction="#addPersonnelButtonAction" prefWidth="200.0" style="-fx-background-color: #fff; -fx-border-color: #69a197; -fx-background-radius: 5; -fx-border-radius: 5;" text="Créer">
+                                 <VBox.margin>
+                                    <Insets top="15.0" />
+                                 </VBox.margin>
+                                 <graphic>
+                                    <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@images/dice.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic></Button>
+                           </children>
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </VBox>
+                     </children>
+                  </VBox>
+               </children>
+            </GridPane>
+         </center>
+      </BorderPane>
+  </children>
+</VBox>

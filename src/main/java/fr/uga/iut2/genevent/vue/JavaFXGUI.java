@@ -11,13 +11,14 @@ import fr.uga.iut2.genevent.modele.jeu.JeuDeSocieteException;
 import fr.uga.iut2.genevent.modele.jeu.TailleTable;
 import fr.uga.iut2.genevent.modele.membre.Membre;
 import fr.uga.iut2.genevent.modele.membre.MembreException;
-import fr.uga.iut2.genevent.modele.personnel.Animateur;
-import fr.uga.iut2.genevent.modele.personnel.Personnel;
+import fr.uga.iut2.genevent.modele.personnel.*;
 import fr.uga.iut2.genevent.modele.salles.Salle;
 import fr.uga.iut2.genevent.modele.salles.Table;
 import fr.uga.iut2.genevent.modele.seance.Seance;
 import fr.uga.iut2.genevent.modele.seance.SeanceException;
 import javafx.application.Platform;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -92,7 +93,7 @@ public class JavaFXGUI extends IHM {
     public Button btnCancel;
 
     @FXML
-    private Button stocks, members, salles, planning;
+    private Button stocks, members, salles, planning, personnels;
 
     public JavaFXGUI(Controleur controleur) {
         this.controleur = controleur;
@@ -226,6 +227,30 @@ public class JavaFXGUI extends IHM {
                 }
             }
         }
+
+        if (personnelRankField != null) {
+            refreshPersonnelTable();
+
+            for (Role value : Role.values()) {
+                personnelRankField.getItems().add(value.getName());
+            }
+
+            TableColumn<Personnel, String> personnelTableColumn = (TableColumn<Personnel, String>) personnelList.getColumns().get(3);
+            personnelTableColumn.setCellValueFactory(c -> {
+                Personnel personnel = c.getValue();
+                String roleName = "";
+
+                if (personnel instanceof Gerant) {
+                    roleName = "Gérant";
+                } else if (personnel instanceof Gestionnaire) {
+                    roleName = "Gestionnaire";
+                } else if (personnel instanceof Animateur) {
+                    roleName = "Animateur";
+                }
+
+                return new SimpleStringProperty(roleName);
+            });
+        }
     }
 
     // vue accueil
@@ -252,6 +277,9 @@ public class JavaFXGUI extends IHM {
                 break;
             case "planning":
                 loader = new FXMLLoader(getClass().getResource("planning.fxml"));
+                break;
+            case "personnels":
+                loader = new FXMLLoader(getClass().getResource("personnels.fxml"));
                 break;
             default:
                 return;
@@ -715,6 +743,80 @@ public class JavaFXGUI extends IHM {
                 entry.setTitle(seance.getType());
                 entry.setLocation("Table " + seance.getTable().getSalle().getNumero() + "-" + seance.getTable().getId());
             }
+        }
+    }
+
+    // Vue personnel
+
+    @FXML
+    private Button personnelDeleteButton;
+
+    @FXML
+    private TextField personnelLoginField, personnelFirstNameField, personnelNameField, personnelPhoneNbField;
+
+    @FXML
+    private ChoiceBox<String> personnelRankField;
+
+    @FXML
+    private TableView<Personnel> personnelList;
+
+    @FXML
+    private void addPersonnelButtonAction(ActionEvent event) {
+        boolean valid = validateNonEmptyTextInputControl(personnelLoginField)
+                & validateNonEmptyTextInputControl(personnelFirstNameField)
+                & validateNonEmptyTextInputControl(personnelNameField)
+                & personnelRankField.getValue() != null;
+
+        if (!personnelPhoneNbField.getText().isEmpty()) {
+            valid &= validateNonEmptyTextInputControl(personnelPhoneNbField, matchesPattern(personnelPhoneNbField.getText(), Membre.PATERNE_TELEPHONE));
+        }
+
+        if (controleur.getPersonnel(personnelLoginField.getText()) != null) {
+            // TODO : erreur existe déjà
+        }
+
+        if (valid) {
+            Role role = Role.getByName(personnelRankField.getValue());
+
+            try {
+                controleur.creerPersonnel(new InfosPersonnel(
+                        personnelLoginField.getText(),
+                        personnelFirstNameField.getText(),
+                        personnelNameField.getText(),
+                        role,
+                        personnelPhoneNbField.getText()
+                ));
+            } catch (PersonnelException e) {
+                // TODO : Message d'erreur
+                e.printStackTrace();
+            }
+        }
+
+        refreshPersonnelTable();
+    }
+
+    private void refreshPersonnelTable() {
+        personnelList.getItems().clear();
+        for (Personnel personnel : controleur.getPersonnel()) {
+            personnelList.getItems().add(personnel);
+        }
+        personnelList.refresh();
+    }
+
+    @FXML
+    private void onPersonnelListValueClick(MouseEvent event) {
+        Personnel selectedItem = personnelList.getSelectionModel().getSelectedItem();
+
+        personnelDeleteButton.setDisable(selectedItem == null);
+    }
+
+    @FXML
+    private void onPersonnelDeleteButtonAction() {
+        Personnel selectedItem = personnelList.getSelectionModel().getSelectedItem();
+
+        if (selectedItem != null) {
+            controleur.supprimerPersonnel(selectedItem);
+            refreshPersonnelTable();
         }
     }
 
