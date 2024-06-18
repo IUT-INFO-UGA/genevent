@@ -3,16 +3,13 @@ package fr.uga.iut2.genevent.controleur;
 import fr.uga.iut2.genevent.Main;
 import fr.uga.iut2.genevent.modele.Role;
 import fr.uga.iut2.genevent.modele.membre.Membre;
-import fr.uga.iut2.genevent.modele.personnel.Personnel;
-import fr.uga.iut2.genevent.modele.personnel.PersonnelException;
+import fr.uga.iut2.genevent.modele.personnel.*;
 import fr.uga.iut2.genevent.util.ControllerUtilitaire;
 import fr.uga.iut2.genevent.vue.IHM;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 
 public class PersonnelController extends HeaderController {
@@ -28,6 +25,31 @@ public class PersonnelController extends HeaderController {
 
     @FXML
     private TableView<Personnel> personnelList;
+
+    @Override
+    public void refresh() {
+        refreshPersonnelTable();
+
+        for (Role value : Role.values()) {
+            personnelRankField.getItems().add(value.getName());
+        }
+
+        TableColumn<Personnel, String> personnelTableColumn = (TableColumn<Personnel, String>) personnelList.getColumns().get(3);
+        personnelTableColumn.setCellValueFactory(c -> {
+            Personnel personnel = c.getValue();
+            String roleName = "";
+
+            if (personnel instanceof Gerant) {
+                roleName = "Gérant";
+            } else if (personnel instanceof Gestionnaire) {
+                roleName = "Gestionnaire";
+            } else if (personnel instanceof Animateur) {
+                roleName = "Animateur";
+            }
+
+            return new SimpleStringProperty(roleName);
+        });
+    }
 
     @FXML
     private void addPersonnelButtonAction(ActionEvent event) {

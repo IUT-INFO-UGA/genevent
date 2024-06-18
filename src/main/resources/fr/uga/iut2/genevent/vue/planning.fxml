@@ -87,7 +87,7 @@
                <children>
                   <VBox prefHeight="346.0" prefWidth="305.0">
                      <children>
-                        <CalendarView prefHeight="446.0" prefWidth="463.0" showToolBar="false" />
+                        <CalendarView fx:id="planningView" onMouseClicked="#onPlanningClick" prefHeight="446.0" prefWidth="463.0" showToolBar="false" />
                      </children></VBox>
                   <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
                      <children>

@@ -1,12 +1,14 @@
 package fr.uga.iut2.genevent.controleur;
 
-import com.calendarfx.model.Entry;
+import com.calendarfx.model.*;
 import com.calendarfx.view.CalendarView;
 import fr.uga.iut2.genevent.Main;
 import fr.uga.iut2.genevent.modele.jeu.JeuDeSociete;
 import fr.uga.iut2.genevent.modele.personnel.Animateur;
+import fr.uga.iut2.genevent.modele.personnel.Personnel;
 import fr.uga.iut2.genevent.modele.salles.Salle;
 import fr.uga.iut2.genevent.modele.salles.Table;
+import fr.uga.iut2.genevent.modele.seance.Evenement;
 import fr.uga.iut2.genevent.modele.seance.Seance;
 import fr.uga.iut2.genevent.modele.seance.SeanceException;
 import fr.uga.iut2.genevent.util.ControllerUtilitaire;
@@ -15,6 +17,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
 import org.controlsfx.control.CheckComboBox;
@@ -50,9 +53,6 @@ public class PlanningController extends HeaderController {
     private CheckComboBox<String> jeuxList, animateursList;
 
     @FXML
-    private TableView<Table> tablesList;
-
-    @FXML
     private void onEventCheckClick(ActionEvent event) {
         eventBox.setVisible(eventCheckBox.isSelected());
     }
@@ -76,10 +76,10 @@ public class PlanningController extends HeaderController {
                 jeux.add(getControleur().getJeu(checkedItem));
             }
 
-            Table selectedItem = tablesList.getSelectionModel().getSelectedItem();
+            Table selectedItem = planningTableList.getSelectionModel().getSelectedItem();
 
             if (selectedItem == null) {
-                ControllerUtilitaire.markControlErrorStatus(tablesList, true);
+                ControllerUtilitaire.markControlErrorStatus(planningTableList, true);
                 // TODO : Message d'erreur
                 return;
             }
@@ -127,42 +127,91 @@ public class PlanningController extends HeaderController {
     @Override
     public void refresh() {
         refreshPlanningView();
+
+        jeuxList.getItems().clear();
+        for (JeuDeSociete jeux : getControleur().getJeux()) {
+            jeuxList.getItems().add(jeux.getNom());
+        }
+
+        planningTableList.getItems().clear();
+        for (Salle salle : getControleur().getSalles()) {
+            salle.getTables().forEach((id, table) -> {
+                planningTableList.getItems().add(table);
+            });
+        }
+
+        planningTableList.setConverter(new StringConverter<>() {
+            @Override
+            public String toString(Table table) {
+                if (table == null) {
+                    return null;
+                }
+
+                return table.getSalle().getNumero() + "-" + table.getId();
+            }
+
+            @Override
+            public Table fromString(String s) {
+                String[] splittedName = s.split("-");
+
+                return getControleur().getSalle(Integer.parseInt(splittedName[0])).getTable(Long.parseLong(splittedName[1]));
+            }
+        });
+
+        animateursList.getItems().clear();
+
+        for (Personnel personnel : getControleur().getPersonnel()) {
+            if (personnel instanceof Animateur) {
+                animateursList.getItems().add(personnel.getId());
+            }
+        }
+    }
+
+    @FXML
+    private void onPlanningClick(MouseEvent event) {
+        System.out.println(planningView.getDraggedEntry());
     }
 
     private void refreshPlanningView() {
         if (planningView != null) {
-            planningTableList.setConverter(new StringConverter<>() {
-                @Override
-                public String toString(Table table) {
-                    return table.getSalle().getNumero() + "-" + table.getId();
-                }
+            // planningView.setEditAvailability(false);
 
-                @Override
-                public Table fromString(String s) {
-                    String[] splittedName = s.split("-");
+            Calendar<String> calendar = new Calendar<>();
+            calendar.addEventHandler(calendarEvent -> {
+                Entry<Seance> entry = (Entry<Seance>) calendarEvent.getEntry();
+                Seance seance = entry.getUserObject();
 
-                    return getControleur().getSalle(Integer.parseInt(splittedName[0])).getTable(Long.parseLong(splittedName[1]));
+                if (calendarEvent.isEntryRemoved()) {
+                    getControleur().supprimerSeance(seance);
                 }
             });
 
-            planningTableList.getItems().clear();
-            for (Salle salle : getControleur().getSalles()) {
-                salle.getTables().forEach((id, table) -> {
-                    planningTableList.getItems().add(table);
-                });
-            }
+            planningView.setEntryFactory(createEntryParameter -> null);
+            planningView.setEditAvailability(false);
 
-            planningView.getCalendarSources().clear();
+            CalendarSource source = new CalendarSource();
+            source.getCalendars().add(calendar);
+            // calendar.setReadOnly(false);
+            planningView.setShowAddCalendarButton(false);
+            planningView.setShowSourceTray(false);
+
             for (Seance seance : getControleur().getSeances()) {
+                System.out.println(seance);
                 ZonedDateTime d = ZonedDateTime.ofInstant(seance.getDate().toInstant(),
                         ZoneId.systemDefault());
 
-                Entry<?> entry = planningView.createEntryAt(d);
+                Entry<Seance> entry = new Entry<>();
+                entry.changeStartDate(d.toLocalDate());
+                entry.changeEndDate(d.toLocalDate());
                 entry.changeStartTime(LocalTime.of(seance.getHeureDebut(), 0));
                 entry.changeEndTime(LocalTime.of(seance.getHeureFin(), 0));
                 entry.setTitle(seance.getType());
+                entry.setUserObject(seance);
+
                 entry.setLocation("Table " + seance.getTable().getSalle().getNumero() + "-" + seance.getTable().getId());
+                calendar.addEntry(entry);
             }
+            planningView.getCalendarSources().add(source);
         }
     }
 }
