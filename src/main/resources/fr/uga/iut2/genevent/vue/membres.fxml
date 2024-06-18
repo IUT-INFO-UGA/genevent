@@ -96,10 +96,10 @@
                         </Label>
                         <TableView fx:id="memberList" onMouseClicked="#onMemberListValueClick" prefHeight="300.0" prefWidth="252.0">
                           <columns>
-                            <TableColumn minWidth="0.0" prefWidth="147.0" text="Nom">
+                            <TableColumn minWidth="0.0" prefWidth="184.0" text="Nom complet">
                                <cellValueFactory><PropertyValueFactory property="nom" /></cellValueFactory>
                             </TableColumn>
-                              <TableColumn minWidth="0.0" prefWidth="135.0" text="Téléphone">
+                              <TableColumn minWidth="0.0" prefWidth="98.0" text="Téléphone">
                                  <cellValueFactory><PropertyValueFactory property="telephone" /></cellValueFactory>
                               </TableColumn>
 
@@ -136,7 +136,7 @@
                         </Label>
                         <VBox prefHeight="315.0" prefWidth="203.0">
                            <children>
-                              <Label text="Nom">
+                              <Label text="Nom complet">
                                  <VBox.margin>
                                     <Insets top="45.0" />
                                  </VBox.margin></Label>
@@ -151,6 +151,11 @@
                                     <Insets top="5.0" />
                                  </VBox.margin></Label>
                               <TextField fx:id="memberPhoneNbField" style="-fx-border-color: #6b5ca5; -fx-background-radius: 5; -fx-border-radius: 5;" />
+                              <Label text="Format attendu : 0XXXXXXXXX">
+                                 <font>
+                                    <Font name="System Italic" size="11.0" />
+                                 </font>
+                              </Label>
                               <Button fx:id="memberCreateButton" mnemonicParsing="false" onAction="#addMemberButtonAction" prefWidth="200.0" style="-fx-background-color: #fff; -fx-border-color: #69a197; -fx-background-radius: 5; -fx-border-radius: 5;" text="Créer">
                                  <VBox.margin>
                                     <Insets bottom="20.0" top="20.0" />

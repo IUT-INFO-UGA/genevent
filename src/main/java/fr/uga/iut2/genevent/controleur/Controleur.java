@@ -2,6 +2,10 @@ package fr.uga.iut2.genevent.controleur;
 
 import fr.uga.iut2.genevent.modele.GenEvent;
 import fr.uga.iut2.genevent.modele.Role;
+import fr.uga.iut2.genevent.modele.commande.Commande;
+import fr.uga.iut2.genevent.modele.commande.CommandeException;
+import fr.uga.iut2.genevent.modele.jeu.JeuDeSociete;
+import fr.uga.iut2.genevent.modele.jeu.JeuDeSocieteException;
 import fr.uga.iut2.genevent.modele.membre.Membre;
 import fr.uga.iut2.genevent.modele.membre.MembreException;
 import fr.uga.iut2.genevent.modele.salles.Salle;
@@ -109,5 +113,39 @@ public class Controleur {
 
     public void setRole(Role role) {
         genevent.setRole(role);
+    }
+
+    public void creerJeu(IHM.InfosJeu jeu) throws JeuDeSocieteException {
+        genevent.addJeuDeSociete(new JeuDeSociete(
+                jeu.nom,
+                jeu.regles,
+                jeu.nbJoueurs,
+                jeu.dateAchat,
+                jeu.type,
+                jeu.taille,
+                jeu.dureePartie,
+                jeu.prix
+        ));
+    }
+
+    public void supprimerJeu(JeuDeSociete jeuDeSociete) {
+        this.genevent.supprimerJeu(jeuDeSociete);
+    }
+
+    public Collection<JeuDeSociete> getJeux() {
+        return genevent.getJeuxDeSociete();
+    }
+
+    public void creerCommande(IHM.InfosCommande commande) throws CommandeException {
+        genevent.addCommande(new Commande(
+                commande.numero,
+                commande.nomDuJeu,
+                commande.quantite,
+                commande.prix
+        ));
+    }
+
+    public Collection<Commande> getCommandes() {
+        return genevent.getCommandes();
     }
 }

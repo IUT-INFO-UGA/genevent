@@ -1,5 +1,7 @@
 package fr.uga.iut2.genevent.vue;
 
+import fr.uga.iut2.genevent.modele.jeu.TailleTable;
+
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
@@ -80,6 +82,42 @@ public abstract class IHM {
             this.nom = nom;
             this.dateNaissance = dateNaissance;
             this.telephone = telephone;
+        }
+    }
+
+
+    public static class InfosJeu {
+        public String nom, regles;
+        public Date dateAchat;
+        public String type;
+        public TailleTable taille;
+        public int dureePartie;
+        public double prix;
+        public int nbJoueurs;
+
+        public InfosJeu(String nom, String regles, Date dateAchat, String type, TailleTable taille, int dureePartie, double prix, int nbJoueurs) {
+            this.nom = nom;
+            this.regles = regles;
+            this.dateAchat = dateAchat;
+            this.type = type;
+            this.taille = taille;
+            this.dureePartie = dureePartie;
+            this.prix = prix;
+            this.nbJoueurs = nbJoueurs;
+        }
+    }
+
+    public static class InfosCommande {
+        public int numero;
+        public String nomDuJeu;
+        public int quantite;
+        public double prix;
+
+        public InfosCommande(int numero, String nomDuJeu, int quantite, double prix) {
+            this.numero = numero;
+            this.nomDuJeu = nomDuJeu;
+            this.quantite = quantite;
+            this.prix = prix;
         }
     }
 }
