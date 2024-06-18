@@ -1,10 +1,12 @@
 package fr.uga.iut2.genevent.vue;
 
 import fr.uga.iut2.genevent.modele.jeu.TailleTable;
+import fr.uga.iut2.genevent.modele.personnel.Animateur;
+import fr.uga.iut2.genevent.modele.salles.Salle;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.Set;
 
 
 public abstract class IHM {
@@ -118,6 +120,60 @@ public abstract class IHM {
             this.nomDuJeu = nomDuJeu;
             this.quantite = quantite;
             this.prix = prix;
+        }
+    }
+
+    public static class InfosSalle {
+        public long numero;
+        public String type;
+
+        public InfosSalle(long numero, String type) {
+            this.numero = numero;
+            this.type = type;
+        }
+    }
+
+    public static class InfosTable {
+        public long id;
+        public Salle salle;
+        public String type;
+        public int nbPlaces, taille;
+
+        public InfosTable(long id, Salle salle, String type, int nbPlaces, int taille) {
+            this.id = id;
+            this.salle = salle;
+            this.type = type;
+            this.nbPlaces = nbPlaces;
+            this.taille = taille;
+        }
+    }
+
+    public static class InfosSeance {
+        public String type;
+        public Date date;
+        public int heureDebut, heureFin;
+
+        public InfosSeance(String type, Date date, int heureDebut, int heureFin) {
+            this.type = type;
+            this.date = date;
+            this.heureDebut = heureDebut;
+            this.heureFin = heureFin;
+        }
+    }
+
+    public static class InfosEvenement {
+        public String type;
+        public Date date;
+        public int heureDebut, heureFin, nbPlaces;
+        public ArrayList<Animateur> animateurs;
+
+        public InfosEvenement(String type, Date date, int heureDebut, int heureFin, int nbPlaces, ArrayList<Animateur> animateurs) {
+            this.type = type;
+            this.date = date;
+            this.heureDebut = heureDebut;
+            this.heureFin = heureFin;
+            this.nbPlaces = nbPlaces;
+            this.animateurs = animateurs;
         }
     }
 }
