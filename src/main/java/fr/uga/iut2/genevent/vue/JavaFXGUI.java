@@ -1,17 +1,19 @@
 package fr.uga.iut2.genevent.vue;
 
 import fr.uga.iut2.genevent.controleur.Controleur;
-import fr.uga.iut2.genevent.controleur.MainViewController;
+import fr.uga.iut2.genevent.controleur.HeaderController;
+import fr.uga.iut2.genevent.modele.GenEvent;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.concurrent.CountDownLatch;
+import java.util.logging.Level;
 
 
 /**
@@ -146,17 +148,30 @@ public class JavaFXGUI extends IHM {
      * @see javafx.application.Application#start(Stage)
      */
     public static void start(Stage primaryStage, Controleur controleur) throws IOException {
-        FXMLLoader mainViewLoader = new FXMLLoader(JavaFXGUI.class.getResource("main-view.fxml"));
-        Scene mainScene = new Scene(mainViewLoader.load());
-        MainViewController mainViewController = mainViewLoader.getController();
-        mainViewController.setControleur(controleur);
-        mainViewController.setStage(primaryStage);
-        mainViewController.initialiserRoles();
+        loadFXML(primaryStage, controleur, "main-view.fxml");
+    }
 
-        primaryStage.setResizable(false);
-        primaryStage.setTitle("GenEvent");
-        primaryStage.setScene(mainScene);
-        primaryStage.show();
+    public static void loadFXML(Stage stage, Controleur controleur, String fileName) throws IOException {
+        FXMLLoader loader = new FXMLLoader(JavaFXGUI.class.getResource(fileName));
+        Scene scene = new Scene(loader.load());
+
+        HeaderController controller = loader.getController();
+        controller.setControleur(controleur);
+        controller.setStage(stage);
+        controller.initialiserRoles();
+        controller.refresh();
+
+        URL stylesheet = JavaFXGUI.class.getResource("style.css");
+        if (stylesheet == null) {
+            GenEvent.logger.log(Level.CONFIG, "La feuille de style n'a pas été trouvée dans le dossier de ressources.");
+        } else {
+            scene.getStylesheets().add(stylesheet.toExternalForm());
+        }
+
+        stage.setResizable(false);
+        stage.setTitle("GenEvent");
+        stage.setScene(scene);
+        stage.show();
     }
 
     // IMPORTANT : Pour les formulaires de création de salles, ...

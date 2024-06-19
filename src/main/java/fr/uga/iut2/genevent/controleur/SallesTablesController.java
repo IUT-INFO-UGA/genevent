@@ -88,20 +88,16 @@ public class SallesTablesController extends CreateurPopupController {
     }
 
     private void refreshSallesTable() {
-        if (sallesList != null) {
-            sallesList.getItems().clear();
-            sallesList.getItems().addAll(getControleur().getSalles());
-            sallesList.refresh();
-        }
+        sallesList.getItems().clear();
+        sallesList.getItems().addAll(getControleur().getSalles());
+        sallesList.refresh();
     }
 
     private void refreshTablesTable(Salle salle) {
-        if (tablesList != null) {
-            tablesList.getItems().clear();
-            if (salle != null) {
-                tablesList.getItems().addAll(salle.getTables().values());
-            }
-            tablesList.refresh();
+        tablesList.getItems().clear();
+        if (salle != null) {
+            tablesList.getItems().addAll(salle.getTables().values());
         }
+        tablesList.refresh();
     }
 }

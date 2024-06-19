@@ -43,7 +43,7 @@
   <children>
       <BorderPane prefHeight="404.0" prefWidth="640.0">
          <top>
-            <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="54.0" prefWidth="640.0" style="-fx-background-color: #fd8c58;" BorderPane.alignment="CENTER">
+            <HBox id="header" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="54.0" prefWidth="640.0" BorderPane.alignment="CENTER">
                <children>
                   <HBox>
                      <children>
@@ -66,7 +66,7 @@
                               <Insets right="10.0" />
                            </HBox.margin>
                         </Label>
-                        <ChoiceBox fx:id="rolesList" onMouseClicked="#onRoleButtonClick" prefWidth="150.0" style="-fx-mark-color: #fc7536; -fx-background-color: #fff; -fx-border-radius: 5; -fx-background-radius: 5;" />
+                        <ChoiceBox fx:id="rolesList" onMouseClicked="#onRoleButtonClick" prefWidth="150.0" />
                      </children></HBox>
                </children>
             </HBox>
@@ -120,7 +120,7 @@
                         </TableView>
                         <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0">
                            <children>
-                              <Button fx:id="personnelDeleteButton" disable="true" mnemonicParsing="false" onAction="#onPersonnelDeleteButtonAction" style="-fx-background-color: #fff; -fx-border-color: #ff3a33; -fx-background-radius: 5; -fx-border-radius: 5;" text="Supprimer">
+                              <Button fx:id="personnelDeleteButton" disable="true" mnemonicParsing="false" onAction="#onPersonnelDeleteButtonAction" styleClass="supprimer" text="Supprimer">
                                  <HBox.margin>
                                     <Insets right="10.0" />
                                  </HBox.margin>
@@ -142,22 +142,22 @@
                         <VBox prefHeight="315.0" prefWidth="203.0">
                            <children>
                               <Label layoutX="20.0" layoutY="65.0" text="Login" />
-                              <TextField fx:id="personnelLoginField" layoutX="20.0" layoutY="83.0" style="-fx-border-color: #6b5ca5; -fx-background-radius: 5; -fx-border-radius: 5;" />
+                              <TextField fx:id="personnelLoginField" layoutX="20.0" layoutY="83.0" styleClass="champ" />
                               <Label text="Nom">
                                  <VBox.margin>
                                     <Insets top="5.0" />
                                  </VBox.margin></Label>
-                              <TextField fx:id="personnelFirstNameField" style="-fx-border-color: #6b5ca5; -fx-background-radius: 5; -fx-border-radius: 5;" />
+                              <TextField fx:id="personnelFirstNameField" styleClass="champ" />
                               <Label text="Prénom">
                                  <VBox.margin>
                                     <Insets top="5.0" />
                                  </VBox.margin></Label>
-                              <TextField fx:id="personnelNameField" layoutX="20.0" layoutY="89.0" style="-fx-border-color: #6b5ca5; -fx-background-radius: 5; -fx-border-radius: 5;" />
+                              <TextField fx:id="personnelNameField" layoutX="20.0" layoutY="89.0" styleClass="champ" />
                               <Label text="Téléphone">
                                  <VBox.margin>
                                     <Insets top="5.0" />
                                  </VBox.margin></Label>
-                              <TextField fx:id="personnelPhoneNbField" style="-fx-border-color: #6b5ca5; -fx-background-radius: 5; -fx-border-radius: 5;" />
+                              <TextField fx:id="personnelPhoneNbField" styleClass="champ" />
                               <Label text="Format attendu : 0XXXXXXXXX">
                                  <font>
                                     <Font name="System Italic" size="11.0" />
@@ -165,7 +165,7 @@
                               </Label>
                               <Label layoutX="20.0" layoutY="173.0" text="Rang" />
                               <ChoiceBox fx:id="personnelRankField" prefWidth="151600.0" />
-                              <Button fx:id="personnelCreateButton" mnemonicParsing="false" onAction="#addPersonnelButtonAction" prefWidth="200.0" style="-fx-background-color: #fff; -fx-border-color: #69a197; -fx-background-radius: 5; -fx-border-radius: 5;" text="Créer">
+                              <Button fx:id="personnelCreateButton" mnemonicParsing="false" onAction="#addPersonnelButtonAction" prefWidth="200.0" styleClass="creer" text="Créer">
                                  <VBox.margin>
                                     <Insets top="15.0" />
                                  </VBox.margin>

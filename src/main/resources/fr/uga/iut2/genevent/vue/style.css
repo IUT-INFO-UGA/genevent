@@ -1,0 +1,33 @@
+#header {
+    -fx-background-color: #fd8c58;
+}
+
+#header ChoiceBox {
+    -fx-mark-color: #fc7536;
+}
+
+#rolesList, .mainMenuButton, .creer, .modifier, .champ, .supprimer {
+    -fx-background-color: #fff;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+.mainMenuButton {
+    -fx-border-color: #fc7536;
+}
+
+.creer{
+    -fx-border-color: #69a197;
+}
+
+.modifier {
+    -fx-border-color: #6b5ca5;
+}
+
+.champ {
+    -fx-border-color: #6b5ca5;
+}
+
+.supprimer {
+    -fx-border-color: #ff3a33;
+}

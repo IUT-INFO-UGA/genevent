@@ -43,7 +43,7 @@
   <children>
       <BorderPane prefHeight="404.0" prefWidth="640.0">
          <top>
-            <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="54.0" prefWidth="640.0" style="-fx-background-color: #fd8c58;" BorderPane.alignment="CENTER">
+            <HBox id="header" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="54.0" prefWidth="640.0" BorderPane.alignment="CENTER">
                <children>
                   <HBox>
                      <children>
@@ -66,7 +66,7 @@
                               <Insets right="10.0" />
                            </HBox.margin>
                         </Label>
-                        <ChoiceBox fx:id="rolesList" onMouseClicked="#onRoleButtonClick" prefWidth="150.0" style="-fx-mark-color: #fc7536; -fx-background-color: #fff; -fx-border-radius: 5; -fx-background-radius: 5;" />
+                        <ChoiceBox fx:id="rolesList" onMouseClicked="#onRoleButtonClick" prefWidth="150.0" />
                      </children></HBox>
                </children>
             </HBox>
@@ -112,16 +112,16 @@
                         </TableView>
                         <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0">
                            <children>
-                              <Button fx:id="stocksAddButton" mnemonicParsing="false" onAction="#onStocksAddButtonAction" style="-fx-background-color: #fff; -fx-border-color: #69a197; -fx-background-radius: 5; -fx-border-radius: 5;" text="Ajouter">
+                              <Button fx:id="stocksAddButton" mnemonicParsing="false" onAction="#onStocksAddButtonAction" styleClass="creer" text="Ajouter">
                                  <HBox.margin>
                                     <Insets right="10.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button fx:id="stocksModifyButton" mnemonicParsing="false" onAction="#onStocksModifyButtonAction" style="-fx-background-color: #fff; -fx-border-color: #6b5ca5; -fx-background-radius: 5; -fx-border-radius: 5;" text="Modifier">
+                              <Button fx:id="stocksModifyButton" mnemonicParsing="false" onAction="#onStocksModifyButtonAction" styleClass="modifier" text="Modifier">
                                  <HBox.margin>
                                     <Insets right="10.0" />
                                  </HBox.margin></Button>
-                              <Button fx:id="stocksDeleteButton" mnemonicParsing="false" onAction="#onStocksDeleteButtonAction" style="-fx-background-color: #fff; -fx-border-color: #ff3a33; -fx-background-radius: 5; -fx-border-radius: 5;" text="Supprimer">
+                              <Button fx:id="stocksDeleteButton" mnemonicParsing="false" onAction="#onStocksDeleteButtonAction" styleClass="supprimer" text="Supprimer">
                                  <HBox.margin>
                                     <Insets right="10.0" />
                                  </HBox.margin>
@@ -158,12 +158,12 @@
                         </TableView>
                         <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0">
                            <children>
-                              <Button fx:id="commandeCreateButton" mnemonicParsing="false" onAction="#onCommandeCreateButtonAction" style="-fx-background-color: #fff; -fx-border-color: #69a197; -fx-background-radius: 5; -fx-border-radius: 5;" text="Créer">
+                              <Button fx:id="commandeCreateButton" mnemonicParsing="false" onAction="#onCommandeCreateButtonAction" styleClass="creer" text="Créer">
                                  <HBox.margin>
                                     <Insets right="10.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button fx:id="commandeSetStatusButton" mnemonicParsing="false" onAction="#onCommandeSetStatusButtonAction" style="-fx-background-color: #fff; -fx-border-color: #69a197; -fx-background-radius: 5; -fx-border-radius: 5;" text="Marquer comme reçue" />
+                              <Button fx:id="commandeSetStatusButton" mnemonicParsing="false" onAction="#onCommandeSetStatusButtonAction" styleClass="modifier" text="Marquer comme reçue" />
                            </children>
                         </HBox>
                      </children>

@@ -15,6 +15,9 @@ import javafx.scene.input.MouseEvent;
 public class PersonnelController extends HeaderController {
 
     @FXML
+    public Button personnelCreateButton;
+
+    @FXML
     private Button personnelDeleteButton;
 
     @FXML

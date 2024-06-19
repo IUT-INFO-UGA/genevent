@@ -3,12 +3,9 @@ package fr.uga.iut2.genevent.controleur;
 import fr.uga.iut2.genevent.modele.Role;
 import fr.uga.iut2.genevent.vue.JavaFXGUI;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -35,7 +32,7 @@ public class HeaderController extends ControllerBase {
         if (event.getSource() instanceof ImageView) {
             ImageView button = (ImageView) event.getSource();
             if (button.getId().equals("logo")) {
-                loadFXML("main-view.fxml", (Stage) button.getScene().getWindow());
+                loadFXML("main-view.fxml");
             }
         }
     }
@@ -62,17 +59,7 @@ public class HeaderController extends ControllerBase {
         JavaFXGUI.start(getStage(), getControleur());
     }
 
-    protected void loadFXML(String fileName, Stage stage) throws IOException {
-        FXMLLoader mainViewLoader = new FXMLLoader(JavaFXGUI.class.getResource(fileName));
-        Scene mainScene = new Scene(mainViewLoader.load());
-        HeaderController controller = mainViewLoader.getController();
-
-        controller.setControleur(getControleur());
-        controller.setStage(stage);
-        controller.initialiserRoles();
-        controller.refresh();
-
-        stage.setScene(mainScene);
-        stage.show();
+    protected void loadFXML(String fileName) throws IOException {
+        JavaFXGUI.loadFXML(getStage(), getControleur(), fileName);
     }
 }

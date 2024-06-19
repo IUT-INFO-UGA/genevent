@@ -15,7 +15,7 @@ public class CreateurPopupController extends HeaderController {
     private PopupController popupController;
 
     protected void genererPopup(String fileName, String title) throws IOException {
-        FXMLLoader popupLoader = new FXMLLoader(JavaFXGUI.class.getResource(fileName));
+        FXMLLoader popupLoader = new FXMLLoader(JavaFXGUI.class.getResource("popups/" + fileName));
         Scene popupScene = new Scene(popupLoader.load());
         popupController = popupLoader.getController();
         popup = new Stage();

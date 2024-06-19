@@ -3,7 +3,6 @@ package fr.uga.iut2.genevent.controleur;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -54,6 +53,6 @@ public class MainViewController extends HeaderController {
                 return;
         }
 
-        loadFXML(fileName, (Stage) button.getScene().getWindow());
+        loadFXML(fileName);
     }
 }

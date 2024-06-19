@@ -43,7 +43,7 @@
   <children>
       <BorderPane prefHeight="404.0" prefWidth="640.0">
          <top>
-            <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="54.0" prefWidth="640.0" style="-fx-background-color: #fd8c58;" BorderPane.alignment="CENTER">
+            <HBox id="header" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="54.0" prefWidth="640.0" BorderPane.alignment="CENTER">
                <children>
                   <HBox>
                      <children>
@@ -66,7 +66,7 @@
                               <Insets right="10.0" />
                            </HBox.margin>
                         </Label>
-                        <ChoiceBox fx:id="rolesList" onMouseClicked="#onRoleButtonClick" prefWidth="150.0" style="-fx-mark-color: #fc7536; -fx-background-color: #fff; -fx-border-radius: 5; -fx-background-radius: 5;" />
+                        <ChoiceBox fx:id="rolesList" onMouseClicked="#onRoleButtonClick" prefWidth="150.0" />
                      </children></HBox>
                </children>
             </HBox>
@@ -110,12 +110,12 @@
                         </TableView>
                         <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0">
                            <children>
-                              <Button fx:id="memberModifyButton" disable="true" mnemonicParsing="false" onAction="#onMemberModifyButtonAction" style="-fx-background-color: #fff; -fx-border-color: #69a197; -fx-background-radius: 5; -fx-border-radius: 5;" text="Modifier">
+                              <Button fx:id="memberModifyButton" disable="true" mnemonicParsing="false" onAction="#onMemberModifyButtonAction" styleClass="modifier" text="Modifier">
                                  <HBox.margin>
                                     <Insets right="10.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button fx:id="memberDeleteButton" disable="true" mnemonicParsing="false" onAction="#onMemberDeleteButtonAction" style="-fx-background-color: #fff; -fx-border-color: #ff3a33; -fx-background-radius: 5; -fx-border-radius: 5;" text="Supprimer">
+                              <Button fx:id="memberDeleteButton" disable="true" mnemonicParsing="false" onAction="#onMemberDeleteButtonAction" styleClass="supprimer" text="Supprimer">
                                  <HBox.margin>
                                     <Insets right="10.0" />
                                  </HBox.margin>
@@ -140,23 +140,23 @@
                                  <VBox.margin>
                                     <Insets top="45.0" />
                                  </VBox.margin></Label>
-                              <TextField fx:id="memberNameField" style="-fx-border-color: #6b5ca5; -fx-background-radius: 5; -fx-border-radius: 5;" />
+                              <TextField fx:id="memberNameField" styleClass="champ" />
                               <Label text="Date de naissance">
                                  <VBox.margin>
                                     <Insets top="5.0" />
                                  </VBox.margin></Label>
-                              <DatePicker fx:id="memberBirthDateField" style="-fx-border-color: #6b5ca5; -fx-background-radius: 5; -fx-border-radius: 5;" />
+                              <DatePicker fx:id="memberBirthDateField" styleClass="champ" />
                               <Label text="Téléphone">
                                  <VBox.margin>
                                     <Insets top="5.0" />
                                  </VBox.margin></Label>
-                              <TextField fx:id="memberPhoneNbField" style="-fx-border-color: #6b5ca5; -fx-background-radius: 5; -fx-border-radius: 5;" />
+                              <TextField fx:id="memberPhoneNbField" styleClass="champ" />
                               <Label text="Format attendu : 0XXXXXXXXX">
                                  <font>
                                     <Font name="System Italic" size="11.0" />
                                  </font>
                               </Label>
-                              <Button fx:id="memberCreateButton" mnemonicParsing="false" onAction="#addMemberButtonAction" prefWidth="200.0" style="-fx-background-color: #fff; -fx-border-color: #69a197; -fx-background-radius: 5; -fx-border-radius: 5;" text="Créer">
+                              <Button fx:id="memberCreateButton" mnemonicParsing="false" onAction="#addMemberButtonAction" prefWidth="200.0" styleClass="creer" text="Créer">
                                  <VBox.margin>
                                     <Insets bottom="20.0" top="20.0" />
                                  </VBox.margin>

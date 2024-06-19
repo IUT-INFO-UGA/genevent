@@ -44,7 +44,7 @@
   <children>
       <BorderPane prefHeight="501.0" prefWidth="640.0">
          <top>
-            <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="54.0" prefWidth="640.0" style="-fx-background-color: #fd8c58;" BorderPane.alignment="CENTER">
+            <HBox id="header" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="54.0" prefWidth="640.0" BorderPane.alignment="CENTER">
                <children>
                   <HBox>
                      <children>
@@ -67,7 +67,7 @@
                               <Insets right="10.0" />
                            </HBox.margin>
                         </Label>
-                        <ChoiceBox fx:id="rolesList" onMouseClicked="#onRoleButtonClick" prefWidth="150.0" style="-fx-mark-color: #fc7536; -fx-background-color: #fff; -fx-border-radius: 5; -fx-background-radius: 5;" />
+                        <ChoiceBox fx:id="rolesList" onMouseClicked="#onRoleButtonClick" prefWidth="150.0" />
                      </children></HBox>
                </children>
             </HBox>
@@ -105,23 +105,23 @@
                                  <VBox.margin>
                                     <Insets top="0.0" />
                                  </VBox.margin></Label>
-                              <TextField fx:id="planningNameField" style="-fx-background-color: #fff; -fx-border-color: #6b5ca5; -fx-background-radius: 5; -fx-border-radius: 5;" />
+                              <TextField fx:id="planningNameField" styleClass="champ" />
                               <Label text="Date">
                                  <VBox.margin>
                                     <Insets top="5.0" />
                                  </VBox.margin></Label>
-                              <DatePicker fx:id="planningDatePicker" style="-fx-background-color: #fff; -fx-border-color: #6b5ca5; -fx-background-radius: 5; -fx-border-radius: 5;" />
+                              <DatePicker fx:id="planningDatePicker" styleClass="champ" />
                               <Label text="Heure de début">
                                  <VBox.margin>
                                     <Insets top="5.0" />
                                  </VBox.margin></Label>
-                              <TextField fx:id="planningStartHourField" style="-fx-background-color: #fff; -fx-border-color: #6b5ca5; -fx-background-radius: 5; -fx-border-radius: 5;" />
+                              <TextField fx:id="planningStartHourField" styleClass="champ" />
                               <Label layoutX="20.0" layoutY="163.0" text="Heure de fin">
                                  <VBox.margin>
                                     <Insets top="5.0" />
                                  </VBox.margin>
                               </Label>
-                              <TextField fx:id="planningEndHourField" layoutX="20.0" layoutY="181.0" style="-fx-background-color: #fff; -fx-border-color: #6b5ca5; -fx-background-radius: 5; -fx-border-radius: 5;" />
+                              <TextField fx:id="planningEndHourField" layoutX="20.0" layoutY="181.0" styleClass="champ" />
                               <Label layoutX="20.0" layoutY="188.0" text="Jeu(x) de société">
                                  <VBox.margin>
                                     <Insets top="5.0" />
@@ -133,7 +133,7 @@
                                     <Insets top="5.0" />
                                  </VBox.margin>
                               </Label>
-                              <ChoiceBox fx:id="planningTableList" prefHeight="200.0" prefWidth="200.0" style="-fx-mark-color: #fc7536; -fx-background-color: #fff; -fx-border-radius: 5; -fx-background-radius: 5;" />
+                              <ChoiceBox fx:id="planningTableList" prefHeight="200.0" prefWidth="200.0" styleClass="champ" />
                               <CheckBox fx:id="eventCheckBox" mnemonicParsing="false" onAction="#onEventCheckClick" text="Événement">
                                  <VBox.margin>
                                     <Insets bottom="5.0" right="5.0" top="5.0" />
@@ -149,7 +149,7 @@
                                     <CheckComboBox fx:id="animateursList" prefHeight="200.0" prefWidth="200.0" />
                                  </children>
                               </VBox>
-                              <Button mnemonicParsing="false" onAction="#onCreateEventButtonAction" prefWidth="200.0" style="-fx-background-color: #fff; -fx-border-color: #69a197; -fx-background-radius: 5; -fx-border-radius: 5;" text="Créer">
+                              <Button mnemonicParsing="false" onAction="#onCreateEventButtonAction" prefWidth="200.0" styleClass="creer" text="Créer">
                                  <VBox.margin>
                                     <Insets bottom="5.0" top="5.0" />
                                  </VBox.margin></Button>
