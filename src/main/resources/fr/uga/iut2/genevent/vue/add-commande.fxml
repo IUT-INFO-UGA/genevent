@@ -5,6 +5,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
+<?import fr.uga.iut2.genevent.vue.controls.PositiveIntegerSpinner?>
+<?import fr.uga.iut2.genevent.vue.controls.PositiveDoubleSpinner?>
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.uga.iut2.genevent.controleur.popup.CreationCommandeController">
    <children>
       <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="200.0" style="-fx-background-color: #69a197;">
@@ -34,16 +36,8 @@
             <Label text="Quantité à commander :" GridPane.rowIndex="1" />
             <Label text="Prix du jeu à l'unité :" GridPane.rowIndex="2" />
             <TextField fx:id="tfNomDuJeu" GridPane.columnIndex="1" style="-fx-border-color: #6b5ca5; -fx-background-radius: 5; -fx-border-radius: 5;" />
-            <Spinner fx:id="spQuantite" GridPane.columnIndex="1" GridPane.rowIndex="1" style="-fx-border-color: #69a197; -fx-background-radius: 5; -fx-border-radius: 5;" >
-                <valueFactory>
-                    <SpinnerValueFactory.IntegerSpinnerValueFactory amountToStepBy="1" initialValue="1" max="2147483647" min="1" />
-                </valueFactory>
-            </Spinner>
-             <Spinner fx:id="spPrix" GridPane.columnIndex="1" GridPane.rowIndex="2" style="-fx-border-color: #69a197; -fx-background-radius: 5; -fx-border-radius: 5;">
-                 <valueFactory>
-                     <SpinnerValueFactory.DoubleSpinnerValueFactory amountToStepBy="0.01" initialValue="1.0" max="2147483647.0" min="0.01" />
-                 </valueFactory>
-             </Spinner>
+            <PositiveIntegerSpinner fx:id="spQuantite" GridPane.columnIndex="1" GridPane.rowIndex="1" style="-fx-border-color: #69a197; -fx-background-radius: 5; -fx-border-radius: 5;" />
+            <PositiveDoubleSpinner fx:id="spPrix" GridPane.columnIndex="1" GridPane.rowIndex="2" style="-fx-border-color: #69a197; -fx-background-radius: 5; -fx-border-radius: 5;" />
          </children>
          <VBox.margin>
             <Insets left="20.0" right="20.0" />

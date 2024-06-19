@@ -3,10 +3,27 @@ package fr.uga.iut2.genevent.util;
 import javafx.scene.control.*;
 import org.apache.commons.validator.routines.EmailValidator;
 
+import java.util.function.UnaryOperator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ControllerUtilitaire {
+
+    public static final UnaryOperator<TextFormatter.Change> integerFilter = change -> {
+        String newText = change.getControlNewText();
+        if (newText.matches("^[0-9]*$")) {
+            return change;
+        }
+        return null;
+    };
+
+    public static final UnaryOperator<TextFormatter.Change> doubleFilter = change -> {
+        String newText = change.getControlNewText();
+        if (newText.matches("^([0-9]+,[0-9]+)|([0-9]+)$")) {
+            return change;
+        }
+        return null;
+    };
 
     public static boolean matchesPattern(String text, Pattern pattern) {
         Matcher matcher = pattern.matcher(text);

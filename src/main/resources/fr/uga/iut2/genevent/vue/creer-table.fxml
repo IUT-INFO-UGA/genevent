@@ -17,6 +17,7 @@
 <?import javafx.scene.text.Font?>
 
 <?import java.lang.String?>
+<?import fr.uga.iut2.genevent.vue.controls.PositiveIntegerSpinner?>
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.uga.iut2.genevent.controleur.popup.CreationTableController">
    <children>
       <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="200.0" style="-fx-background-color: #69a197;">
@@ -46,11 +47,7 @@
             <Label text="Nombre de places disponibles :" GridPane.rowIndex="1" />
             <Label text="Taille de la table :" GridPane.rowIndex="2" />
             <TextField fx:id="tfType" GridPane.columnIndex="1" />
-            <Spinner fx:id="spNbJoueurs" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                <valueFactory>
-                    <SpinnerValueFactory.IntegerSpinnerValueFactory amountToStepBy="1" initialValue="1" max="2147483647" min="1" />
-                </valueFactory>
-            </Spinner>
+            <PositiveIntegerSpinner fx:id="spNbJoueurs" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <ComboBox fx:id="cbTailleTable" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                 <items>
                     <FXCollections fx:factory="observableArrayList">

@@ -21,6 +21,7 @@ public class CreateurPopupController extends HeaderController {
         popup = new Stage();
         popup.setTitle(title);
         popup.setScene(popupScene);
+        popup.setResizable(false);
     }
 
     protected void initialiserPopup() {

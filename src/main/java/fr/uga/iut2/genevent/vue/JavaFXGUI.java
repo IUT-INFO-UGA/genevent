@@ -153,6 +153,7 @@ public class JavaFXGUI extends IHM {
         mainViewController.setStage(primaryStage);
         mainViewController.initialiserRoles();
 
+        primaryStage.setResizable(false);
         primaryStage.setTitle("GenEvent");
         primaryStage.setScene(mainScene);
         primaryStage.show();

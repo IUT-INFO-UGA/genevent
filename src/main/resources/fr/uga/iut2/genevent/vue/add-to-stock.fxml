@@ -8,6 +8,8 @@
 
 <?import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory?>
 <?import java.lang.String?>
+<?import fr.uga.iut2.genevent.vue.controls.PositiveIntegerSpinner?>
+<?import fr.uga.iut2.genevent.vue.controls.PositiveDoubleSpinner?>
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.uga.iut2.genevent.controleur.popup.AjoutStockController">
    <children>
       <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #69a197;">
@@ -44,11 +46,7 @@
          <children>
             <TextField fx:id="tfNomDuJeu" GridPane.columnIndex="4" GridPane.rowIndex="2" style="-fx-border-color: #6b5ca5; -fx-background-radius: 5; -fx-border-radius: 5;"/>
             <TextArea fx:id="taRegles" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="3" style="-fx-border-color: #6b5ca5; -fx-background-radius: 5; -fx-border-radius: 5;"/>
-            <Spinner fx:id="spNbJoueurs" GridPane.columnIndex="4" GridPane.rowIndex="4" style="-fx-border-color: #69a197; -fx-background-radius: 5; -fx-border-radius: 5;">
-               <valueFactory>
-                  <SpinnerValueFactory.IntegerSpinnerValueFactory min="1" initialValue="1" max="2147483647" amountToStepBy="1"/>
-               </valueFactory>
-            </Spinner>
+            <PositiveIntegerSpinner fx:id="spNbJoueurs" GridPane.columnIndex="4" GridPane.rowIndex="4" style="-fx-border-color: #69a197; -fx-background-radius: 5; -fx-border-radius: 5;" />
             <DatePicker fx:id="dpDateAchat" GridPane.columnIndex="4" GridPane.rowIndex="5" style="-fx-border-color: #6b5ca5; -fx-background-radius: 5; -fx-border-radius: 5;"/>
             <TextField fx:id="tfType" GridPane.columnIndex="4" GridPane.rowIndex="6" style="-fx-border-color: #6b5ca5; -fx-background-radius: 5; -fx-border-radius: 5;"/>
             <ComboBox fx:id="cbTailleTable" prefWidth="150.0" GridPane.columnIndex="4" GridPane.rowIndex="7">
@@ -60,16 +58,8 @@
                     </FXCollections>
                 </items>
             </ComboBox>
-            <Spinner fx:id="spDureePartie" editable="true" GridPane.columnIndex="4" GridPane.rowIndex="8" style="-fx-border-color: #69a197; -fx-background-radius: 5; -fx-border-radius: 5;">
-               <valueFactory>
-                  <SpinnerValueFactory.IntegerSpinnerValueFactory min="1" initialValue="1" max="2147483647" amountToStepBy="1"/>
-               </valueFactory>
-            </Spinner>
-            <Spinner fx:id="spPrix" editable="true" GridPane.columnIndex="4" GridPane.rowIndex="9" style="-fx-border-color: #69a197; -fx-background-radius: 5; -fx-border-radius: 5;">
-               <valueFactory>
-                  <SpinnerValueFactory.DoubleSpinnerValueFactory min="0.01" initialValue="1.0" max="2147483647" amountToStepBy="0.01"/>
-               </valueFactory>
-            </Spinner>
+            <PositiveIntegerSpinner fx:id="spDureePartie" GridPane.columnIndex="4" GridPane.rowIndex="8" style="-fx-border-color: #69a197; -fx-background-radius: 5; -fx-border-radius: 5;" />
+            <PositiveDoubleSpinner fx:id="spPrix" GridPane.columnIndex="4" GridPane.rowIndex="9" style="-fx-border-color: #69a197; -fx-background-radius: 5; -fx-border-radius: 5;" />
             <Label text="Règles" GridPane.columnIndex="3" GridPane.rowIndex="3" />
             <Label text="Nom du jeu" GridPane.columnIndex="3" GridPane.rowIndex="2" />
             <Label text="Nombre de joueurs" GridPane.columnIndex="3" GridPane.rowIndex="4" />
