@@ -41,20 +41,16 @@ public class HeaderController extends ControllerBase {
     protected void onRoleButtonClick(MouseEvent event) throws IOException {
         String value = rolesList.getValue();
 
-        System.out.println(value);
-
         if (value == null) {
             return;
         }
 
         Role role = Role.getByName(value);
-        System.out.println(role);
 
         if (getControleur().getRole() == role) {
             return;
         }
 
-        System.out.println("Mise à jour rôle");
         getControleur().setRole(role);
         JavaFXGUI.start(getStage(), getControleur());
     }

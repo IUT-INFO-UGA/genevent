@@ -25,19 +25,14 @@ public class SallesTablesController extends CreateurPopupController {
     private TableView<Table> tablesList;
 
     @FXML
-    private Button tableCreateButton, tableDeleteButton;
+    private Button salleDeleteButton, tableCreateButton, tableDeleteButton;
 
     @FXML
     public TextField tfType;
 
     @FXML
     private void onSalleSelected(MouseEvent event) {
-        salleSelectionnee = sallesList.getSelectionModel().getSelectedItem();
-
-        tableCreateButton.setDisable(salleSelectionnee == null);
-        tableDeleteButton.setDisable(salleSelectionnee == null);
-
-        refreshTablesTable(salleSelectionnee);
+        updateSelection();
     }
 
     @FXML
@@ -54,6 +49,7 @@ public class SallesTablesController extends CreateurPopupController {
         if (selectedItem != null) {
             getControleur().supprimerSalle(selectedItem);
             refreshSallesTable();
+            updateSelection();
         }
     }
 
@@ -81,8 +77,17 @@ public class SallesTablesController extends CreateurPopupController {
         refreshTablesTable(salleSelectionnee);
     }
 
+    private void updateSelection() {
+        salleSelectionnee = sallesList.getSelectionModel().getSelectedItem();
+        salleDeleteButton.setDisable(salleSelectionnee == null);
+        tableCreateButton.setDisable(salleSelectionnee == null);
+        tableDeleteButton.setDisable(salleSelectionnee == null);
+        refreshTablesTable(salleSelectionnee);
+    }
+
     @Override
     public void refresh() {
+        updateSelection();
         refreshSallesTable();
         refreshTablesTable(salleSelectionnee);
     }

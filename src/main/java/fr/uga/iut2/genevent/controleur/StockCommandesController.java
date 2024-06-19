@@ -1,17 +1,22 @@
 package fr.uga.iut2.genevent.controleur;
 
+import fr.uga.iut2.genevent.controleur.popup.ModifierJeuController;
 import fr.uga.iut2.genevent.modele.commande.Commande;
 import fr.uga.iut2.genevent.modele.jeu.JeuDeSociete;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
+import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
 
 public class StockCommandesController extends CreateurPopupController {
+
+    private JeuDeSociete jeuSelectionne;
+    private Commande commandeSelectionnee;
 
     @FXML
     private TableView<JeuDeSociete> stocksList;
@@ -26,6 +31,11 @@ public class StockCommandesController extends CreateurPopupController {
     private Button commandeCreateButton, commandeSetStatusButton;
 
     @FXML
+    private void onSelection(MouseEvent event) {
+        updateSelection();
+    }
+
+    @FXML
     private void onStocksAddButtonAction(ActionEvent event) {
         try {
             creerPopup("add-to-stock.fxml", "Ajouter un jeu au stock");
@@ -37,12 +47,16 @@ public class StockCommandesController extends CreateurPopupController {
 
     @FXML
     private void onStocksModifyButtonAction(ActionEvent event) {
-        JeuDeSociete jds = stocksList.getSelectionModel().getSelectedItem();
-
-        if (jds != null) {
+        JeuDeSociete jeuDeSociete = jeuSelectionne;
+        if (jeuDeSociete != null) {
             try {
-                creerPopup("add-to-stock.fxml", "Modification du jeu \"" + jds.getNom() + "\"");
+                genererPopup("modifier-jeu.fxml", "Modification du jeu \"" + jeuDeSociete.getNom() + "\"");
+                initialiserPopup();
+                ModifierJeuController modifierJeuController = (ModifierJeuController) getPopupController();
+                modifierJeuController.setPreremplissage(jeuDeSociete);
+                afficherPopup();
                 refreshStockTable();
+                updateSelection();
             } catch (IOException exc) {
                 throw new RuntimeException(exc);
             }
@@ -56,6 +70,7 @@ public class StockCommandesController extends CreateurPopupController {
         if (selectedItem != null) {
             getControleur().supprimerJeu(selectedItem);
             refreshStockTable();
+            updateSelection();
         }
     }
 
@@ -76,12 +91,23 @@ public class StockCommandesController extends CreateurPopupController {
             selectedItem.marquerCommeRecue();
         }
         refreshCommandeTable();
+        updateSelection();
     }
 
     @Override
     public void refresh() {
+        updateSelection();
         refreshCommandeTable();
         refreshStockTable();
+    }
+
+    private void updateSelection() {
+        jeuSelectionne = stocksList.getSelectionModel().getSelectedItem();
+        stocksModifyButton.setDisable(jeuSelectionne == null);
+        stocksDeleteButton.setDisable(jeuSelectionne == null);
+
+        commandeSelectionnee = commandesList.getSelectionModel().getSelectedItem();
+        commandeSetStatusButton.setDisable(commandeSelectionnee == null);
     }
 
     private void refreshStockTable() {

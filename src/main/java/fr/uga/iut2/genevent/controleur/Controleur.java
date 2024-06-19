@@ -119,6 +119,11 @@ public class Controleur {
         ));
     }
 
+    public void modifierJeu(JeuDeSociete ancienJeu, IHM.InfosJeu jeu) throws JeuDeSocieteException {
+        supprimerJeu(ancienJeu);
+        creerJeu(jeu);
+    }
+
     public void supprimerJeu(JeuDeSociete jeuDeSociete) {
         this.genevent.supprimerJeu(jeuDeSociete);
     }

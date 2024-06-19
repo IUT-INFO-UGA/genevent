@@ -94,7 +94,7 @@
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <TableView fx:id="stocksList" prefHeight="300.0" prefWidth="200.0">
+                        <TableView fx:id="stocksList" onMouseClicked="#onSelection" prefHeight="300.0" prefWidth="200.0">
                           <columns>
                             <TableColumn prefWidth="100.0" text="Nom">
                                 <cellValueFactory><PropertyValueFactory property="nom" /></cellValueFactory>
@@ -140,7 +140,7 @@
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <TableView fx:id="commandesList" prefHeight="300.0" prefWidth="200.0">
+                        <TableView fx:id="commandesList" onMouseClicked="#onSelection" prefHeight="300.0" prefWidth="200.0">
                           <columns>
                             <TableColumn prefWidth="29.0" text="N°">
                                 <cellValueFactory><PropertyValueFactory property="numero" /></cellValueFactory>

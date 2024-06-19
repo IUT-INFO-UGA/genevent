@@ -1,5 +1,6 @@
 package fr.uga.iut2.genevent.controleur.popup;
 
+import fr.uga.iut2.genevent.modele.jeu.JeuDeSociete;
 import fr.uga.iut2.genevent.modele.jeu.JeuDeSocieteException;
 import fr.uga.iut2.genevent.modele.jeu.TailleTable;
 import fr.uga.iut2.genevent.util.ControllerUtilitaire;
@@ -7,12 +8,14 @@ import fr.uga.iut2.genevent.vue.IHM;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
 
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 
-public class AjoutStockController extends PopupController {
+public class ModifierJeuController extends PopupController {
+
+    private JeuDeSociete ancienJeu;
 
     @FXML
     private TextField tfNomDuJeu;
@@ -46,8 +49,7 @@ public class AjoutStockController extends PopupController {
 
     @Override
     protected void onBtnEnregistrerAction(ActionEvent event) {
-        if (ControllerUtilitaire.validateNonEmptyTextInputControl(tfNomDuJeu)
-                & ControllerUtilitaire.validateNonEmptyTextInputControl(taRegles)
+        if ( ControllerUtilitaire.validateNonEmptyTextInputControl(taRegles)
                 & ControllerUtilitaire.validateSpinnerValue(spNbJoueurs, 1, false)
                 & ControllerUtilitaire.validateNonEmptyDatePicker(dpDateAchat)
                 & ControllerUtilitaire.validateNonEmptyTextInputControl(tfType)
@@ -56,7 +58,8 @@ public class AjoutStockController extends PopupController {
                 & ControllerUtilitaire.validateComboBoxValue(cbTailleTable)
         ) {
             try {
-                getControleur().creerJeu(
+                getControleur().modifierJeu(
+                        ancienJeu,
                         new IHM.InfosJeu(
                                 tfNomDuJeu.getText(),
                                 taRegles.getText(),
@@ -75,5 +78,31 @@ public class AjoutStockController extends PopupController {
             }
             getStage().close();
         }
+    }
+
+    public void setPreremplissage(JeuDeSociete jeuDeSociete) {
+        tfNomDuJeu.setText(jeuDeSociete.getNom());
+        taRegles.setText(jeuDeSociete.getRegles());
+        spNbJoueurs.getEditor().setText(Integer.toString(jeuDeSociete.getNbJoueurs()));
+
+        dpDateAchat.setValue(LocalDate.ofInstant(jeuDeSociete.getDateAchat().toInstant(), ZoneId.systemDefault()));
+
+        tfType.setText(jeuDeSociete.getType());
+
+        int i = 0;
+        cbTailleTable.getSelectionModel().select(i);
+        while (!cbTailleTable.getSelectionModel().getSelectedItem().equals(jeuDeSociete.getTailleTable().getName()) && i < cbTailleTable.getItems().size()) {
+            i++;
+            cbTailleTable.getSelectionModel().select(i);
+        }
+        if (i >= cbTailleTable.getItems().size()) {
+            cbTailleTable.getSelectionModel().clearSelection();
+        }
+
+        cbTailleTable.getEditor().setText(jeuDeSociete.getTailleTable().getName());
+        spDureePartie.getEditor().setText(Integer.toString(jeuDeSociete.getDureePartie()));
+        spPrix.getEditor().setText(Double.toString(jeuDeSociete.getPrix()));
+
+        ancienJeu = jeuDeSociete;
     }
 }
