@@ -109,39 +109,6 @@ public class CLI extends IHM {
         return CLI.lireAvecErreurs(CLI::parseCommande);
     }
 
-    private InfosUtilisateur dialogueSaisirUtilisateur() {
-        String email, nom, prenom;
-
-        CLI.afficher("== Saisie d'un·e utilisa·teur/trice ==");
-        email = CLI.lireEmail();
-        CLI.afficher("Saisir le nom :");
-        nom = CLI.lireNom();
-        CLI.afficher("Saisir le prénom :");
-        prenom = CLI.lireNom();
-
-        return new InfosUtilisateur(email, nom, prenom);
-    }
-
-    private InfosNouvelEvenement dialogueSaisirNouvelEvenement(final Set<String> nomsExistants) {
-        String nom;
-        LocalDate dateDebut, dateFin;
-        InfosUtilisateur admin;
-
-        CLI.afficher("== Saisie d'un nouvel évènement ==");
-        CLI.afficher("Saisir le nom de l'évènement :");
-        nom = CLI.lireNom(nomsExistants, true);
-        CLI.afficher("Date de début: ");
-        dateDebut = CLI.lireDate();
-        CLI.afficher("Date de fin: ");
-        dateFin = CLI.lireDate(dateDebut);
-
-        CLI.afficher("Saisir les informations à propos de l'administra·teur/trice de l'évènement.");
-        CLI.afficher("Un·e nouvel·lle utilisa·teur/trice sera créé·e si nécessaire.");
-        admin = this.dialogueSaisirUtilisateur();
-
-        return new InfosNouvelEvenement(nom, dateDebut, dateFin, admin);
-    }
-
 //-----  Implémentation des méthodes abstraites  -------------------------------
 
     @Override
@@ -164,19 +131,8 @@ public class CLI extends IHM {
         } while (cmd != Commande.QUITTER);
     }
 
-    @Override
     public final void informerUtilisateur(final String msg, final boolean succes) {
         CLI.afficher((succes ? "[OK]" : "[KO]") + " " + msg);
-    }
-
-    public void saisirUtilisateur() {
-        InfosUtilisateur infos = dialogueSaisirUtilisateur();
-        controleur.creerUtilisateur(infos);
-    }
-
-    public void saisirNouvelEvenement(final Set<String> nomsExistants) {
-        InfosNouvelEvenement infos = dialogueSaisirNouvelEvenement(nomsExistants);
-        controleur.creerEvenement(infos);
     }
 
 //-----  Primitives d'affichage  -----------------------------------------------

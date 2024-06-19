@@ -158,16 +158,6 @@ public class JavaFXGUI extends IHM {
         primaryStage.show();
     }
 
-    @Override
-    public void informerUtilisateur(String msg, boolean succes) {
-        final Alert alert = new Alert(
-                succes ? Alert.AlertType.INFORMATION : Alert.AlertType.WARNING
-        );
-        alert.setTitle("DashBoardGame");
-        alert.setContentText(msg);
-        alert.showAndWait();
-    }
-
     // IMPORTANT : Pour les formulaires de création de salles, ...
 //    @Override
 //    public void saisirUtilisateur() {
