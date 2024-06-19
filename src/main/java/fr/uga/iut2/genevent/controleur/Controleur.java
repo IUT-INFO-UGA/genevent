@@ -94,6 +94,10 @@ public class Controleur {
         return this.genevent.getSalles().get(numero);
     }
 
+    public void supprimerSalle(Salle salle) {
+        this.genevent.supprimerSalle(salle);
+    }
+
     public Role getRole() {
         return genevent.getRole();
     }

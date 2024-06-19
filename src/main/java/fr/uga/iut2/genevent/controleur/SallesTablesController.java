@@ -43,14 +43,19 @@ public class SallesTablesController extends CreateurPopupController {
     @FXML
     private void onCreerSalleAction(ActionEvent event) {
         if (ControllerUtilitaire.validateNonEmptyTextInputControl(tfType)) {
-            // TODO : changer la  façon dont les identifiants sont générés
-            getControleur().creerSalle(new IHM.InfosSalle(getControleur().getSalles().size(), tfType.getText()));
+            getControleur().creerSalle(new IHM.InfosSalle(Salle.genererIdentifiant(), tfType.getText()));
             refreshSallesTable();
         }
     }
 
     @FXML
-    private void onSupprimerSalleAction(ActionEvent event) {}
+    private void onSupprimerSalleAction(ActionEvent event) {
+        Salle selectedItem = sallesList.getSelectionModel().getSelectedItem();
+        if (selectedItem != null) {
+            getControleur().supprimerSalle(selectedItem);
+            refreshSallesTable();
+        }
+    }
 
     @FXML
     private void onCreerTableAction(ActionEvent event) {

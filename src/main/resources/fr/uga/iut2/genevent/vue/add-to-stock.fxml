@@ -6,7 +6,6 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<?import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory?>
 <?import java.lang.String?>
 <?import fr.uga.iut2.genevent.vue.controls.PositiveIntegerSpinner?>
 <?import fr.uga.iut2.genevent.vue.controls.PositiveDoubleSpinner?>

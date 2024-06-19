@@ -2,7 +2,7 @@ package fr.uga.iut2.genevent.modele.salles;
 
 import fr.uga.iut2.genevent.modele.GenEvent;
 
-import java.io.Serializable;
+import java.io.*;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,6 +12,24 @@ import java.util.logging.Logger;
  * Une salle est composée d'un numéro ainsi qu'un type, et possède des tables.
  */
 public class Salle implements Serializable {
+
+    // Identifiant
+
+    private static long identifiant = 0;
+
+    public static long genererIdentifiant() {
+        return identifiant++;
+    }
+
+    public static void chargerIdentifiant(BufferedReader reader) throws IOException {
+        String line = reader.readLine();
+        int i = line.indexOf(' ');
+        identifiant = Long.parseLong(line.substring(i + 1));
+    }
+
+    public static void enregistrerIdentifiant(BufferedWriter writer) throws IOException {
+        writer.write("SalleId: " + identifiant + "\n");
+    }
 
     // Logger
 

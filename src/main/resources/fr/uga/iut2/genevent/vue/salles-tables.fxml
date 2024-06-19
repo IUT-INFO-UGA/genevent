@@ -110,12 +110,13 @@
                         </TableView>
                         <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
                            <children>
-                              <Button mnemonicParsing="false" onAction="#onCreerSalleAction" style="-fx-background-color: #fff; -fx-border-color: #69a197; -fx-background-radius: 5; -fx-border-radius: 5;" text="Ajouter">
+                              <Button mnemonicParsing="false" onAction="#onCreerSalleAction" stylesheets="" style="-fx-background-color: #fff; -fx-border-color: #69a197; -fx-background-radius: 5; -fx-border-radius: 5;" text="Ajouter">
                                  <HBox.margin>
                                     <Insets />
                                  </HBox.margin>
                               </Button>
-                              <TextField fx:id="tfType" prefWidth="100.0" promptText="Type..." />
+                              <TextField fx:id="tfType" prefWidth="75.0" promptText="Type..." />
+                              <Button onAction="#onSupprimerSalleAction" mnemonicParsing="false" text="Supprimer" />
                            </children>
                            <padding>
                               <Insets left="10.0" right="10.0" />
