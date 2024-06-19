@@ -10,6 +10,7 @@ import fr.uga.iut2.genevent.modele.seance.Seance;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -21,6 +22,8 @@ import java.util.logging.Logger;
 
 
 public class GenEvent implements Serializable {
+
+    public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     public static final Logger logger = Logger.getLogger(GenEvent.class.getPackageName());
     public static final LogManager logManager = LogManager.getLogManager();
@@ -81,10 +84,12 @@ public class GenEvent implements Serializable {
 
     public void addPersonnel(Personnel personnel) {
         this.personnels.put(personnel.getId(), personnel);
+        Personnel.logger.log(Level.INFO, "Ajout d'un.e membre du personnel : " + personnel + ".");
     }
 
     public void supprimerPersonnel(Personnel personnel) {
         this.personnels.remove(personnel.getId());
+        Personnel.logger.log(Level.INFO, "Suppression d'un.e membre du personnel : " + personnel + ".");
     }
 
     public Collection<Personnel> getPersonnels() {
@@ -99,10 +104,12 @@ public class GenEvent implements Serializable {
 
     public void addJeuDeSociete(JeuDeSociete jeu) {
         this.jeuxDeSociete.put(jeu.getNom(), jeu);
+        JeuDeSociete.logger.log(Level.INFO, "Ajout d'un jeu de société au stock : " + jeu + ".");
     }
 
     public void supprimerJeu(JeuDeSociete jeuDeSociete) {
         this.jeuxDeSociete.remove(jeuDeSociete.getNom());
+        JeuDeSociete.logger.log(Level.INFO, "Suppression d'un jeu de société du stock : " + jeuDeSociete + ".");
     }
 
     public Collection<JeuDeSociete> getJeuxDeSociete() {
@@ -121,6 +128,7 @@ public class GenEvent implements Serializable {
 
     public void addCommande(Commande commande) {
         this.commandes.put(commande.getNumero(), commande);
+        Commande.logger.log(Level.INFO, "Passage de la commande " + commande + ".");
     }
 
     public Collection<Commande> getCommandes() {
@@ -131,6 +139,7 @@ public class GenEvent implements Serializable {
 
     public void addMembre(Membre membre) {
         this.membres.put(membre.getNom(), membre);
+        Membre.logger.log(Level.INFO, "Ajout d'un.e membre à la liste : " + membre + ".");
     }
 
     public Collection<Membre> getMembres() {
@@ -139,16 +148,19 @@ public class GenEvent implements Serializable {
 
     public void supprimerMembre(Membre membre) {
         this.membres.remove(membre.getNom());
+        Membre.logger.log(Level.INFO, "Suppression d'un.e membre de la liste : " + membre + ".");
     }
 
     // SEANCES
 
     public void addSeance(Seance seance) {
         this.seances.add(seance);
+        Seance.logger.log(Level.INFO, "Ajout d'une séance au planning : " + seance + ".");
     }
 
     public void supprimerSeance(Seance seance) {
         this.seances.remove(seance);
+        Seance.logger.log(Level.INFO, "Suppression d'une séance du planning : " + seance + ".");
     }
 
     public List<Seance> getSeances() {
@@ -159,10 +171,12 @@ public class GenEvent implements Serializable {
 
     public void addSalle(Salle salle) {
         this.salles.put(salle.getNumero(), salle);
+        Salle.logger.log(Level.INFO, "Ajout d'une salle aux locaux : " + salle + ".");
     }
 
     public void supprimerSalle(Salle salle) {
         this.salles.remove(salle.getNumero());
+        Salle.logger.log(Level.INFO, "Suppression d'une salle des locaux : " + salle + ".");
     }
 
     public Map<Long, Salle> getSalles() {
@@ -174,6 +188,7 @@ public class GenEvent implements Serializable {
     }
 
     public void setRole(Role role) {
+        GenEvent.logger.log(Level.INFO, "Changement de rôle dans l'application : " + this.role + " -> " + role + ".");
         this.role = role;
     }
 }

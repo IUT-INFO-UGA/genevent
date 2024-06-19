@@ -1,7 +1,13 @@
 package fr.uga.iut2.genevent.modele.jeu;
 
+import fr.uga.iut2.genevent.modele.GenEvent;
+
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.logging.Logger;
 
 /**
  * Représente un jeu de société dont l'association/le salon est en possession.
@@ -10,6 +16,14 @@ import java.util.Date;
  * et enfin un prix et une date d'achat.
  */
 public class JeuDeSociete implements Serializable {
+
+    // Logger
+
+    public static Logger logger = Logger.getLogger(JeuDeSociete.class.getPackageName());
+
+    static {
+        GenEvent.logManager.addLogger(logger);
+    }
 
     // Attributs
 
@@ -126,5 +140,13 @@ public class JeuDeSociete implements Serializable {
         } else {
             throw new JeuDeSocieteException("Nombre de joueurs négatif");
         }
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + "(nom=\"" + getNom() + "\", type=\"" + getType() + "\""
+                + ", nbJoueurs=" + getNbJoueurs()
+                + ", dateAchat=\"" + LocalDate.ofInstant(getDateAchat().toInstant(), ZoneId.systemDefault()).format(GenEvent.DATE_FORMATTER)
+                + "\", prix=" + getPrix() + ")";
     }
 }

@@ -1,6 +1,10 @@
 package fr.uga.iut2.genevent.modele.commande;
 
+import fr.uga.iut2.genevent.modele.GenEvent;
+
 import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Classe représentant une commande de jeux de société.
@@ -9,6 +13,14 @@ import java.io.Serializable;
  * et le pris du jeu à l'unité à commander.
  */
 public class Commande implements Serializable {
+
+    // Logger
+
+    public static final Logger logger = Logger.getLogger(Commande.class.getPackageName());
+
+    static {
+        GenEvent.logManager.addLogger(logger);
+    }
 
     // Attributs
 
@@ -91,6 +103,7 @@ public class Commande implements Serializable {
      */
     public void marquerCommeRecue() {
         this.recue = true;
+        logger.log(Level.INFO, "Marquage de la commande comme reçue : " + this + ".");
     }
 
     /**
@@ -140,5 +153,12 @@ public class Commande implements Serializable {
      */
     public double getPrixTotal() {
         return getPrix() * getQuantite();
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + "(numero=" + getNumero() + ", recue=" + estRecue()
+                + ", nomDuJeu=\"" + getNomDuJeu() + "\", quantite=" + getQuantite()
+                + ", prixDuJeu=" + getPrix() + ", prixTotal=" + getPrixTotal() + ")";
     }
 }

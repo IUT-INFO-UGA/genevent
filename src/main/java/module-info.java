@@ -5,6 +5,7 @@ module genevent {
     requires com.calendarfx.view;
     requires java.logging;
     requires commons.collections;
+    requires commons.logging;
 
     opens fr.uga.iut2.genevent.controleur to javafx.fxml;
     opens fr.uga.iut2.genevent.controleur.popup to javafx.fxml;

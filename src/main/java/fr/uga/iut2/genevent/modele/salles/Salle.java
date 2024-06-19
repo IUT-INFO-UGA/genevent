@@ -1,13 +1,25 @@
 package fr.uga.iut2.genevent.modele.salles;
 
+import fr.uga.iut2.genevent.modele.GenEvent;
+
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Représente une salle de l'établissement de l'association/le salon de jeux de société.
  * Une salle est composée d'un numéro ainsi qu'un type, et possède des tables.
  */
 public class Salle implements Serializable {
+
+    // Logger
+
+    public static final Logger logger = Logger.getLogger(Salle.class.getPackageName());
+
+    static {
+        GenEvent.logManager.addLogger(logger);
+    }
 
     // Attributs
 
@@ -36,6 +48,7 @@ public class Salle implements Serializable {
      */
     public void addTable(Table table) {
         tables.put(table.getId(), table);
+        Salle.logger.log(Level.INFO, "Ajout d'une table dans la salle " + getNumero() + " : " + table + ".");
     }
 
     /**
@@ -68,6 +81,7 @@ public class Salle implements Serializable {
      * @param id L'identifiant de la table à supprimer de la salle.
      */
     public void removeTable(long id) {
+        Salle.logger.log(Level.INFO, "Suppression de la table de la salle " + getNumero() + " : " + getTable(id) + ".");
         tables.remove(id);
     }
 
@@ -76,7 +90,7 @@ public class Salle implements Serializable {
      * @param table La table à supprimer de la salle.
      */
     public void removeTable(Table table) {
-        tables.remove(table.getId());
+        removeTable(table.getId());
     }
 
     /**
@@ -85,5 +99,11 @@ public class Salle implements Serializable {
      */
     public HashMap<Long, Table> getTables() {
         return tables;
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + "(numero=" + getNumero() + ", type=\"" + getType()
+                + "\", nombreTables=" + getTables().size() + ")";
     }
 }

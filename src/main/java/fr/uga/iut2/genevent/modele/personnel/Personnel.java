@@ -1,8 +1,10 @@
 package fr.uga.iut2.genevent.modele.personnel;
 
+import fr.uga.iut2.genevent.modele.GenEvent;
 import fr.uga.iut2.genevent.modele.membre.Membre;
 
 import java.io.Serializable;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 
 /**
@@ -12,6 +14,14 @@ import java.util.regex.Matcher;
  * Cette classe est abstraite et sert de base pour tous les autres rôles du personnel.
  */
 public abstract class Personnel implements Serializable {
+
+    // Logger
+
+    public static Logger logger = Logger.getLogger(Personnel.class.getPackageName());
+
+    static {
+        GenEvent.logManager.addLogger(logger);
+    }
 
     // Attributs
 
@@ -81,5 +91,11 @@ public abstract class Personnel implements Serializable {
         } else {
             throw new PersonnelException("Le numéro de téléphone est invalide");
         }
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + "(id=\"" + getId() + "\", nomComplet=\"" + getNom()
+                + "\", prenom=\"" + getPrenom() + "\", tel=\"" + getNumTel() + "\")";
     }
 }

@@ -1,7 +1,12 @@
 package fr.uga.iut2.genevent.modele.membre;
 
+import fr.uga.iut2.genevent.modele.GenEvent;
+
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -11,6 +16,14 @@ import java.util.regex.Pattern;
  * Un membre possède un identifiant unique, un nom, une date de naissance et un numéro de téléphone.
  */
 public class Membre implements Serializable {
+
+    // Logger
+
+    public static final Logger logger = Logger.getLogger(Membre.class.getPackageName());
+
+    static {
+        GenEvent.logManager.addLogger(logger);
+    }
 
     // Constantes
 
@@ -110,5 +123,12 @@ public class Membre implements Serializable {
         } else {
             throw new MembreException("numéro de téléphone du membre invalide");
         }
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + "(nom=\"" + getNom()
+                + "\", dateNaissance=\"" + LocalDate.ofInstant(getDateNaissance().toInstant(), ZoneId.systemDefault()).format(GenEvent.DATE_FORMATTER)
+                + "\", tel=\"" + getTelephone() + "\")";
     }
 }

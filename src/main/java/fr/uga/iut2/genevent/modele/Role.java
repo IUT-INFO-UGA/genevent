@@ -1,5 +1,6 @@
 package fr.uga.iut2.genevent.modele;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,5 +50,30 @@ public enum Role {
 
     public static Role getByName(String name) {
         return BY_NAME.get(name);
+    }
+
+    @Override
+    public String toString() {
+        int i, nbAcces;
+        ArrayList<String> acces = new ArrayList<>();
+        if (isAccesMembres())
+            acces.add("accesMembres");
+        if (isAccesPlanning())
+            acces.add("accesPlanning");
+        if (isAccesSalles())
+            acces.add("accesSalles");
+        if (isAccesStocks())
+            acces.add("accesStocks");
+
+        StringBuilder sb = new StringBuilder(getName() + "(");
+        nbAcces = acces.size();
+        for (i = 0; i < nbAcces; i++) {
+            sb.append(acces.get(i));
+            if (i + 1 < nbAcces) {
+                sb.append(", ");
+            }
+        }
+        sb.append(")");
+        return sb.toString();
     }
 }

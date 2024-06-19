@@ -78,4 +78,11 @@ public class Table implements Serializable {
     public TailleTable getTaille() {
         return taille;
     }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + "(id=" + getId() + ", type=\"" + getType()
+                + "\", taille=\"" + getTaille().toString() + "\", nbPlaces=" + getNbPlaces()
+                + ", salle=" + getSalle().getNumero() + ")";
+    }
 }

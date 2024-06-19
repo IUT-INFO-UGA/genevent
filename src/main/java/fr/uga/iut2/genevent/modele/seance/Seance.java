@@ -1,12 +1,16 @@
 package fr.uga.iut2.genevent.modele.seance;
 
+import fr.uga.iut2.genevent.modele.GenEvent;
 import fr.uga.iut2.genevent.modele.jeu.JeuDeSociete;
 import fr.uga.iut2.genevent.modele.membre.Membre;
 import fr.uga.iut2.genevent.modele.salles.Table;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Logger;
 
 /**
  * Représente une séance du planning de l'association/du salon.
@@ -14,6 +18,14 @@ import java.util.Date;
  * Elle possède aussi la liste des membres qui participent à cette séance
  */
 public class Seance implements Serializable {
+
+    // Logger
+
+    public static final Logger logger = Logger.getLogger(Seance.class.getPackageName());
+
+    static {
+        GenEvent.logManager.addLogger(logger);
+    }
 
     // Attributs
 
@@ -132,5 +144,13 @@ public class Seance implements Serializable {
      */
     public void removeJeuDeSociete(JeuDeSociete jeuDeSociete) {
         this.jeuxDeSociete.remove(jeuDeSociete);
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + "(type=\"" + getType()
+                + "\", date=\"" + LocalDate.ofInstant(getDate().toInstant(), ZoneId.systemDefault()).format(GenEvent.DATE_FORMATTER)
+                + "\", heureDebut=" + getHeureDebut() + "h, heureFin=" + getHeureFin()
+                + "h, table=" + getTable().getId();
     }
 }
