@@ -28,6 +28,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.stream.Collectors;
 
 public class PlanningController extends HeaderController {
 
@@ -80,7 +81,7 @@ public class PlanningController extends HeaderController {
 
             if (selectedItem == null) {
                 ControllerUtilitaire.markControlErrorStatus(planningTableList, true);
-                // TODO : Message d'erreur
+                ControllerUtilitaire.openAlert("Veuillez choisir une table !", false);
                 return;
             }
 
@@ -90,7 +91,7 @@ public class PlanningController extends HeaderController {
 
                 if (items.isEmpty()) {
                     ControllerUtilitaire.markControlErrorStatus(animateursList, true);
-                    // TODO : Message d'erreur
+                    ControllerUtilitaire.openAlert("Un événement a besoin d'au moins un animateur.", false);
                     return;
                 }
 
@@ -108,8 +109,12 @@ public class PlanningController extends HeaderController {
                             selectedItem.getNbPlaces(), // TODO
                             personnels
                     ));
+                    planningNameField.clear();
+                    planningEndHourField.clear();
+                    planningStartHourField.clear();
+                    planningDatePicker.setValue(null);
                 } catch (SeanceException e) {
-                    // TODO
+                    ControllerUtilitaire.openAlert(e.getMessage(), false);
                 }
             } else {
                 getControleur().creerSeance(new IHM.InfosSeance(
@@ -196,7 +201,6 @@ public class PlanningController extends HeaderController {
             planningView.setShowSourceTray(false);
 
             for (Seance seance : getControleur().getSeances()) {
-                System.out.println(seance);
                 ZonedDateTime d = ZonedDateTime.ofInstant(seance.getDate().toInstant(),
                         ZoneId.systemDefault());
 
@@ -207,6 +211,11 @@ public class PlanningController extends HeaderController {
                 entry.changeEndTime(LocalTime.of(seance.getHeureFin(), 0));
                 entry.setTitle(seance.getType());
                 entry.setUserObject(seance);
+
+                if (seance instanceof Evenement) {
+                    System.out.println(seance);
+                    entry.setTitle("Év. " + entry.getTitle() + " avec " + ((Evenement) seance).getAnimateurs().stream().map(Animateur::getId).collect(Collectors.joining(", ")));
+                }
 
                 entry.setLocation("Table " + seance.getTable().getSalle().getNumero() + "-" + seance.getTable().getId());
                 calendar.addEntry(entry);

@@ -83,4 +83,13 @@ public class ControllerUtilitaire {
 
         return isValid;
     }
+
+    public static void openAlert(String message, boolean isSuccess) {
+        final Alert alert = new Alert(
+                isSuccess ? Alert.AlertType.INFORMATION : Alert.AlertType.WARNING
+        );
+        alert.setTitle("DashBoardGame");
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 }

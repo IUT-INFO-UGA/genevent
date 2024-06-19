@@ -53,6 +53,14 @@ public class Evenement extends Seance {
     }
 
     /**
+     * Récupère la liste des animateurs de l'événement
+     * @return la liste des animateurs
+     */
+    public ArrayList<Animateur> getAnimateurs() {
+        return animateurs;
+    }
+
+    /**
      * Récupère le nombre de places disponibles lors de l'évènement.
      * @return Le nombre de places disponibles lors de l'évènement.
      */
