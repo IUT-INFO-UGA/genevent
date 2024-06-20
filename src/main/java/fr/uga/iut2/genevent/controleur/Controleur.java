@@ -76,7 +76,7 @@ public class Controleur {
 
     public void creerSalle(IHM.InfosSalle salle) {
         this.genevent.addSalle(new Salle(
-                salle.numero,
+                genevent.getAndIncrementSalleId(),
                 salle.type
         ));
     }
@@ -87,7 +87,7 @@ public class Controleur {
 
     public void creerTable(IHM.InfosTable table) {
         table.salle.addTable(new Table(
-                table.id,
+                table.salle.getAndIncrementTableId(),
                 table.salle,
                 table.type,
                 table.nbPlaces,

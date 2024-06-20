@@ -73,24 +73,20 @@ public abstract class IHM {
     }
 
     public static class InfosSalle {
-        public long numero;
         public String type;
 
-        public InfosSalle(long numero, String type) {
-            this.numero = numero;
+        public InfosSalle(String type) {
             this.type = type;
         }
     }
 
     public static class InfosTable {
-        public long id;
         public Salle salle;
         public String type;
         public int nbPlaces;
         public TailleTable taille;
 
-        public InfosTable(long id, Salle salle, String type, int nbPlaces, TailleTable taille) {
-            this.id = id;
+        public InfosTable(Salle salle, String type, int nbPlaces, TailleTable taille) {
             this.salle = salle;
             this.type = type;
             this.nbPlaces = nbPlaces;
