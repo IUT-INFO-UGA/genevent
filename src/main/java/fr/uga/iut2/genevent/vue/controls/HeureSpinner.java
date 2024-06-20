@@ -4,11 +4,11 @@ import fr.uga.iut2.genevent.util.ControllerUtilitaire;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextFormatter;
 
-public class HourSpinner extends EditableSpinner<Integer> {
+public abstract class HeureSpinner extends EditableSpinner<Integer> {
 
-    public HourSpinner() {
+    public HeureSpinner(SpinnerValueFactory.IntegerSpinnerValueFactory valueFactory) {
         super();
-        setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 24, 0, 1));
+        setValueFactory(valueFactory);
         getEditor().setTextFormatter(new TextFormatter<>(ControllerUtilitaire.integerFilter));
     }
 }

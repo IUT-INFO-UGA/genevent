@@ -116,13 +116,13 @@
                                  <VBox.margin>
                                     <Insets top="5.0" />
                                  </VBox.margin></Label>
-                              <HourSpinner fx:id="planningStartHourField" styleClass="champ" />
+                              <HeureDebutSpinner fx:id="planningStartHourField" styleClass="champ" />
                               <Label layoutX="20.0" layoutY="163.0" text="Heure de fin">
                                  <VBox.margin>
                                     <Insets top="5.0" />
                                  </VBox.margin>
                               </Label>
-                              <HourSpinner fx:id="planningEndHourField" layoutX="20.0" layoutY="181.0" styleClass="champ" />
+                              <HeureFinSpinner fx:id="planningEndHourField" layoutX="20.0" layoutY="181.0" styleClass="champ" />
                               <Label layoutX="20.0" layoutY="188.0" text="Jeu(x) de société">
                                  <VBox.margin>
                                     <Insets top="5.0" />

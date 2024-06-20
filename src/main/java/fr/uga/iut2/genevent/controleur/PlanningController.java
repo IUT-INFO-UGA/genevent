@@ -12,7 +12,8 @@ import fr.uga.iut2.genevent.modele.seance.Seance;
 import fr.uga.iut2.genevent.modele.seance.SeanceException;
 import fr.uga.iut2.genevent.util.ControllerUtilitaire;
 import fr.uga.iut2.genevent.vue.IHM;
-import fr.uga.iut2.genevent.vue.controls.HourSpinner;
+import fr.uga.iut2.genevent.vue.controls.HeureDebutSpinner;
+import fr.uga.iut2.genevent.vue.controls.HeureFinSpinner;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -42,7 +43,10 @@ public class PlanningController extends HeaderController {
     private TextField planningNameField;
 
     @FXML
-    private HourSpinner planningStartHourField, planningEndHourField;
+    private HeureDebutSpinner planningStartHourField;
+
+    @FXML
+    private HeureFinSpinner planningEndHourField;
 
     @FXML
     private VBox eventBox;
@@ -58,12 +62,19 @@ public class PlanningController extends HeaderController {
 
     @FXML
     private void initialize() {
+        planningNameField.clear();
         planningDatePicker.setValue(LocalDate.now());
+        planningStartHourField.getEditor().setText(Integer.toString(HeureDebutSpinner.VALUE_FACTORY.getMin()));
+        planningEndHourField.getEditor().setText(Integer.toString(HeureFinSpinner.VALUE_FACTORY.getMin()));
+        jeuxList.getCheckModel().clearChecks();
+        planningTableList.getSelectionModel().clearSelection();
+        animateursList.getCheckModel().clearChecks();
+        eventCheckBox.setSelected(false);
     }
 
     @FXML
     private void onEventCheckClick(ActionEvent event) {
-        eventBox.setVisible(eventCheckBox.isSelected());
+        refreshAnimateurs();
     }
 
     @FXML
@@ -117,10 +128,7 @@ public class PlanningController extends HeaderController {
                             selectedItem.getNbPlaces(), // TODO
                             personnels
                     ));
-                    planningNameField.clear();
-                    planningEndHourField.getEditor().clear();
-                    planningStartHourField.getEditor().clear();
-                    planningDatePicker.setValue(null);
+                    initialize();
                 } catch (SeanceException e) {
                     ControllerUtilitaire.openAlert(e.getMessage(), false);
                 }
@@ -133,13 +141,14 @@ public class PlanningController extends HeaderController {
                         end
                 ));
             }
-            refreshPlanningView();
+            refresh();
         }
     }
 
     @Override
     public void refresh() {
         refreshPlanningView();
+        refreshAnimateurs();
 
         jeuxList.getItems().clear();
         for (JeuDeSociete jeux : getControleur().getJeux()) {
@@ -214,7 +223,7 @@ public class PlanningController extends HeaderController {
                 entry.changeStartDate(d.toLocalDate());
                 entry.changeEndDate(d.toLocalDate());
                 entry.changeStartTime(LocalTime.of(seance.getHeureDebut(), 0));
-                entry.changeEndTime(LocalTime.of(seance.getHeureFin(), 0));
+                entry.changeEndTime(LocalTime.of(seance.getHeureFin() - 1, 59));
                 entry.setTitle(seance.getType());
                 entry.setUserObject(seance);
 
@@ -228,5 +237,9 @@ public class PlanningController extends HeaderController {
             }
             planningView.getCalendarSources().add(source);
         }
+    }
+
+    private void refreshAnimateurs() {
+        eventBox.setVisible(eventCheckBox.isSelected());
     }
 }
