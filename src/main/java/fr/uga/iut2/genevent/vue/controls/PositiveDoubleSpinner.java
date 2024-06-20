@@ -4,7 +4,7 @@ import fr.uga.iut2.genevent.util.ControllerUtilitaire;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextFormatter;
 
-public class PositiveDoubleSpinner extends CustomSpinner<Double> {
+public class PositiveDoubleSpinner extends EditableSpinner<Double> {
 
     public PositiveDoubleSpinner() {
         super();

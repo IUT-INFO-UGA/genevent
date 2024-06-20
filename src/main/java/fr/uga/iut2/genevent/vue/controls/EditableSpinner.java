@@ -2,9 +2,9 @@ package fr.uga.iut2.genevent.vue.controls;
 
 import javafx.scene.control.Spinner;
 
-public class CustomSpinner<T> extends Spinner<T> {
+public class EditableSpinner<T> extends Spinner<T> {
 
-    public CustomSpinner() {
+    public EditableSpinner() {
         super();
         setEditable(true);
     }

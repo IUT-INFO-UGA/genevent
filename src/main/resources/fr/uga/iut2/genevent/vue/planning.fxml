@@ -33,6 +33,7 @@
 -->
 
 <?import com.calendarfx.view.*?>
+<?import fr.uga.iut2.genevent.vue.controls.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
@@ -115,19 +116,19 @@
                                  <VBox.margin>
                                     <Insets top="5.0" />
                                  </VBox.margin></Label>
-                              <TextField fx:id="planningStartHourField" styleClass="champ" />
+                              <HourSpinner fx:id="planningStartHourField" styleClass="champ" />
                               <Label layoutX="20.0" layoutY="163.0" text="Heure de fin">
                                  <VBox.margin>
                                     <Insets top="5.0" />
                                  </VBox.margin>
                               </Label>
-                              <TextField fx:id="planningEndHourField" layoutX="20.0" layoutY="181.0" styleClass="champ" />
+                              <HourSpinner fx:id="planningEndHourField" layoutX="20.0" layoutY="181.0" styleClass="champ" />
                               <Label layoutX="20.0" layoutY="188.0" text="Jeu(x) de société">
                                  <VBox.margin>
                                     <Insets top="5.0" />
                                  </VBox.margin>
                               </Label>
-                              <CheckComboBox fx:id="jeuxList" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #fff;" />
+                              <CheckComboBox fx:id="jeuxList" prefHeight="200.0" prefWidth="200.0" styleClass="champ" />
                               <Label layoutX="20.0" layoutY="188.0" text="Table">
                                  <VBox.margin>
                                     <Insets top="5.0" />

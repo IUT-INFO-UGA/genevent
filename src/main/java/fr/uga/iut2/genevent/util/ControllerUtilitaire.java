@@ -39,7 +39,7 @@ public class ControllerUtilitaire {
         }
     }
 
-    public static boolean validateSpinnerValue(Spinner<? extends Number> spinner, int min, boolean strict) {
+    public static boolean validateSpinnerValue(Spinner<? extends Number> spinner, double min, boolean strict) {
         double spinnerValue = spinner.getValue().doubleValue();
         if (spinnerValue > min || (!strict && spinnerValue == min)) {
             markControlErrorStatus(spinner, true);

@@ -53,6 +53,11 @@ public class Controleur {
         this.genevent.addMembre(membre);
     }
 
+    public void modifierMembre(Membre ancienMembre, IHM.InfosMembre infos) throws MembreException {
+        supprimerMembre(ancienMembre);
+        creerMembre(infos);
+    }
+
     public Collection<Membre> getMembres() {
         return Collections.unmodifiableCollection(this.genevent.getMembres());
     }

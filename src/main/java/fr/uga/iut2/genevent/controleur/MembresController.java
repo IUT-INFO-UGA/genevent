@@ -5,6 +5,8 @@ import fr.uga.iut2.genevent.modele.membre.Membre;
 import fr.uga.iut2.genevent.modele.membre.MembreException;
 import fr.uga.iut2.genevent.util.ControllerUtilitaire;
 import fr.uga.iut2.genevent.vue.IHM;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
@@ -18,6 +20,8 @@ import java.util.Date;
 
 public class MembresController extends HeaderController {
 
+    private Membre membreSelectionne;
+
     @FXML
     private TableView<Membre> memberList;
 
@@ -28,25 +32,57 @@ public class MembresController extends HeaderController {
     private DatePicker memberBirthDateField;
 
     @FXML
-    private Button memberModifyButton, memberDeleteButton;
+    private Button memberModifyButton, memberDeleteButton, memberCreateButton;
 
     @FXML
     private void onMemberListValueClick(MouseEvent event) {
-        Membre selectedItem = memberList.getSelectionModel().getSelectedItem();
-
-        memberModifyButton.setDisable(selectedItem == null);
-        memberDeleteButton.setDisable(selectedItem == null);
+        updateSelection();
     }
 
     @FXML
-    private void onMemberModifyButtonAction() {
+    private void onMemberModifyButtonAction(ActionEvent event) {
         Membre selectedItem = memberList.getSelectionModel().getSelectedItem();
 
         memberNameField.setText(selectedItem.getNom());
-        memberPhoneNbField.setText(selectedItem.getTelephone());
         memberBirthDateField.setValue(selectedItem.getDateNaissance().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+        memberPhoneNbField.setText(selectedItem.getTelephone());
 
-        // TODO: implémenter la modification
+        memberCreateButton.setText("Modifier");
+        memberCreateButton.setOnAction(this::onMemberSaveModificationsAction);
+    }
+
+    @FXML
+    private void onMemberSaveModificationsAction(ActionEvent event) {
+        Membre selectedItem = memberList.getSelectionModel().getSelectedItem();
+        if (selectedItem != null && validerEntrees()) {
+            try {
+                LocalDate value = memberBirthDateField.getValue();
+                Date birthDate = Date.from(value.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+                getControleur().creerMembre(new IHM.InfosMembre(
+                        memberNameField.getText().strip(),
+                        birthDate,
+                        memberPhoneNbField.getText().strip()
+                ));
+
+                getControleur().modifierMembre(selectedItem, new IHM.InfosMembre(
+                        memberNameField.getText().strip(),
+                        birthDate,
+                        memberPhoneNbField.getText().strip()
+                ));
+
+                memberNameField.clear();
+                memberBirthDateField.getEditor().clear();
+                memberPhoneNbField.clear();
+
+                memberCreateButton.setText("Créer");
+                memberCreateButton.setOnAction(this::addMemberButtonAction);
+            } catch (MembreException e) {
+                e.printStackTrace();
+            }
+            refreshMemberTable();
+            updateSelection();
+        }
     }
 
     @FXML
@@ -56,24 +92,13 @@ public class MembresController extends HeaderController {
         if (selectedItem != null) {
             getControleur().supprimerMembre(selectedItem);
             refreshMemberTable();
+            updateSelection();
         }
     }
 
     @FXML
-    private void addMemberButtonAction() {
-        boolean isValid = ControllerUtilitaire.validateNonEmptyTextInputControl(memberNameField)
-                & ControllerUtilitaire.validateNonEmptyTextInputControl(memberPhoneNbField)
-                & ControllerUtilitaire.validateNonEmptyDatePicker(memberBirthDateField);
-
-        if (!ControllerUtilitaire.matchesPattern(memberNameField.getText(), Membre.PATERNE_NOM)) {
-            isValid = false;
-            ControllerUtilitaire.markControlErrorStatus(memberNameField, false);
-        }
-
-        if (!ControllerUtilitaire.matchesPattern(memberPhoneNbField.getText(), Membre.PATERNE_TELEPHONE)) {
-            isValid = false;
-            ControllerUtilitaire.markControlErrorStatus(memberPhoneNbField, false);
-        }
+    private void addMemberButtonAction(ActionEvent event) {
+        boolean isValid = validerEntrees();
 
         if (!isValid) {
             return;
@@ -93,21 +118,46 @@ public class MembresController extends HeaderController {
             memberPhoneNbField.clear();
             memberBirthDateField.setValue(null);
         } catch (MembreException e) {
-            isValid = false;
             e.printStackTrace();
         }
 
         refreshMemberTable();
+        updateSelection();
     }
 
     @Override
     public void refresh() {
         refreshMemberTable();
+        updateSelection();
+    }
+
+    public void updateSelection() {
+        membreSelectionne = memberList.getSelectionModel().getSelectedItem();
+        memberModifyButton.setDisable(membreSelectionne == null);
+        memberDeleteButton.setDisable(membreSelectionne == null);
     }
 
     private void refreshMemberTable() {
         memberList.getItems().clear();
         memberList.getItems().addAll(getControleur().getMembres());
         memberList.refresh();
+    }
+
+    private boolean validerEntrees() {
+        boolean isValid = ControllerUtilitaire.validateNonEmptyTextInputControl(memberNameField)
+                & ControllerUtilitaire.validateNonEmptyTextInputControl(memberPhoneNbField)
+                & ControllerUtilitaire.validateNonEmptyDatePicker(memberBirthDateField);
+
+        if (!ControllerUtilitaire.matchesPattern(memberNameField.getText(), Membre.PATERNE_NOM)) {
+            isValid = false;
+            ControllerUtilitaire.markControlErrorStatus(memberNameField, false);
+        }
+
+        if (!ControllerUtilitaire.matchesPattern(memberPhoneNbField.getText(), Membre.PATERNE_TELEPHONE)) {
+            isValid = false;
+            ControllerUtilitaire.markControlErrorStatus(memberPhoneNbField, false);
+        }
+
+        return isValid;
     }
 }

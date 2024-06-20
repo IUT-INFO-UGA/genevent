@@ -2,7 +2,6 @@ package fr.uga.iut2.genevent.controleur;
 
 import com.calendarfx.model.*;
 import com.calendarfx.view.CalendarView;
-import fr.uga.iut2.genevent.Main;
 import fr.uga.iut2.genevent.modele.jeu.JeuDeSociete;
 import fr.uga.iut2.genevent.modele.personnel.Animateur;
 import fr.uga.iut2.genevent.modele.personnel.Personnel;
@@ -13,6 +12,7 @@ import fr.uga.iut2.genevent.modele.seance.Seance;
 import fr.uga.iut2.genevent.modele.seance.SeanceException;
 import fr.uga.iut2.genevent.util.ControllerUtilitaire;
 import fr.uga.iut2.genevent.vue.IHM;
+import fr.uga.iut2.genevent.vue.controls.HourSpinner;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -39,7 +39,10 @@ public class PlanningController extends HeaderController {
     private DatePicker planningDatePicker;
 
     @FXML
-    private TextField planningNameField, planningStartHourField, planningEndHourField;
+    private TextField planningNameField;
+
+    @FXML
+    private HourSpinner planningStartHourField, planningEndHourField;
 
     @FXML
     private VBox eventBox;
@@ -54,21 +57,26 @@ public class PlanningController extends HeaderController {
     private CheckComboBox<String> jeuxList, animateursList;
 
     @FXML
+    private void initialize() {
+        planningDatePicker.setValue(LocalDate.now());
+    }
+
+    @FXML
     private void onEventCheckClick(ActionEvent event) {
         eventBox.setVisible(eventCheckBox.isSelected());
     }
 
     @FXML
     private void onCreateEventButtonAction() {
-        boolean valide = ControllerUtilitaire.validateNonEmptyTextInputControl(planningNameField)
+        if (ControllerUtilitaire.validateNonEmptyTextInputControl(planningNameField)
                 & ControllerUtilitaire.validateNonEmptyDatePicker(planningDatePicker)
-                & ControllerUtilitaire.validateNonEmptyTextInputControl(planningStartHourField, ControllerUtilitaire.isNumeric(planningStartHourField.getText()))
-                & ControllerUtilitaire.validateNonEmptyTextInputControl(planningEndHourField, ControllerUtilitaire.isNumeric(planningEndHourField.getText()));
-
-        if (valide) {
+                & 0 <= planningStartHourField.getValue() & planningStartHourField.getValue() < 24
+                & 0 < planningEndHourField.getValue() & planningEndHourField.getValue() <= 24
+                & planningStartHourField.getValue() < planningEndHourField.getValue()
+        ) {
             String type = planningNameField.getText();
-            int start = Integer.parseInt(planningStartHourField.getText());
-            int end = Integer.parseInt(planningEndHourField.getText());
+            int start = planningStartHourField.getValue();
+            int end = planningEndHourField.getValue();
             LocalDate date = planningDatePicker.getValue();
 
             ArrayList<JeuDeSociete> jeux = new ArrayList<>();
@@ -110,8 +118,8 @@ public class PlanningController extends HeaderController {
                             personnels
                     ));
                     planningNameField.clear();
-                    planningEndHourField.clear();
-                    planningStartHourField.clear();
+                    planningEndHourField.getEditor().clear();
+                    planningStartHourField.getEditor().clear();
                     planningDatePicker.setValue(null);
                 } catch (SeanceException e) {
                     ControllerUtilitaire.openAlert(e.getMessage(), false);
@@ -140,9 +148,7 @@ public class PlanningController extends HeaderController {
 
         planningTableList.getItems().clear();
         for (Salle salle : getControleur().getSalles()) {
-            salle.getTables().forEach((id, table) -> {
-                planningTableList.getItems().add(table);
-            });
+            salle.getTables().forEach((id, table) -> planningTableList.getItems().add(table));
         }
 
         planningTableList.setConverter(new StringConverter<>() {
