@@ -19,6 +19,7 @@ import fr.uga.iut2.genevent.vue.JavaFXGUI;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.logging.Level;
 
 
 public class Controleur {
@@ -53,9 +54,12 @@ public class Controleur {
         this.genevent.addMembre(membre);
     }
 
-    public void modifierMembre(Membre ancienMembre, IHM.InfosMembre infos) throws MembreException {
-        supprimerMembre(ancienMembre);
-        creerMembre(infos);
+    public void modifierMembre(Membre membre, IHM.InfosMembre infos) throws MembreException {
+        Membre versionPrecedente = new Membre(membre.getNom(), membre.getDateNaissance(), membre.getTelephone());
+        membre.setNom(infos.nom);
+        membre.setDateNaissance(infos.dateNaissance);
+        membre.setTelephone(infos.telephone);
+        Membre.logger.log(Level.INFO, "Modification d'un membre : " + versionPrecedente + " -> " + membre + ".");
     }
 
     public Collection<Membre> getMembres() {
@@ -124,9 +128,22 @@ public class Controleur {
         ));
     }
 
-    public void modifierJeu(JeuDeSociete ancienJeu, IHM.InfosJeu jeu) throws JeuDeSocieteException {
-        supprimerJeu(ancienJeu);
-        creerJeu(jeu);
+    public void modifierJeu(String nomDuJeu, IHM.InfosJeu infos) throws JeuDeSocieteException {
+        JeuDeSociete jeu = this.genevent.getJeu(nomDuJeu);
+        JeuDeSociete versionPrecedente = new JeuDeSociete(
+                jeu.getNom(), jeu.getRegles(), jeu.getNbJoueurs(), jeu.getDateAchat(),
+                jeu.getType(), jeu.getTailleTable(), jeu.getDureePartie(), jeu.getPrix()
+        );
+
+        jeu.setRegles(infos.regles);
+        jeu.setNbJoueurs(infos.nbJoueurs);
+        jeu.setDateAchat(infos.dateAchat);
+        jeu.setType(infos.type);
+        jeu.setTailleTable(infos.taille);
+        jeu.setDureePartie(infos.dureePartie);
+        jeu.setPrix(infos.prix);
+
+        JeuDeSociete.logger.log(Level.INFO, "Un jeu de société a été modifié dans le stock : " + versionPrecedente + " -> " + jeu + ".");
     }
 
     public void supprimerJeu(JeuDeSociete jeuDeSociete) {

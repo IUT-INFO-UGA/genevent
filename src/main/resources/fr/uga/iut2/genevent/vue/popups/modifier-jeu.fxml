@@ -43,7 +43,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <TextField fx:id="tfNomDuJeu" GridPane.columnIndex="4" GridPane.rowIndex="2" style="-fx-border-color: #6b5ca5; -fx-background-radius: 5; -fx-border-radius: 5;" />
+                <Label fx:id="labelNomDuJeu" GridPane.columnIndex="4" GridPane.rowIndex="2" />
                 <TextArea fx:id="taRegles" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="3" style="-fx-border-color: #6b5ca5; -fx-background-radius: 5; -fx-border-radius: 5;"/>
                 <PositiveIntegerSpinner fx:id="spNbJoueurs" GridPane.columnIndex="4" GridPane.rowIndex="4" style="-fx-border-color: #69a197; -fx-background-radius: 5; -fx-border-radius: 5;" />
                 <DatePicker fx:id="dpDateAchat" GridPane.columnIndex="4" GridPane.rowIndex="5" style="-fx-border-color: #6b5ca5; -fx-background-radius: 5; -fx-border-radius: 5;"/>

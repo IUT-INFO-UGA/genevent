@@ -28,7 +28,7 @@ public class Membre implements Serializable {
     // Constantes
 
     public static final Pattern PATERNE_NOM = Pattern.compile("^[a-z-A-Z]+(-[a-z-A-Z]+)*( [a-z-A-Z]+(-[a-z-A-Z]+)*)+$");
-    public static final Pattern PATERNE_TELEPHONE = Pattern.compile("^[0-9]{2}(([0-9]{2}){4})|(\\.([0-9]{2}){4})|( ([0-9]{2}){4})$");
+    public static final Pattern PATERNE_TELEPHONE = Pattern.compile("^[0-9]{2}(([0-9]{2}){4})|((\\.[0-9]{2}){4})|(( [0-9]{2}){4})$");
 
     // Attributs
 
@@ -90,7 +90,7 @@ public class Membre implements Serializable {
      * @param nom Le nouveau nom complet du membre.
      * @throws MembreException Exception levée si le nom ne correspond pas à l'expression régulière.
      */
-    private void setNom(String nom) throws MembreException {
+    public void setNom(String nom) throws MembreException {
         Matcher matcher = PATERNE_NOM.matcher(nom);
         if (matcher.find()) {
             int indiceEspace = nom.indexOf(' ');
@@ -119,7 +119,18 @@ public class Membre implements Serializable {
     public void setTelephone(String telephone) throws MembreException {
         Matcher matcher = PATERNE_TELEPHONE.matcher(telephone);
         if (matcher.find()) {
-            this.telephone = telephone;
+            if (telephone.length() == 10) {
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < 5; i++) {
+                    sb.append(telephone, i * 2, (i * 2) + 2);
+                    if (i + 1 < 5) {
+                        sb.append(' ');
+                    }
+                }
+                this.telephone = sb.toString();
+            } else {
+                this.telephone = telephone.replaceAll("\\.", " ");
+            }
         } else {
             throw new MembreException("numéro de téléphone du membre invalide");
         }

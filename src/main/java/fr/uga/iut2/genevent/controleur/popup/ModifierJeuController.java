@@ -15,10 +15,8 @@ import java.util.Date;
 
 public class ModifierJeuController extends PopupController {
 
-    private JeuDeSociete ancienJeu;
-
     @FXML
-    private TextField tfNomDuJeu;
+    private Label labelNomDuJeu;
 
     @FXML
     private TextArea taRegles;
@@ -49,7 +47,7 @@ public class ModifierJeuController extends PopupController {
 
     @Override
     protected void onBtnEnregistrerAction(ActionEvent event) {
-        if ( ControllerUtilitaire.validateNonEmptyTextInputControl(taRegles)
+        if (ControllerUtilitaire.validateNonEmptyTextInputControl(taRegles)
                 & ControllerUtilitaire.validateSpinnerValue(spNbJoueurs, 1, false)
                 & ControllerUtilitaire.validateNonEmptyDatePicker(dpDateAchat)
                 & ControllerUtilitaire.validateNonEmptyTextInputControl(tfType)
@@ -59,9 +57,9 @@ public class ModifierJeuController extends PopupController {
         ) {
             try {
                 getControleur().modifierJeu(
-                        ancienJeu,
+                        labelNomDuJeu.getText(),
                         new IHM.InfosJeu(
-                                tfNomDuJeu.getText(),
+                                labelNomDuJeu.getText(),
                                 taRegles.getText(),
                                 Date.from(dpDateAchat.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()),
                                 tfType.getText(),
@@ -81,7 +79,7 @@ public class ModifierJeuController extends PopupController {
     }
 
     public void setPreremplissage(JeuDeSociete jeuDeSociete) {
-        tfNomDuJeu.setText(jeuDeSociete.getNom());
+        labelNomDuJeu.setText(jeuDeSociete.getNom());
         taRegles.setText(jeuDeSociete.getRegles());
         spNbJoueurs.getEditor().setText(Integer.toString(jeuDeSociete.getNbJoueurs()));
 
@@ -101,8 +99,6 @@ public class ModifierJeuController extends PopupController {
 
         cbTailleTable.getEditor().setText(jeuDeSociete.getTailleTable().getName());
         spDureePartie.getEditor().setText(Integer.toString(jeuDeSociete.getDureePartie()));
-        spPrix.getEditor().setText(Double.toString(jeuDeSociete.getPrix()));
-
-        ancienJeu = jeuDeSociete;
+        spPrix.getEditor().setText(Double.toString(jeuDeSociete.getPrix()).replace('.', ','));
     }
 }

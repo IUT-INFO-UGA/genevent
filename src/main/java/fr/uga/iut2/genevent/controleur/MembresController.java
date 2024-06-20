@@ -1,12 +1,10 @@
 package fr.uga.iut2.genevent.controleur;
 
-import fr.uga.iut2.genevent.Main;
 import fr.uga.iut2.genevent.modele.membre.Membre;
 import fr.uga.iut2.genevent.modele.membre.MembreException;
 import fr.uga.iut2.genevent.util.ControllerUtilitaire;
 import fr.uga.iut2.genevent.vue.IHM;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;

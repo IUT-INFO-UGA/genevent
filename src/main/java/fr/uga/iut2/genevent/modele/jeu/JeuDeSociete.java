@@ -5,7 +5,6 @@ import fr.uga.iut2.genevent.modele.GenEvent;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.logging.Logger;
 
@@ -28,12 +27,12 @@ public class JeuDeSociete implements Serializable {
     // Attributs
 
     private final String nom;
-    private final String regles;
-    private final Date dateAchat;
-    private final String type;
-    private final TailleTable tailleTable;
-    private final int dureePartie;
-    private final double prix;
+    private String regles;
+    private Date dateAchat;
+    private String type;
+    private TailleTable tailleTable;
+    private int dureePartie;
+    private double prix;
     private int nbJoueurs;
 
     // Constructeur
@@ -127,6 +126,14 @@ public class JeuDeSociete implements Serializable {
     }
 
     /**
+     * Remplace les règles du jeu par la chaîne de caractères passée en paramètres.
+     * @param regles Les nouvelles règles du jeu.
+     */
+    public void setRegles(String regles) {
+        this.regles = regles;
+    }
+
+    /**
      * Remplace le nombre de joueurs nécessaire pour faire une partie de jeu de société par la valeur en paramètre.
      * Le nombre de joueurs minimum pour un jeu de société est de 1. Un nombre de joueurs négatif ou nul lèvera une exception.
      * @param nbJoueurs Le nouveau nombre de joueurs nécessaires pour faire une partie du jeu de société.
@@ -139,6 +146,56 @@ public class JeuDeSociete implements Serializable {
             throw new JeuDeSocieteException("Nombre de joueurs nul");
         } else {
             throw new JeuDeSocieteException("Nombre de joueurs négatif");
+        }
+    }
+
+    public void setDateAchat(Date dateAchat) {
+        this.dateAchat = dateAchat;
+    }
+
+    /**
+     * Remplace le type du jeu par la chaîne de caractères passée en paramètres.
+     * @param type Le nouveau type du jeu.
+     */
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    /**
+     * Remplace la taille de la table nécessaire pour lancer une partie du jeu par la valeur en paramètre.
+     * @param tailleTable La nouvelle taille de la table nécessaire pour lancer une partie du jeu.
+     */
+    public void setTailleTable(TailleTable tailleTable) {
+        this.tailleTable = tailleTable;
+    }
+
+    /**
+     * Remplace la durée du jeu en minutes par le nombre entier strictement positif passé en paramètres.
+     * @param dureePartie La nouvelle durée d'une partie en minutes.
+     * @throws JeuDeSocieteException Exception levée si la durée d'une partie est négative ou nulle.
+     */
+    public void setDureePartie(int dureePartie) throws JeuDeSocieteException {
+        if (dureePartie > 0) {
+            this.dureePartie = dureePartie;
+        } else if (prix == 0) {
+            throw new JeuDeSocieteException("La durée d'une partie ne peut pas être nul.");
+        } else {
+            throw new JeuDeSocieteException("La durée d'une partie ne peut pas être négatif.");
+        }
+    }
+
+    /**
+     * Remplace le prix du jeu par le nombre réel strictement positif passé en paramètres.
+     * @param prix Le nouveau prix du jeu.
+     * @throws JeuDeSocieteException Exception levée si le prix du jeu est négatif ou nul.
+     */
+    public void setPrix(double prix) throws JeuDeSocieteException {
+        if (prix > 0) {
+            this.prix = prix;
+        } else if (prix == 0) {
+            throw new JeuDeSocieteException("Le prix du jeu de société ne peut pas être nul.");
+        } else {
+            throw new JeuDeSocieteException("Le prix du jeu de société ne peut pas être négatif.");
         }
     }
 
