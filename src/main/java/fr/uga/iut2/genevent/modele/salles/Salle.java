@@ -13,24 +13,6 @@ import java.util.logging.Logger;
  */
 public class Salle implements Serializable {
 
-    // Identifiant
-
-    private static long identifiant = 0;
-
-    public static long genererIdentifiant() {
-        return identifiant++;
-    }
-
-    public static void chargerIdentifiant(BufferedReader reader) throws IOException {
-        String line = reader.readLine();
-        int i = line.indexOf(' ');
-        identifiant = Long.parseLong(line.substring(i + 1));
-    }
-
-    public static void enregistrerIdentifiant(BufferedWriter writer) throws IOException {
-        writer.write("SalleId: " + identifiant + "\n");
-    }
-
     // Logger
 
     public static final Logger logger = Logger.getLogger(Salle.class.getPackageName());
@@ -44,6 +26,7 @@ public class Salle implements Serializable {
     private final long numero;
     private final String type;
     private final HashMap<Long, Table> tables;
+    private long nextTableId;
 
     // Constructeur
 
@@ -56,6 +39,7 @@ public class Salle implements Serializable {
         this.numero = numero;
         this.type = type;
         this.tables = new HashMap<>();
+        this.nextTableId = 1;
     }
 
     // Méthodes
@@ -123,5 +107,9 @@ public class Salle implements Serializable {
     public String toString() {
         return getClass().getSimpleName() + "(numero=" + getNumero() + ", type=\"" + getType()
                 + "\", nombreTables=" + getTables().size() + ")";
+    }
+
+    public long getAndIncrementTableId() {
+        return nextTableId++;
     }
 }

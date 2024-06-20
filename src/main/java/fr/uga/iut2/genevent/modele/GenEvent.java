@@ -48,6 +48,7 @@ public class GenEvent implements Serializable {
     private Map<String, Membre> membres;
     private Map<Long, Salle> salles;
     private List<Seance> seances;
+    private int nextSalleId;
 
     public GenEvent() {
         //this.utilisateurs = new HashMap<>();
@@ -59,6 +60,7 @@ public class GenEvent implements Serializable {
         this.membres = new HashMap<>();
         this.salles = new HashMap<>();
         this.seances = new ArrayList<>();
+        this.nextSalleId = 1;
     }
 
     /*public boolean ajouteUtilisateur(String email, String nom, String prenom) {
@@ -190,5 +192,9 @@ public class GenEvent implements Serializable {
     public void setRole(Role role) {
         GenEvent.logger.log(Level.INFO, "Changement de rôle dans l'application : " + this.role + " -> " + role + ".");
         this.role = role;
+    }
+
+    public int getAndIncrementSalleId() {
+        return nextSalleId++;
     }
 }

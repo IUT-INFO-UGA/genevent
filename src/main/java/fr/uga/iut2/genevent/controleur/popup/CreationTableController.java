@@ -37,10 +37,8 @@ public class CreationTableController extends PopupController {
                 & ControllerUtilitaire.validateSpinnerValue(spNbJoueurs, 1, false)
                 & ControllerUtilitaire.validateComboBoxValue(cbTailleTable)
         ) {
-            System.out.println("hello ??");
             getControleur().creerTable(
                     new IHM.InfosTable(
-                            getSalleSelectionnee().getTables().size(),
                             getSalleSelectionnee(),
                             tfType.getText(),
                             spNbJoueurs.getValue(),

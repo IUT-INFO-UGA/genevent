@@ -38,7 +38,7 @@ public class SallesTablesController extends CreateurPopupController {
     @FXML
     private void onCreerSalleAction(ActionEvent event) {
         if (ControllerUtilitaire.validateNonEmptyTextInputControl(tfType)) {
-            getControleur().creerSalle(new IHM.InfosSalle(Salle.genererIdentifiant(), tfType.getText()));
+            getControleur().creerSalle(new IHM.InfosSalle(tfType.getText()));
             refreshSallesTable();
         }
     }

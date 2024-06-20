@@ -24,17 +24,6 @@ public class Main {
             System.exit(EXIT_ERR_LOAD);
         }
 
-        File fichierIdentifiants = new File("persistence/id.txt");
-        if (fichierIdentifiants.exists()) {
-            try {
-                BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(fichierIdentifiants)));
-                Salle.chargerIdentifiant(reader);
-                reader.close();
-            } catch (IOException e) {
-                GenEvent.logger.log(Level.SEVERE, "Fichier de persistence des identifiants est existant mais impossible à lire.");
-                System.exit(EXIT_ERR_LOAD);
-            }
-        }
 
         Controleur controleur = new Controleur(genevent);
         // `Controleur.demarrer` garde le contrôle de l'exécution tant que
@@ -47,15 +36,6 @@ public class Main {
         catch (IOException ignored) {
             System.err.println("Erreur irrécupérable pendant la sauvegarde de l'état : fin d'exécution !");
             System.err.flush();
-            System.exit(EXIT_ERR_SAVE);
-        }
-
-        try {
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fichierIdentifiants)));
-            Salle.enregistrerIdentifiant(writer);
-            writer.close();
-        } catch (IOException e) {
-            GenEvent.logger.log(Level.SEVERE, "Impossible d'enregistrer les identifiants dans le fichier de persistence des identifiants.");
             System.exit(EXIT_ERR_SAVE);
         }
     }
