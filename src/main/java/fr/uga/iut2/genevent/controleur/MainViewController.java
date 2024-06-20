@@ -23,6 +23,15 @@ public class MainViewController extends HeaderController {
     @FXML
     private Button personnels;
 
+    @Override
+    public void refresh() {
+        members.setDisable(!getControleur().getRole().isAccesMembres());
+        stocks.setDisable(!getControleur().getRole().isAccesStocks());
+        planning.setDisable(!getControleur().getRole().isAccesPlanning());
+        salles.setDisable(!getControleur().getRole().isAccesSalles());
+        personnels.setDisable(!getControleur().getRole().isAccesMembres());
+    }
+
     @FXML
     private void onMainButtonClicked(ActionEvent event) throws IOException {
         String fileName;

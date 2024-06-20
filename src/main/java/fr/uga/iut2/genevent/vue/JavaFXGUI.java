@@ -55,62 +55,6 @@ public class JavaFXGUI extends IHM {
         this.exitAction();
     }
 
-    // initialisation
-
-    /*
-    @FXML
-    private void initialize() {
-
-        if (members != null) {
-            members.setDisable(!controleur.getRole().isAccesMembres());
-            stocks.setDisable(!controleur.getRole().isAccesStocks());
-            planning.setDisable(!controleur.getRole().isAccesPlanning());
-            salles.setDisable(!controleur.getRole().isAccesSalles());
-        }
-
-        if (jeuxList != null) {
-            jeuxList.getItems().clear();
-            for (JeuDeSociete jeux : controleur.getJeux()) {
-                jeuxList.getItems().add(jeux.getNom());
-            }
-        }
-
-        if (animateursList != null) {
-            animateursList.getItems().clear();
-
-            for (Personnel personnel : controleur.getPersonnel()) {
-                if (personnel instanceof Animateur) {
-                    animateursList.getItems().add(personnel.getId());
-                }
-            }
-        }
-
-        if (personnelRankField != null) {
-            refreshPersonnelTable();
-
-            for (Role value : Role.values()) {
-                personnelRankField.getItems().add(value.getName());
-            }
-
-            TableColumn<Personnel, String> personnelTableColumn = (TableColumn<Personnel, String>) personnelList.getColumns().get(3);
-            personnelTableColumn.setCellValueFactory(c -> {
-                Personnel personnel = c.getValue();
-                String roleName = "";
-
-                if (personnel instanceof Gerant) {
-                    roleName = "Gérant";
-                } else if (personnel instanceof Gestionnaire) {
-                    roleName = "Gestionnaire";
-                } else if (personnel instanceof Animateur) {
-                    roleName = "Animateur";
-                }
-
-                return new SimpleStringProperty(roleName);
-            });
-        }
-    }
-    */
-
 //-----  Implémentation des méthodes abstraites  -------------------------------
 
     @Override

@@ -15,6 +15,7 @@ public enum Role {
         for (Role role : Role.values()) {
             BY_NAME.put(role.getName(), role);
         }
+    // initialisation
     }
 
     private String name;
