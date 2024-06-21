@@ -57,12 +57,6 @@ public class MembresController extends HeaderController {
                 LocalDate value = memberBirthDateField.getValue();
                 Date birthDate = Date.from(value.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
-                getControleur().creerMembre(new IHM.InfosMembre(
-                        memberNameField.getText().strip(),
-                        birthDate,
-                        memberPhoneNbField.getText().strip()
-                ));
-
                 getControleur().modifierMembre(selectedItem, new IHM.InfosMembre(
                         memberNameField.getText().strip(),
                         birthDate,
