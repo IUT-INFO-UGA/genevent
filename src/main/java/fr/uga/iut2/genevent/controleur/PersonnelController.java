@@ -3,7 +3,6 @@ package fr.uga.iut2.genevent.controleur;
 import fr.uga.iut2.genevent.modele.Role;
 import fr.uga.iut2.genevent.modele.personnel.*;
 import fr.uga.iut2.genevent.util.ControllerUtilitaire;
-import fr.uga.iut2.genevent.util.ModeleUtilitaire;
 import fr.uga.iut2.genevent.vue.IHM;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
@@ -60,10 +59,6 @@ public class PersonnelController extends HeaderController {
                 & ControllerUtilitaire.validateNonEmptyTextInputControl(personnelNameField)
                 & personnelRankField.getValue() != null;
 
-        if (!personnelPhoneNbField.getText().isEmpty()) {
-            valid &= ControllerUtilitaire.validateNonEmptyTextInputControl(personnelPhoneNbField, ControllerUtilitaire.matchesPattern(personnelPhoneNbField.getText(), ModeleUtilitaire.PATERNE_TELEPHONE));
-        }
-
         if (getControleur().getPersonnel(personnelLoginField.getText()) != null) {
             // TODO : erreur existe déjà
         }
@@ -79,28 +74,22 @@ public class PersonnelController extends HeaderController {
                         role,
                         personnelPhoneNbField.getText()
                 ));
+                personnelLoginField.clear();
+                personnelFirstNameField.clear();
+                personnelNameField.clear();
+                personnelPhoneNbField.clear();
+                personnelRankField.getSelectionModel().clearSelection();
             } catch (PersonnelException e) {
-                // TODO : Message d'erreur
-                e.printStackTrace();
+                ControllerUtilitaire.openAlert(e.getMessage(), false);
             }
         }
 
         refreshPersonnelTable();
     }
 
-    private void refreshPersonnelTable() {
-        personnelList.getItems().clear();
-        for (Personnel personnel : getControleur().getPersonnel()) {
-            personnelList.getItems().add(personnel);
-        }
-        personnelList.refresh();
-    }
-
     @FXML
     private void onPersonnelListValueClick(MouseEvent event) {
-        Personnel selectedItem = personnelList.getSelectionModel().getSelectedItem();
-
-        personnelDeleteButton.setDisable(selectedItem == null);
+        updateSelection();
     }
 
     @FXML
@@ -110,6 +99,21 @@ public class PersonnelController extends HeaderController {
         if (selectedItem != null) {
             getControleur().supprimerPersonnel(selectedItem);
             refreshPersonnelTable();
+            updateSelection();
         }
+    }
+
+    private void refreshPersonnelTable() {
+        personnelList.getItems().clear();
+        for (Personnel personnel : getControleur().getPersonnel()) {
+            personnelList.getItems().add(personnel);
+        }
+        personnelList.refresh();
+        updateSelection();
+    }
+
+    private void updateSelection() {
+        Personnel selectedItem = personnelList.getSelectionModel().getSelectedItem();
+        personnelDeleteButton.setDisable(selectedItem == null);
     }
 }

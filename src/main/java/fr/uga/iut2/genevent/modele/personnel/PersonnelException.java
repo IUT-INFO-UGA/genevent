@@ -2,7 +2,7 @@ package fr.uga.iut2.genevent.modele.personnel;
 
 public class PersonnelException extends Exception {
 
-    private String message;
+    private final String message;
 
     public PersonnelException(String message) {
         this.message = message;
@@ -10,6 +10,6 @@ public class PersonnelException extends Exception {
 
     @Override
     public String getMessage() {
-        return message + ": " + super.getMessage();
+        return message;
     }
 }

@@ -2,7 +2,7 @@ package fr.uga.iut2.genevent.modele.seance;
 
 public class SeanceException extends Exception {
 
-    private String message;
+    private final String message;
 
     public SeanceException(String message) {
         this.message = message;
@@ -10,6 +10,6 @@ public class SeanceException extends Exception {
 
     @Override
     public String getMessage() {
-        return message + ": " + super.getMessage();
+        return message;
     }
 }

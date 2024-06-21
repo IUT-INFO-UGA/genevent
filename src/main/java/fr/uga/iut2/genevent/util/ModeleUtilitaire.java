@@ -34,7 +34,7 @@ public class ModeleUtilitaire {
             }
             return sb.toString();
         } else {
-            return telephone.replaceAll("\\.", " ");
+            return telephone.replace('.', ' ');
         }
     }
 }

@@ -86,9 +86,15 @@ public abstract class Personnel implements Serializable {
     public void setNumTel(String telephone) throws PersonnelException {
         String telephoneFormate = ModeleUtilitaire.formaterTelephone(telephone);
         if (telephoneFormate != null) {
-            this.telephone = telephone;
+            this.telephone = telephoneFormate;
         } else {
-            throw new PersonnelException("Le numéro de téléphone est invalide");
+            throw new PersonnelException(
+                    "Le numéro de téléphone est invalide : " + telephone  + "ne respecte pas le format attendu."
+                            + "\nLes formats possibles sont :"
+                            + "\n\t- XXXXXXXXXX"
+                            + "\n\t- XX.XX.XX.XX.XX"
+                            + "\n\t- XX XX XX XX XX"
+            );
         }
     }
 

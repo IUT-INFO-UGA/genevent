@@ -71,7 +71,7 @@ public class MembresController extends HeaderController {
                 memberCreateButton.setText("Créer");
                 memberCreateButton.setOnAction(this::addMemberButtonAction);
             } catch (MembreException e) {
-                e.printStackTrace();
+                ControllerUtilitaire.openAlert(e.getMessage(), false);
             }
             refreshMemberTable();
             updateSelection();
@@ -111,7 +111,7 @@ public class MembresController extends HeaderController {
             memberPhoneNbField.clear();
             memberBirthDateField.setValue(null);
         } catch (MembreException e) {
-            e.printStackTrace();
+            ControllerUtilitaire.openAlert(e.getMessage(), false);
         }
 
         refreshMemberTable();
@@ -137,20 +137,8 @@ public class MembresController extends HeaderController {
     }
 
     private boolean validerEntrees() {
-        boolean isValid = ControllerUtilitaire.validateNonEmptyTextInputControl(memberNameField)
+        return ControllerUtilitaire.validateNonEmptyTextInputControl(memberNameField)
                 & ControllerUtilitaire.validateNonEmptyTextInputControl(memberPhoneNbField)
                 & ControllerUtilitaire.validateNonEmptyDatePicker(memberBirthDateField);
-
-        if (!ControllerUtilitaire.matchesPattern(memberNameField.getText(), ModeleUtilitaire.PATERNE_NOM)) {
-            isValid = false;
-            ControllerUtilitaire.markControlErrorStatus(memberNameField, false);
-        }
-
-        if (!ControllerUtilitaire.matchesPattern(memberPhoneNbField.getText(), ModeleUtilitaire.PATERNE_TELEPHONE)) {
-            isValid = false;
-            ControllerUtilitaire.markControlErrorStatus(memberPhoneNbField, false);
-        }
-
-        return isValid;
     }
 }

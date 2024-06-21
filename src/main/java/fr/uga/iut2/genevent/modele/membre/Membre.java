@@ -1,6 +1,7 @@
 package fr.uga.iut2.genevent.modele.membre;
 
 import fr.uga.iut2.genevent.modele.GenEvent;
+import fr.uga.iut2.genevent.modele.personnel.PersonnelException;
 import fr.uga.iut2.genevent.util.ModeleUtilitaire;
 
 import java.io.Serializable;
@@ -95,7 +96,10 @@ public class Membre implements Serializable {
             sb.setCharAt(indiceEspace + 1, maj.charAt(indiceEspace + 1));
             this.nom = sb.toString();
         } else {
-            throw new MembreException("Nom du membre invalide");
+            throw new MembreException(
+                    "Nom du membre invalide : " + nom + "."
+                            + "\nLe nom du membre doit être de la forme \"prénom[-composé] nom de famille\""
+            );
         }
     }
 
@@ -116,7 +120,13 @@ public class Membre implements Serializable {
         if (telephoneFormate != null) {
             this.telephone = ModeleUtilitaire.formaterTelephone(telephone);
         } else {
-            throw new MembreException("numéro de téléphone du membre invalide");
+            throw new MembreException(
+                    "Le numéro de téléphone est invalide : " + telephone  + "ne respecte pas le format attendu."
+                            + "\nLes formats possibles sont :"
+                            + "\n\t- XXXXXXXXXX"
+                            + "\n\t- XX.XX.XX.XX.XX"
+                            + "\n\t- XX XX XX XX XX"
+            );
         }
     }
 
