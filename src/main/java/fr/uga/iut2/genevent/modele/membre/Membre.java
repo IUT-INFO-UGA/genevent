@@ -1,6 +1,7 @@
 package fr.uga.iut2.genevent.modele.membre;
 
 import fr.uga.iut2.genevent.modele.GenEvent;
+import fr.uga.iut2.genevent.util.ModeleUtilitaire;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -8,7 +9,6 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Représente un membre de l'association ou du café de jeux de société.
@@ -24,11 +24,6 @@ public class Membre implements Serializable {
     static {
         GenEvent.logManager.addLogger(logger);
     }
-
-    // Constantes
-
-    public static final Pattern PATERNE_NOM = Pattern.compile("^[a-z-A-Z]+(-[a-z-A-Z]+)*( [a-z-A-Z]+(-[a-z-A-Z]+)*)+$");
-    public static final Pattern PATERNE_TELEPHONE = Pattern.compile("^[0-9]{2}(([0-9]{2}){4})|((\\.[0-9]{2}){4})|(( [0-9]{2}){4})$");
 
     // Attributs
 
@@ -91,7 +86,7 @@ public class Membre implements Serializable {
      * @throws MembreException Exception levée si le nom ne correspond pas à l'expression régulière.
      */
     public void setNom(String nom) throws MembreException {
-        Matcher matcher = PATERNE_NOM.matcher(nom);
+        Matcher matcher = ModeleUtilitaire.PATERNE_NOM.matcher(nom);
         if (matcher.find()) {
             int indiceEspace = nom.indexOf(' ');
             String maj = nom.toUpperCase();
@@ -117,20 +112,9 @@ public class Membre implements Serializable {
      * @param telephone Le nouveau numéro de téléphone du membre.
      */
     public void setTelephone(String telephone) throws MembreException {
-        Matcher matcher = PATERNE_TELEPHONE.matcher(telephone);
-        if (matcher.find()) {
-            if (telephone.length() == 10) {
-                StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < 5; i++) {
-                    sb.append(telephone, i * 2, (i * 2) + 2);
-                    if (i + 1 < 5) {
-                        sb.append(' ');
-                    }
-                }
-                this.telephone = sb.toString();
-            } else {
-                this.telephone = telephone.replaceAll("\\.", " ");
-            }
+        String telephoneFormate = ModeleUtilitaire.formaterTelephone(telephone);
+        if (telephoneFormate != null) {
+            this.telephone = ModeleUtilitaire.formaterTelephone(telephone);
         } else {
             throw new MembreException("numéro de téléphone du membre invalide");
         }

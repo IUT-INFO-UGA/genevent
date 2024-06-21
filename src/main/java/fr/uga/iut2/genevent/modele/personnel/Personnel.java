@@ -1,11 +1,10 @@
 package fr.uga.iut2.genevent.modele.personnel;
 
 import fr.uga.iut2.genevent.modele.GenEvent;
-import fr.uga.iut2.genevent.modele.membre.Membre;
+import fr.uga.iut2.genevent.util.ModeleUtilitaire;
 
 import java.io.Serializable;
 import java.util.logging.Logger;
-import java.util.regex.Matcher;
 
 /**
  * Représente un membre du personnel de l'association/du salon.
@@ -80,13 +79,13 @@ public abstract class Personnel implements Serializable {
 
     /**
      * Remplace le numéro de téléphone du membre du personnel par le numéro de téléphone passé en paramètre.
-     * Le numéro de téléphone doit correspondre à l'expression régulière {@link Membre#PATERNE_TELEPHONE}.
+     * Le numéro de téléphone doit correspondre à l'expression régulière {@link ModeleUtilitaire#PATERNE_TELEPHONE}.
      * @param telephone Le nouveau numéro de téléphone à attribuer au membre du personnel.
      * @throws PersonnelException L'exception à lever lorsque le numéro de téléphone est invalide.
      */
     public void setNumTel(String telephone) throws PersonnelException {
-        Matcher matcher = Membre.PATERNE_TELEPHONE.matcher(telephone);
-        if (matcher.find()) {
+        String telephoneFormate = ModeleUtilitaire.formaterTelephone(telephone);
+        if (telephoneFormate != null) {
             this.telephone = telephone;
         } else {
             throw new PersonnelException("Le numéro de téléphone est invalide");

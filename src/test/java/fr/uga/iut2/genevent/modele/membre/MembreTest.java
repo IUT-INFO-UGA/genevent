@@ -14,7 +14,7 @@ class MembreTest {
         assertEquals("Marcel Le fol", m.getNom());
 
         assertThrows(MembreException.class, () -> new Membre("htrrthrhtthr", new Date(2024, 06, 17), "00 00 00 00 00"));
-        assertThrows(MembreException.class, () -> new Membre("MARCEL-Le fol", new Date(2024, 06, 17), "00 00 00 00 00"));
+        assertDoesNotThrow(() -> new Membre("MARCEL-Le fol", new Date(2024, 06, 17), "00 00 00 00 00"));
         assertDoesNotThrow(() -> new Membre("Marcel le Fol", new Date(2024, 06, 17), "00 00 00 00 00"));
     }
 
@@ -24,8 +24,12 @@ class MembreTest {
         assertEquals("00 00 00 00 00", m.getTelephone());
 
         assertThrows(MembreException.class, () -> m.setTelephone("00.00.00 00.00"));
+        assertThrows(MembreException.class, () -> m.setTelephone("00.00000000"));
 
         m.setTelephone("0000000000");
-        assertEquals("0000000000", m.getTelephone());
+        assertEquals("00 00 00 00 00", m.getTelephone());
+
+        m.setTelephone("00.00.00.00.00");
+        assertEquals("00 00 00 00 00", m.getTelephone());
     }
 }

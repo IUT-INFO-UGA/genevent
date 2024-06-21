@@ -11,9 +11,9 @@ class CommandeTest {
         Commande c = new Commande(1, "Jeu cool", 5, 20);
         assertEquals(100, c.getPrixTotal());
         assertDoesNotThrow(() -> c.setPrix(15));
-        assertEquals(60, c.getPrixTotal());
+        assertEquals(75, c.getPrixTotal());
         assertDoesNotThrow(() -> c.setPrix(16.75));
-        assertEquals(67.75, c.getPrixTotal());
+        assertEquals(83.75, c.getPrixTotal());
     }
 
     @Test

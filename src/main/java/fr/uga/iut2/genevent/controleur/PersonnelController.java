@@ -1,10 +1,9 @@
 package fr.uga.iut2.genevent.controleur;
 
-import fr.uga.iut2.genevent.Main;
 import fr.uga.iut2.genevent.modele.Role;
-import fr.uga.iut2.genevent.modele.membre.Membre;
 import fr.uga.iut2.genevent.modele.personnel.*;
 import fr.uga.iut2.genevent.util.ControllerUtilitaire;
+import fr.uga.iut2.genevent.util.ModeleUtilitaire;
 import fr.uga.iut2.genevent.vue.IHM;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
@@ -62,7 +61,7 @@ public class PersonnelController extends HeaderController {
                 & personnelRankField.getValue() != null;
 
         if (!personnelPhoneNbField.getText().isEmpty()) {
-            valid &= ControllerUtilitaire.validateNonEmptyTextInputControl(personnelPhoneNbField, ControllerUtilitaire.matchesPattern(personnelPhoneNbField.getText(), Membre.PATERNE_TELEPHONE));
+            valid &= ControllerUtilitaire.validateNonEmptyTextInputControl(personnelPhoneNbField, ControllerUtilitaire.matchesPattern(personnelPhoneNbField.getText(), ModeleUtilitaire.PATERNE_TELEPHONE));
         }
 
         if (getControleur().getPersonnel(personnelLoginField.getText()) != null) {

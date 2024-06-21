@@ -3,6 +3,7 @@ package fr.uga.iut2.genevent.controleur;
 import fr.uga.iut2.genevent.modele.membre.Membre;
 import fr.uga.iut2.genevent.modele.membre.MembreException;
 import fr.uga.iut2.genevent.util.ControllerUtilitaire;
+import fr.uga.iut2.genevent.util.ModeleUtilitaire;
 import fr.uga.iut2.genevent.vue.IHM;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -140,12 +141,12 @@ public class MembresController extends HeaderController {
                 & ControllerUtilitaire.validateNonEmptyTextInputControl(memberPhoneNbField)
                 & ControllerUtilitaire.validateNonEmptyDatePicker(memberBirthDateField);
 
-        if (!ControllerUtilitaire.matchesPattern(memberNameField.getText(), Membre.PATERNE_NOM)) {
+        if (!ControllerUtilitaire.matchesPattern(memberNameField.getText(), ModeleUtilitaire.PATERNE_NOM)) {
             isValid = false;
             ControllerUtilitaire.markControlErrorStatus(memberNameField, false);
         }
 
-        if (!ControllerUtilitaire.matchesPattern(memberPhoneNbField.getText(), Membre.PATERNE_TELEPHONE)) {
+        if (!ControllerUtilitaire.matchesPattern(memberPhoneNbField.getText(), ModeleUtilitaire.PATERNE_TELEPHONE)) {
             isValid = false;
             ControllerUtilitaire.markControlErrorStatus(memberPhoneNbField, false);
         }
